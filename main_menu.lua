@@ -47,7 +47,7 @@ local bkgSoundChannel
 
 -- Creating Transition Function to Instructions Page
 local function InstructionsTransition( )       
-    composer.gotoScene( "Instructions_screen", {effect = "slideDown", time = 500})
+    composer.gotoScene( "instructions_screen", {effect = "slideDown", time = 500})
 end 
 
 -----------------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ end
 
 -- Creating Transition to Level1 Screen
 local function Level1ScreenTransition( )
-    composer.gotoScene( "level1_screen", {effect = "slideRight", time = 1000})
+    composer.gotoScene( "level1_screen.lua", {effect = "slideRight", time = 1000})
 end    
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
