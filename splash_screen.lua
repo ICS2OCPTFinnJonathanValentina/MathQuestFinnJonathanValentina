@@ -20,6 +20,11 @@ sceneName = "splash_screen"
 -- Create Scene Object
 local scene = composer.newScene( sceneName )
 
+-----------------------------------------------------------------------------------------
+-- sound effect for sword
+local sound = audio.loadSound( "Sounds/swordSound.mp3")
+local soundChannel
+
 ----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -90,6 +95,9 @@ function scene:show( event )
         timer.performWithDelay ( 3000, gotoMainMenu)          
         
     end
+
+    -- sound effect for sword
+    soundChannel = audio.play(sound)
 
 end --function scene:show( event )
 

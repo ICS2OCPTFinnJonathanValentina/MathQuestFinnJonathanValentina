@@ -78,8 +78,8 @@ function scene:create( event )
         y = display.contentHeight*15/16,
 
         -- Setting Dimensions
-        -- width = 1000,
-        -- height = 106,
+        width = 100,
+        height = 106,
 
         -- Setting Visual Properties
         defaultFile = "Images/BackButtonUnpressedFinnL.png",
