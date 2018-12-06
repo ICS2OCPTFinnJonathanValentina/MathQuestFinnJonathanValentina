@@ -36,6 +36,7 @@ local scene = composer.newScene( sceneName )
 local bkg_image
 local playButton
 local creditsButton
+local instructionButton
 
 -- background music
 local bkgSound = audio.loadSound("Sounds/background_music.mp3")
@@ -106,7 +107,7 @@ function scene:create( event )
             y = display.contentHeight*7/8,
             -- Insert the images here
             defaultFile = "Images/InstructionsButtonUnpressedFinnL.png",
-            overFile = "Images/InstructionButtonPressedFinnL.png",
+            overFile = "Images/InstructionsButtonPressedFinnL.png",
 
             width = 175,
             height = 175,
@@ -123,7 +124,7 @@ function scene:create( event )
             y = display.contentHeight*7/8,
 
             -- Insert the images here
-            defaultFile = "Images/PlayButtonUnPressed.png",
+            defaultFile = "Images/PlayButtonUnPressedJonathanK.png",
             overFile = "Images/PlayButtonPressedJonathanK.png",
 
             width = 175,
