@@ -1,4 +1,4 @@
------------------------------------------------------------------------------------------
+s-----------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
 -- Created by: Ms Raffin
@@ -399,7 +399,7 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/LevelScreenJonathan.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/Level1ScreenJonathan.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
