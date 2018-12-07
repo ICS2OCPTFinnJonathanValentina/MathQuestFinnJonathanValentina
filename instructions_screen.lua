@@ -29,18 +29,6 @@ scene = composer.newScene( sceneName ) -- This function doesn't accept a string,
 local bkg_image
 local backButton
 
-
-
------------------------------------------------------------------------------------------
--- lOCAL SCENE VARIABLES
------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -75,9 +63,6 @@ function scene:create( event )
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
 
-    -- Send the background image to the back layer so all other objects can be on top
-    bkg_image:toBack()
-
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
     -----------------------------------------------------------------------------------------
@@ -86,8 +71,8 @@ function scene:create( event )
     backButton = widget.newButton( 
     {
         -- Setting Position
-        x = display.contentWidth*1/4,
-        y = display.contentHeight*15/17,
+        x = display.contentWidth * 1 / 4,
+        y = display.contentHeight * 15 / 17,
 
         -- Setting Dimensions
          width = 200,
