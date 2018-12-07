@@ -28,7 +28,7 @@ local soundChannel
 ----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
-local scrollspeed = 9
+local scrollspeed =8
 -- The local variables for this scene
 local sword = display.newImageRect("Images/CompanyLogoValentina.png", 1100, 800)
 
