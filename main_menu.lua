@@ -92,9 +92,6 @@ function scene:create( event )
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
 
-    -- Send the background image to the back layer so all other objects can be on top
-    bkg_image:toBack()
-
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
     -----------------------------------------------------------------------------------------   
@@ -147,7 +144,7 @@ function scene:create( event )
             defaultFile = "Images/CreditsButtonUnPressedValentinaG.png",
             overFile = "Images/CreditsButtonPressedValentinaG.png",
 
-            width = 150,
+            width = 175,
             height = 175,
 
             -- When the button is released, call the Credits transition function
