@@ -643,7 +643,7 @@ function scene:show( event )
     end
 
     -- background music
-    backgroundSoundChannel = audio.play(background)
+    backgroundSoundChannel = audio.play(backgroundSound)
 
 end --function scene:show( event )
 
