@@ -88,9 +88,18 @@ function scene:create( event )
     bkg_image.width = display.contentWidth
     bkg_image.height = display.contentHeight
 
+     -- displays text on the screen at position x = 500 and y = 5 with
+     -- a deafult font style and font size of 50 
+     textObject = display.newText( "Math Quest", 500, 350, nil, 170)
+
+     -- sets the color of the text
+     textObject:setTextColor(0, 0, 0)
 
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
+
+        -- Associating display objects with this scene 
+    sceneGroup:insert( textObject )
 
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS

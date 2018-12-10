@@ -77,6 +77,8 @@ local theBall
 
 local questionsAnswered = 0
 
+local textObject
+
 -----------------------------------------------------------------------------------------
 --  Sound
 ----------------------------------------------------------------------------------------- 
@@ -148,7 +150,7 @@ end
 
 
 local function ReplaceCharacter()
-    character = display.newImageRect("BoyCharacterValentina.png", 100, 150)
+    character = display.newImageRect("Images/BoyCharacterValentina.png", 100, 150)
     character.x = display.contentWidth * 0.5 / 8
     character.y = display.contentHeight  * 0.1 / 3
     character.width = 75
@@ -408,8 +410,8 @@ function scene:create( event )
     
     -- Insert the platforms
     platform1 = display.newImageRect("Images/Level-1Platform1.png", 250, 50)
-    platform1.x = display.contentWidth * 1 / 8
-    platform1.y = display.contentHeight * 1.6 / 4
+    platform1.x = 100
+    platform1.y = 500
         
     sceneGroup:insert( platform1 )
 
