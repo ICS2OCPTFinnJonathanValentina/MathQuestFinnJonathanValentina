@@ -88,6 +88,10 @@ local youLoseSoundChannel
 local Grease_Monkey = audio.loadSound("Sounds/Grease_Monkey.mp3")
 local Grease_MonkeySoundChannel
 
+-- background sound
+local backgroundSound = audio.loadSound("Sounds/level.1.mp3")
+local backgroundSoundChannel
+
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
@@ -637,6 +641,9 @@ function scene:show( event )
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
     end
+
+    -- background music
+    backgroundSoundChannel = audio.play(background)
 
 end --function scene:show( event )
 
