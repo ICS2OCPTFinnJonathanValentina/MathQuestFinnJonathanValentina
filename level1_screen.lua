@@ -39,6 +39,7 @@ local platform2
 local platform3
 
 local spikes1
+local spikes2
 
 local spikes1platform
 
@@ -56,7 +57,7 @@ local uArrow
 local motionx = 0
 local SPEED = 7
 local LINEAR_VELOCITY = -100
-local GRAVITY = 7
+local GRAVITY = 1.7
 
 local leftW 
 local topW
@@ -159,7 +160,7 @@ local function ReplaceCharacter()
     motionx = 0
 
     -- add physics body
-    physics.addBody( character, "dynamic", { density=0, friction=0.5, bounce=0, rotation=0 } )
+    physics.addBody( character, "dynamic", { density=6, friction=0.5, bounce=0, rotation=0 } )
 
     -- prevent character from being able to tip over
     character.isFixedRotation = true
@@ -204,7 +205,8 @@ local function onCollision( self, event )
         --Pop sound
         popSoundChannel = audio.play(popSound)
 
-        if (event.target.myName == "spikes1") then
+        if (event.target.myName == "spikes1") or
+           (event.target.myName == "spikes1") then
 
             -- add sound effect here
 
@@ -249,7 +251,7 @@ local function onCollision( self, event )
             end
         end
 
-        if  (event.target.myName == "mathpuzzle1") or
+        if  (event.target.myName == "mathPuzzle1") or
             (event.target.myName == "mathPuzzle2") or
             (event.target.myName == "mathPuzzle3") then
 
@@ -271,7 +273,7 @@ local function onCollision( self, event )
             print("***questions answered = " .. questionsAnswered)
         end
 
-        if (event.target.myName == "puzzle") then
+        if (event.target.myName == "goal") then
             --check to see if the user has answered 5 questions
             if (questionsAnswered == 3) then
                 Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
@@ -292,6 +294,10 @@ local function AddCollisionListeners()
     spikes1.collision = onCollision
     spikes1:addEventListener( "collision" )
 
+    spikes2.collision = onCollision
+    spikes2:addEventListener( "collision" )
+
+
     -- if character collides with ball, onCollision will be called    
     mathPuzzle1.collision = onCollision
     mathPuzzle1:addEventListener( "collision" )
@@ -304,8 +310,8 @@ end
 
 local function RemoveCollisionListeners()
     spikes1:removeEventListener( "collision" )
+
     spikes2:removeEventListener( "collision" )
-    spikes3:removeEventListener( "collision" )
 
     mathPuzzle1:removeEventListener( "collision" )
     mathPuzzle2:removeEventListener( "collision" )
@@ -321,7 +327,9 @@ local function AddPhysicsBodies()
     physics.addBody( platform2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform3, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
-    physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } )  
+    physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } ) 
+    physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )  
+
 
     physics.addBody( spikes1platform, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
@@ -333,8 +341,6 @@ local function AddPhysicsBodies()
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
 
-    physics.addBody( goal, "static", { density=1.0, friction=0.3, bounce=0.2 } )
-
 end
 
 local function RemovePhysicsBodies()
@@ -343,7 +349,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(platform3)
 
     physics.removeBody(spikes1)
-
+    physics.removeBody(spikes2)
     physics.removeBody(spikes1platform)
 
     physics.removeBody(leftW)
@@ -386,14 +392,7 @@ function scene:create( event )
     bkg_image.y = display.contentHeight / 2
 
     -- Insert background image into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( bkg_image )
-
-    goal = display.newImageRect("Images/puzzle.png", 250, 50)
-    goal.x = 800 
-    goal.y = 200
-    goal.myName = "puzzle"
-        
-    sceneGroup:insert( goal )    
+    sceneGroup:insert( bkg_image )    
     
     -- Insert the platforms
     platform1 = display.newImageRect("Images/Level-1Platform1.png", 250, 50)
@@ -403,7 +402,7 @@ function scene:create( event )
     sceneGroup:insert( platform1 )
 
     platform2 = display.newImageRect("Images/Level-1Platform1.png", 150, 50)
-    platform2.x = display.contentWidth /2.1
+    platform2.x = 350
     platform2.y = display.contentHeight * 1.2 / 4
         
     sceneGroup:insert( platform2 )
@@ -416,23 +415,24 @@ function scene:create( event )
 
     spikes1 = display.newImageRect("Images/Level-1Spikes1.png", 250, 50)
     spikes1.x = display.contentWidth * 3 / 8
-    spikes1.y = display.contentHeight * 2.5 / 5
+    spikes1.y = 550
     spikes1.myName = "spikes1"
         
     sceneGroup:insert( spikes1)
 
+    spikes2 = display.newImageRect("Images/Level-1Spikes1.png", 250, 50)
+    spikes2.x = 700
+    spikes2.y = 550
+    spikes2.myName = "spikes2"
+        
+    sceneGroup:insert( spikes2)
+
     spikes1platform = display.newImageRect("Images/Level-1Platform1.png", 250, 50)
     spikes1platform.x = display.contentWidth * 3 / 8
-    spikes1platform.y = display.contentHeight * 2.8 / 5
+    spikes1platform.y = 600
         
     sceneGroup:insert( spikes1platform)
 
-
-    spikes3platform = display.newImageRect("Images/Level-1Platform2.png", 50, 150)
-    spikes3platform.x = 300
-    spikes3platform.y = 600
-        
-    sceneGroup:insert( spikes3platform)
 
     -- Insert the Hearts
     heart1 = display.newImageRect("Images/heart.png", 80, 80)
@@ -521,7 +521,7 @@ function scene:create( event )
 
     --mathPuzzle2
     mathPuzzle2 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
-    mathPuzzle2.x = 490
+    mathPuzzle2.x =350
     mathPuzzle2.y = 170
     mathPuzzle2.myName = "mathPuzzle2"
 
