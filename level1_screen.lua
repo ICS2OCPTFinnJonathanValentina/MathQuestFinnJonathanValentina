@@ -57,9 +57,10 @@ local uArrow
 local motionx = 0
 local SPEED = 7
 local LINEAR_VELOCITY = -100
-local GRAVITY = 1.7
+local GRAVITY = 5
 
 local leftW 
+local rightW
 local topW
 local floor
 
@@ -334,6 +335,7 @@ local function AddPhysicsBodies()
     physics.addBody( spikes1platform, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
+    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
 
@@ -352,6 +354,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(spikes2)
     physics.removeBody(spikes1platform)
 
+    physics.removeBody(rightW)
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
@@ -487,6 +490,7 @@ function scene:create( event )
     leftW = display.newLine( 0, 0, 0, display.contentHeight)
     leftW.isVisible = true
 
+
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( leftW )
 
@@ -605,6 +609,9 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
+
+        --stop the music
+        audio.stop(backgroundSound)
 
     -----------------------------------------------------------------------------------------
 
