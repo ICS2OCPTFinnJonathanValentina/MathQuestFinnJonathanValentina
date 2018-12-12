@@ -35,9 +35,6 @@ local scene = composer.newScene( sceneName )
 -- The local variables for this scene
 local questionText
 
-local correctObject
-local incorrectObject
-
 local firstNumber
 local secondNumber
 
@@ -80,12 +77,9 @@ local function TouchListenerAnswer(touch)
     userAnswer = answerText.text
     
     if (touch.phase == "ended") then
+        -- they got it right
 
-        correctObject.isVisible = true
-        incorrectObject.isVisible = false
-
-
-        BackToLevel1( )
+        BackToLevel1()
     
     end 
 end
@@ -95,13 +89,9 @@ local function TouchListenerWrongAnswer(touch)
     userAnswer = wrongText1.text
     
     if (touch.phase == "ended") then
-        correctObject.isVisible = false
-        incorrectObject.isVisible = true
+        -- they got it wrong
         numLives = numLives - 1
-
-
-        
-        BackToLevel1( )
+        BackToLevel1()
         
         
     end 
@@ -113,12 +103,7 @@ local function TouchListenerWrongAnswer2(touch)
     
     if (touch.phase == "ended") then
 
-        correctObject.isVisible = false
-        incorrectObject.isVisible = true
-        numLives = numLives - 1
-
-
-        BackToLevel1( )
+        BackToLevel1()
         
     end 
 end
@@ -129,11 +114,7 @@ local function TouchListenerWrongAnswer3(touch)
     
     if (touch.phase == "ended") then
 
-        correctObject.isVisible = false
-        incorrectObject.isVisible = true
-        numLives = numLives - 1
-
-        BackToLevel1( )
+        BackToLevel1()
         
     end 
 end
@@ -254,16 +235,6 @@ function scene:create( event )
     -- create the question text object
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
 
- -- create the correct text object and make it invisble
- correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
- correctObject:setTextColor(155/255, 42/255, 198/255)
- correctObject.isVisible = false
-
- -- create the incorrect text object and make it invisble
- incorrectObject = display.newText( "Incorrect!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
- incorrectObject:setTextColor(155/255, 42/255, 198/255)
- incorrectObject.isVisible = false
-
     -- create the answer text object & wrong answer text objects
     answerText = display.newText("", X1, Y2, Arial, 75)
     answerText.anchorX = 0
@@ -329,7 +300,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        --parent:resumeLevel1()
+        --parent:resumeGame()
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then

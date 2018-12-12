@@ -28,6 +28,12 @@ sceneName = "level1_screen"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+
+numLives = 3
+
+-----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
@@ -49,7 +55,7 @@ local character
 local heart1
 local heart2
 local heart3
-local numLives = 3
+
 
 local rArrow
 local lArrow 
@@ -58,10 +64,9 @@ local uArrow
 local motionx = 0
 local SPEED = 7
 local LINEAR_VELOCITY = -100
-local GRAVITY = 5
+local GRAVITY = 1.7
 
 local leftW 
-local rightW
 local topW
 local floor
 
@@ -177,7 +182,6 @@ end
 local function  MakeMathPuzzlesVisible()
     mathPuzzle1.isVisible = true
     mathPuzzle2.isVisible = true
-    mathPuzzle3.isVisible = true
 end
 
 local function MakeHeartsVisible()
@@ -192,6 +196,38 @@ end
 
 local function YouWinTransition()
     composer.gotoScene( "you_Win" )
+end
+
+local function UpdateHearts()
+    if (numLives == 3) then
+        -- update hearts
+        heart1.isVisible = true
+                heart2.isVisible = true
+                heart3.isVisible = true
+                timer.performWithDelay(200, ReplaceCharacter)
+
+           elseif (numLives == 2) then
+                -- update hearts
+                heart1.isVisible = true
+                heart2.isVisible = true
+                heart3.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter) 
+
+            elseif (numLives == 1) then
+                -- update hearts
+                heart1.isVisible = true
+                heart2.isVisible = false
+                heart3.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter)
+
+            elseif (numLives == 0) then
+                -- update hearts
+                heart1.isVisible = false
+                heart2.isVisible = false
+                heart3.isVisible = false
+              timer.performWithDelay(200, YouLoseTransition)
+                youLoseSoundChannel = audio.play(youLose)
+            end
 end
 
 local function onCollision( self, event )
@@ -222,40 +258,11 @@ local function onCollision( self, event )
             -- decrease number of lives
             numLives = numLives - 1
 
-            if (numLives == 3) then
-                -- update hearts
-                heart1.isVisible = true
-                heart2.isVisible = true
-                heart3.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter)
-
-           elseif (numLives == 2) then
-                -- update hearts
-                heart1.isVisible = true
-                heart2.isVisible = true
-                heart3.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter) 
-
-            elseif (numLives == 1) then
-                -- update hearts
-                heart1.isVisible = true
-                heart2.isVisible = false
-                heart3.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter)
-
-            elseif (numLives == 0) then
-                -- update hearts
-                heart1.isVisible = false
-                heart2.isVisible = false
-                heart3.isVisible = false
-              timer.performWithDelay(200, YouLoseTransition)
-                youLoseSoundChannel = audio.play(youLose)
-            end
+            UpdateHearts()
         end
 
         if  (event.target.myName == "mathPuzzle1") or
-            (event.target.myName == "mathPuzzle2") or
-            (event.target.myName == "mathPuzzle3") then
+            (event.target.myName == "mathPuzzle2") then
 
             -- get the ball that the user hit
             theMathPuzzle = event.target
@@ -275,14 +282,15 @@ local function onCollision( self, event )
             print("***questions answered = " .. questionsAnswered)
         end
 
-        if (event.target.myName == "mathPuzzle3") then
+        if (event.target.myName == "mathPuzzle2") then
             --check to see if the user has answered 5 questions
             if (questionsAnswered == 3) then
                 Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
 
                 print("***questions answered = " .. questionsAnswered)
 
-                YouWinTransition()
+                timer.performWithDelay(200, YouWinTransition)
+
 
             end
         end        
@@ -305,9 +313,6 @@ local function AddCollisionListeners()
     mathPuzzle1:addEventListener( "collision" )
     mathPuzzle2.collision = onCollision
     mathPuzzle2:addEventListener( "collision" )
-    mathPuzzle3.collision = onCollision
-    mathPuzzle3:addEventListener( "collision" )
-
 end
 
 local function RemoveCollisionListeners()
@@ -317,8 +322,6 @@ local function RemoveCollisionListeners()
 
     mathPuzzle1:removeEventListener( "collision" )
     mathPuzzle2:removeEventListener( "collision" )
-    mathPuzzle3:removeEventListener( "collision" )
-
 
 
 end
@@ -329,7 +332,6 @@ local function AddPhysicsBodies()
     physics.addBody( platform2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform3, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
-    physics.addBody( platform5, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
     physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } ) 
     physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )  
@@ -338,14 +340,11 @@ local function AddPhysicsBodies()
     physics.addBody( spikes1platform, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
-    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
 
     physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
-
 end
 
 local function RemovePhysicsBodies()
@@ -358,18 +357,21 @@ local function RemovePhysicsBodies()
     physics.removeBody(spikes2)
     physics.removeBody(spikes1platform)
 
-    physics.removeBody(rightW)
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
  
 end
 
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel1()
+
+    -- update the hearts
+    UpdateHearts()
 
     -- make character visible again
     character.isVisible = true
@@ -409,28 +411,22 @@ function scene:create( event )
     sceneGroup:insert( platform1 )
 
     platform2 = display.newImageRect("Images/Level-1Platform1.png", 150, 50)
-    platform2.x = 250
-    platform2.y = 350
+    platform2.x = 350
+    platform2.y = display.contentHeight * 1.2 / 4
         
     sceneGroup:insert( platform2 )
 
     platform3 = display.newImageRect("Images/Level-1Platform1.png", 180, 50)
     platform3.x = display.contentWidth *3 / 5
-    platform3.y = 591
+    platform3.y = display.contentHeight * 3.5 / 5
         
     sceneGroup:insert( platform3 )
 
     platform4 = display.newImageRect("Images/Level-1Platform1.png", 180, 50)
-    platform4.x = 550
-    platform4.y = 300
-        
-    sceneGroup:insert( platform4 )
+    platform4.x = display.contentWidth *3 / 5
+    platform4.y = display.contentHeight * 3.5 / 5
 
-    platform5 = display.newImageRect("Images/Level-1Platform1.png", 300, 50)
-    platform5.x = 840
-    platform5.y = 200
-        
-    sceneGroup:insert( platform5 )
+    sceneGroup:insert( platform4 )
 
     spikes1 = display.newImageRect("Images/Level-1Spikes1.png", 250, 50)
     spikes1.x = display.contentWidth * 3 / 8
@@ -441,7 +437,7 @@ function scene:create( event )
 
     spikes2 = display.newImageRect("Images/Level-1Spikes1.png", 250, 50)
     spikes2.x = 850
-    spikes2.y = 550
+    spikes2.y = 650
     spikes2.myName = "spikes2"
         
     sceneGroup:insert( spikes2)
@@ -506,7 +502,6 @@ function scene:create( event )
     leftW = display.newLine( 0, 0, 0, display.contentHeight)
     leftW.isVisible = true
 
-
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( leftW )
 
@@ -532,8 +527,8 @@ function scene:create( event )
 
     --mathPuzzle1
     mathPuzzle1 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
-    mathPuzzle1.x = 250
-    mathPuzzle1.y = 291
+    mathPuzzle1.x = 610
+    mathPuzzle1.y = 480
     mathPuzzle1.myName = "mathPuzzle1"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -541,21 +536,13 @@ function scene:create( event )
 
     --mathPuzzle2
     mathPuzzle2 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
-    mathPuzzle2.x = 550
-    mathPuzzle2.y = 241
+    mathPuzzle2.x =350
+    mathPuzzle2.y = 170
     mathPuzzle2.myName = "mathPuzzle2"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( mathPuzzle2 )
 
-    --mathPuzzle3
-    mathPuzzle3 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
-    mathPuzzle3.x = display.contentWidth *3 / 5
-    mathPuzzle3.y = 535
-    mathPuzzle3.myName = "mathPuzzle3"
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( mathPuzzle3 )
 
 end --function scene:create( event )
 
@@ -606,7 +593,8 @@ function scene:show( event )
     end
 
     -- background music
-    backgroundSoundChannel = audio.play(backgroundSound)
+    backgroundSoundChannel = audio.play( backgroundSound, { channel=1, loops=-1, fadein=5000 } )
+
 
 end --function scene:show( event )
 
@@ -625,9 +613,6 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-
-        --stop the music
-        audio.stop(backgroundSound)
 
     -----------------------------------------------------------------------------------------
 
