@@ -133,7 +133,7 @@ function scene:create( event )
             y = display.contentHeight*7/8,
 
             -- Insert the images here
-            defaultFile = "Images/PlayButtonUnPressedJonathanK.png",
+            defaultFile = "Images/PlayButtonUnpressedJonathanK.png",
             overFile = "Images/PlayButtonPressedJonathanK.png",
 
             width = 175,
