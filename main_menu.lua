@@ -49,7 +49,7 @@ local bkgSoundChannel
 -- Creating Transition Function to Instructions Page
 local function InstructionsTransition( )       
     composer.gotoScene( "instructions_screen", {effect = "slideDown", time = 500})
-    bkgSoundChannel = audio.stop(bkgSound)
+    bkgSoundChannel = audio.stop(bkgSoundChannel)
 end 
 
 -----------------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ end
 -- Creating Transition Function to Credits Page
 local function CreditsTransition( )       
     composer.gotoScene( "credits_screen", {effect = "slideUp", time = 500})
-    bkgSoundChannel = audio.stop(bkgSound)
+    bkgSoundChannel = audio.stop(bkgSoundChannel)
 end 
 
 -----------------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ end
 -- Creating Transition to Level1 Screen
 local function Level1ScreenTransition( )
     composer.gotoScene( "level1_screen", {effect = "slideRight", time = 1000})
-    bkgSoundChannel = audio.stop(bkgSound)
+    bkgSoundChannel = audio.stop(bkgSoundChannel)
 end    
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
