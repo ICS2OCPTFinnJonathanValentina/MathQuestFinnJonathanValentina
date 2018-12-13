@@ -49,7 +49,6 @@ local bkgSoundChannel
 -- Creating Transition Function to Instructions Page
 local function InstructionsTransition( )       
     composer.gotoScene( "instructions_screen", {effect = "slideDown", time = 500})
-    bkgSoundChannel = audio.stop(bkgSoundChannel)
 end 
 
 -----------------------------------------------------------------------------------------
@@ -57,7 +56,6 @@ end
 -- Creating Transition Function to Credits Page
 local function CreditsTransition( )       
     composer.gotoScene( "credits_screen", {effect = "slideUp", time = 500})
-    bkgSoundChannel = audio.stop(bkgSoundChannel)
 end 
 
 -----------------------------------------------------------------------------------------
@@ -65,7 +63,6 @@ end
 -- Creating Transition to Level1 Screen
 local function Level1ScreenTransition( )
     composer.gotoScene( "level1_screen", {effect = "slideRight", time = 1000})
-    bkgSoundChannel = audio.stop(bkgSoundChannel)
 end    
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
@@ -91,17 +88,17 @@ function scene:create( event )
     bkg_image.width = display.contentWidth
     bkg_image.height = display.contentHeight
 
-     -- displays text on the screen at position x = 500 and y = 5 with
-     -- a deafult font style and font size of 50 
-     textObject = display.newText( "Math Quest", 500, 350, nil, 170)
-
-     -- sets the color of the text
-     textObject:setTextColor(0, 0, 0)
-
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
 
-        -- Associating display objects with this scene 
+    -- displays text on the screen at position x = 500 and y = 5 with
+    -- a deafult font style and font size of 50 
+    textObject = display.newText( "Math Quest", 500, 350, nil, 170)
+
+    -- sets the color of the text
+    textObject:setTextColor(0, 0, 0)
+
+    -- Associating display objects with this scene 
     sceneGroup:insert( textObject )
 
     -----------------------------------------------------------------------------------------
@@ -133,7 +130,7 @@ function scene:create( event )
             y = display.contentHeight*7/8,
 
             -- Insert the images here
-            defaultFile = "Images/PlayButtonUnPressedJonathanK.png",
+            defaultFile = "Images/PlayButtonUnpressedJonathanK.png",
             overFile = "Images/PlayButtonPressedJonathanK.png",
 
             width = 175,
@@ -172,7 +169,6 @@ function scene:create( event )
     sceneGroup:insert( creditsButton )
     sceneGroup:insert( instructionButton )
     
-    -- INSERT INSTRUCTIONS BUTTON INTO SCENE GROUP
 
 end -- function scene:create( event )   
 
@@ -201,12 +197,12 @@ function scene:show( event )
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
     elseif ( phase == "did" ) then       
-        
+        -- background music
+        bkgSoundChannel = audio.play(bkgSound)
 
     end
 
-    -- background music
-    bkgSoundChannel = audio.play(bkgSound)
+    
 
 end -- function scene:show( event )
 
@@ -233,6 +229,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        audio.stop(bkgSoundChannel)
     end
 
 end -- function scene:hide( event )

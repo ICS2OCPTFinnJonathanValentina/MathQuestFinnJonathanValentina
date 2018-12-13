@@ -88,7 +88,7 @@ local goal
 --  Sound
 ----------------------------------------------------------------------------------------- 
 -- GameOver Sound 
-local youLose = audio.loadSound("Sounds/youLose.mp3")
+local youLose = audio.loadSound("Sounds/swordSound.mp3")
 local youLoseSoundChannel
 
 -- youWin Sound

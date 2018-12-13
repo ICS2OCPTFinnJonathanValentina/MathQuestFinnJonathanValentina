@@ -20,7 +20,10 @@ sceneName = "splash_screen"
 -- Create Scene Object
 local scene = composer.newScene( sceneName )
 
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+-- LOCAL SOUNDS
+--------------------------------------------------------------------------------------------
+
 -- sound effect for sword
 local sound = audio.loadSound( "Sounds/swordSound.mp3")
 local soundChannel
@@ -28,12 +31,11 @@ local soundChannel
 ----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
-local scrollspeed =8
--- The local variables for this scene
-local sword = display.newImageRect("Images/CompanyLogoValentina.png", 1100, 800)
+local scrollspeed = 8
 
-sword.y = display.contentWidth * 1.6/4
-sword.x = display.contentHeight * 1/4
+-- The local variables for this scene
+local sword 
+
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
@@ -61,6 +63,12 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
+    sword = display.newImageRect("Images/CompanyLogoValentina.png", 1100, 800)
+    sword.y = display.contentWidth * 1.6/4
+    sword.x = display.contentHeight * 1/4
+
+    sceneGroup:insert (sword)
+
 end -- function scene:create( event )
 
 --------------------------------------------------------------------------------------------
@@ -84,8 +92,8 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
 
-        -- Call the moveBeetleship function as soon as we enter the frame.
-       
+       -- sound effect for sword
+        soundChannel = audio.play(sound)
 
         -- movesword will be called over and over again
         Runtime:addEventListener("enterFrame", MoveSword)
@@ -96,8 +104,7 @@ function scene:show( event )
         
     end
 
-    -- sound effect for sword
-    soundChannel = audio.play(sound)
+    
 
 end --function scene:show( event )
 
@@ -124,6 +131,8 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        Runtime:removeEventListener("enterFrame", MoveSword)
+        audio.stop (soundChannel)
     end
 end
 
