@@ -44,6 +44,7 @@ local platform1
 local platform2
 local platform3
 local platform4
+local platform5
 
 local spikes1
 local spikes2
@@ -56,6 +57,8 @@ local heart1
 local heart2
 local heart3
 
+local correctObject
+local incorrectObject
 
 local rArrow
 local lArrow 
@@ -182,6 +185,7 @@ end
 local function  MakeMathPuzzlesVisible()
     mathPuzzle1.isVisible = true
     mathPuzzle2.isVisible = true
+    mathPuzzle3.isVisible = true
 end
 
 local function MakeHeartsVisible()
@@ -202,23 +206,20 @@ local function UpdateHearts()
     if (numLives == 3) then
         -- update hearts
         heart1.isVisible = true
-                heart2.isVisible = true
-                heart3.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter)
+        heart2.isVisible = true
+        heart3.isVisible = true                
 
            elseif (numLives == 2) then
                 -- update hearts
                 heart1.isVisible = true
                 heart2.isVisible = true
                 heart3.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter) 
 
             elseif (numLives == 1) then
                 -- update hearts
                 heart1.isVisible = true
                 heart2.isVisible = false
                 heart3.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter)
 
             elseif (numLives == 0) then
                 -- update hearts
@@ -262,7 +263,8 @@ local function onCollision( self, event )
         end
 
         if  (event.target.myName == "mathPuzzle1") or
-            (event.target.myName == "mathPuzzle2") then
+            (event.target.myName == "mathPuzzle2") or
+            (event.target.myName == "mathPuzzle3") then
 
             -- get the ball that the user hit
             theMathPuzzle = event.target
@@ -282,7 +284,7 @@ local function onCollision( self, event )
             print("***questions answered = " .. questionsAnswered)
         end
 
-        if (event.target.myName == "mathPuzzle2") then
+        if (event.target.myName == "platformWin") then
             --check to see if the user has answered 5 questions
             if (questionsAnswered == 3) then
                 Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
@@ -313,6 +315,8 @@ local function AddCollisionListeners()
     mathPuzzle1:addEventListener( "collision" )
     mathPuzzle2.collision = onCollision
     mathPuzzle2:addEventListener( "collision" )
+    mathPuzzle3.collision = onCollision
+    mathPuzzle3:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -322,6 +326,7 @@ local function RemoveCollisionListeners()
 
     mathPuzzle1:removeEventListener( "collision" )
     mathPuzzle2:removeEventListener( "collision" )
+    mathPuzzle3:removeEventListener( "collision" )
 
 
 end
@@ -332,6 +337,8 @@ local function AddPhysicsBodies()
     physics.addBody( platform2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform3, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
+    physics.addBody( platform5, "static", { density=1.0, friction=0.3, bounce=0.2 } )
+
 
     physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } ) 
     physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )  
@@ -345,6 +352,7 @@ local function AddPhysicsBodies()
 
     physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
 end
 
 local function RemovePhysicsBodies()
@@ -352,6 +360,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(platform2)
     physics.removeBody(platform3)
     physics.removeBody(platform4)
+    physics.removeBody(platform5)
 
     physics.removeBody(spikes1)
     physics.removeBody(spikes2)
@@ -404,29 +413,36 @@ function scene:create( event )
     sceneGroup:insert( bkg_image )    
     
     -- Insert the platforms
-    platform1 = display.newImageRect("Images/Level-1Platform1.png", 250, 50)
+    platform1 = display.newImageRect("Images/PlatformValentina@2x.png", 250, 50)
     platform1.x = 100
     platform1.y = 500
         
     sceneGroup:insert( platform1 )
 
-    platform2 = display.newImageRect("Images/Level-1Platform1.png", 150, 50)
-    platform2.x = 350
-    platform2.y = display.contentHeight * 1.2 / 4
+    platform2 = display.newImageRect("Images/PlatformValentina@2x.png", 150, 50)
+    platform2.x = 300
+    platform2.y = 241
         
     sceneGroup:insert( platform2 )
 
-    platform3 = display.newImageRect("Images/Level-1Platform1.png", 180, 50)
-    platform3.x = display.contentWidth *3 / 5
-    platform3.y = display.contentHeight * 3.5 / 5
+    platform3 = display.newImageRect("Images/PlatformValentina@2x.png", 280, 50)
+    platform3.x = 890
+    platform3.y = 200
+    platform3.MyName = "platformWin"
         
     sceneGroup:insert( platform3 )
 
-    platform4 = display.newImageRect("Images/Level-1Platform1.png", 180, 50)
+    platform4 = display.newImageRect("Images/PlatformValentina@2x.png", 180, 50)
     platform4.x = display.contentWidth *3 / 5
     platform4.y = display.contentHeight * 3.5 / 5
 
     sceneGroup:insert( platform4 )
+
+    platform5 = display.newImageRect("Images/PlatformValentina@2x.png", 180, 50)
+    platform5.x = 600
+    platform5.y = 241
+
+    sceneGroup:insert( platform5 )
 
     spikes1 = display.newImageRect("Images/Level-1Spikes1.png", 250, 50)
     spikes1.x = display.contentWidth * 3 / 8
@@ -442,7 +458,7 @@ function scene:create( event )
         
     sceneGroup:insert( spikes2)
 
-    spikes1platform = display.newImageRect("Images/Level-1Platform1.png", 250, 50)
+    spikes1platform = display.newImageRect("Images/PlatformValentina@2x.png", 250, 50)
     spikes1platform.x = display.contentWidth * 3 / 8
     spikes1platform.y = 600
         
@@ -492,7 +508,7 @@ function scene:create( event )
 
     --Insert the left arrow
     uArrow = display.newImageRect("Images/UpArrowUnpressed.png", 50, 100)
-    uArrow.x = display.contentWidth * 8.2 / 10
+    uArrow.x = display.contentWidth * 8.35 / 10
     uArrow.y = display.contentHeight * 8.5 / 10
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -536,12 +552,21 @@ function scene:create( event )
 
     --mathPuzzle2
     mathPuzzle2 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
-    mathPuzzle2.x =350
+    mathPuzzle2.x = 300
     mathPuzzle2.y = 170
     mathPuzzle2.myName = "mathPuzzle2"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( mathPuzzle2 )
+
+    --mathPuzzle3
+    mathPuzzle3 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
+    mathPuzzle3.x = 600
+    mathPuzzle3.y = 170
+    mathPuzzle3.myName = "mathPuzzle3"
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( mathPuzzle3 )
 
 
 end --function scene:create( event )
