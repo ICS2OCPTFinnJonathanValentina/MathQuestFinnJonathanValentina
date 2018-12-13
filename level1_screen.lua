@@ -214,22 +214,22 @@ local function UpdateHearts()
     elseif (numLives == 2) then
         -- update hearts
         heart1.isVisible = true
-        heart2.isVisible = true
-         heart3.isVisible = false
+                heart2.isVisible = true
+                heart3.isVisible = false
 
     elseif (numLives == 1) then
-        -- update hearts
-        heart1.isVisible = true
-        heart2.isVisible = false
-        heart3.isVisible = false
+                -- update hearts
+                heart1.isVisible = true
+                heart2.isVisible = false
+                heart3.isVisible = false
 
     elseif (numLives == 0) then
-        -- update hearts
-        heart1.isVisible = false
-        heart2.isVisible = false
-        heart3.isVisible = false
-        timer.performWithDelay(200, YouLoseTransition)
-        youLoseSoundChannel = audio.play(youLose)
+                -- update hearts
+                heart1.isVisible = false
+                heart2.isVisible = false
+                heart3.isVisible = false
+              timer.performWithDelay(200, YouLoseTransition)
+                youLoseSoundChannel = audio.play(youLose)
     end
 end
 
@@ -263,7 +263,7 @@ local function onCollision( self, event )
 
             UpdateHearts()
 
-            
+            ReplaceCharacter()
         end
 
         if  (event.target.myName == "mathPuzzle1") or
@@ -290,28 +290,29 @@ local function onCollision( self, event )
 
         if (event.target.myName == "theBoss") then
 
-           if (questionsAnswered == 4) then
-                
-              -- stop the character from moving
-              motionx = 0
+            if (questionsAnswered == 3) then
 
-              -- make the character invisible
-             character.isVisible = false
+               -- stop the character from moving
+             motionx = 0
 
+             -- make the character invisible
+              character.isVisible = false
+ 
              -- show overlay with math question
-             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+              composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
 
-             -- Increment questions answered
-             questionsAnswered = questionsAnswered + 1 
+              -- Increment questions answered
+              questionsAnswered = questionsAnswered + 1 
         
-               print("***questions answered = " .. questionsAnswered)
+              print("***questions answered = " .. questionsAnswered)
 
-             timer.performWithDelay(200, YouWinTransition)
-         end
-      end
-  end
+              
+                timer.performWithDelay(200, YouWinTransition)
+            end
+     end      
+
+    end
 end
-        
 
 local function AddCollisionListeners()
     -- if character collides with ball, onCollision will be called
@@ -675,7 +676,6 @@ function scene:hide( event )
         physics.stop()
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
-        display.remove(character)
     end
 
 end --function scene:hide( event )
