@@ -36,6 +36,9 @@ local bkg
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
+local sound = audio.loadSound( "Sounds/battle003.mp3")
+local soundChannel
+
 --------------------------------------------------------------------------------------
 -- The function called when the screen doesn't exist
 function scene:create( event )
@@ -79,6 +82,9 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+
+               -- sound effect for sword
+        soundChannel = audio.play(sound)
 
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.

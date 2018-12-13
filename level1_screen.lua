@@ -67,7 +67,7 @@ local uArrow
 local motionx = 0
 local SPEED = 7
 local LINEAR_VELOCITY = -100
-local GRAVITY = 1.7
+local GRAVITY = 7
 
 local leftW 
 local topW
@@ -82,18 +82,15 @@ local questionsAnswered = 0
 
 local textObject
 
-local goal
+local finalBoss
 
 -----------------------------------------------------------------------------------------
 --  Sound
 ----------------------------------------------------------------------------------------- 
 -- GameOver Sound 
-local youLose = audio.loadSound("Sounds/swordSound.mp3")
+local youLose = audio.loadSound("Sounds/battle003.mp3")
 local youLoseSoundChannel
 
--- youWin Sound
-local Grease_Monkey = audio.loadSound("Sounds/Grease_Monkey.mp3")
-local Grease_MonkeySoundChannel
 
 -- background sound
 local backgroundSound = audio.loadSound("Sounds/level.1.mp3")
@@ -159,6 +156,7 @@ end
 
 
 local function ReplaceCharacter()
+    print ("***Called ReplaceCharacter")
     character = display.newImageRect("Images/BoyCharacterValentina.png", 100, 150)
     character.x = display.contentWidth * 0.5 / 8
     character.y = display.contentHeight  * 0.1 / 3
@@ -194,6 +192,10 @@ local function MakeHeartsVisible()
     heart3.isVisible = true
 end
 
+local function  MakeFinalBossVisible()
+    finalBoss.isVisible = true
+end
+
 local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end
@@ -209,26 +211,26 @@ local function UpdateHearts()
         heart2.isVisible = true
         heart3.isVisible = true                
 
-           elseif (numLives == 2) then
-                -- update hearts
-                heart1.isVisible = true
-                heart2.isVisible = true
-                heart3.isVisible = false
+    elseif (numLives == 2) then
+        -- update hearts
+        heart1.isVisible = true
+        heart2.isVisible = true
+         heart3.isVisible = false
 
-            elseif (numLives == 1) then
-                -- update hearts
-                heart1.isVisible = true
-                heart2.isVisible = false
-                heart3.isVisible = false
+    elseif (numLives == 1) then
+        -- update hearts
+        heart1.isVisible = true
+        heart2.isVisible = false
+        heart3.isVisible = false
 
-            elseif (numLives == 0) then
-                -- update hearts
-                heart1.isVisible = false
-                heart2.isVisible = false
-                heart3.isVisible = false
-              timer.performWithDelay(200, YouLoseTransition)
-                youLoseSoundChannel = audio.play(youLose)
-            end
+    elseif (numLives == 0) then
+        -- update hearts
+        heart1.isVisible = false
+        heart2.isVisible = false
+        heart3.isVisible = false
+        timer.performWithDelay(200, YouLoseTransition)
+        youLoseSoundChannel = audio.play(youLose)
+    end
 end
 
 local function onCollision( self, event )
@@ -260,13 +262,15 @@ local function onCollision( self, event )
             numLives = numLives - 1
 
             UpdateHearts()
+
+            
         end
 
         if  (event.target.myName == "mathPuzzle1") or
             (event.target.myName == "mathPuzzle2") or
             (event.target.myName == "mathPuzzle3") then
 
-            -- get the ball that the user hit
+            -- get the puzzle that the user hit
             theMathPuzzle = event.target
 
             -- stop the character from moving
@@ -284,22 +288,30 @@ local function onCollision( self, event )
             print("***questions answered = " .. questionsAnswered)
         end
 
-        if (event.target.myName == "platformWin") then
-            --check to see if the user has answered 5 questions
-            if (questionsAnswered == 3) then
-                Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
+        if (event.target.myName == "theBoss") then
 
-                print("***questions answered = " .. questionsAnswered)
+           if (questionsAnswered == 4) then
+                
+              -- stop the character from moving
+              motionx = 0
 
-                timer.performWithDelay(200, YouWinTransition)
+              -- make the character invisible
+             character.isVisible = false
 
+             -- show overlay with math question
+             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
 
-            end
-        end        
+             -- Increment questions answered
+             questionsAnswered = questionsAnswered + 1 
+        
+               print("***questions answered = " .. questionsAnswered)
 
-    end
+             timer.performWithDelay(200, YouWinTransition)
+         end
+      end
+  end
 end
-
+        
 
 local function AddCollisionListeners()
     -- if character collides with ball, onCollision will be called
@@ -317,6 +329,9 @@ local function AddCollisionListeners()
     mathPuzzle2:addEventListener( "collision" )
     mathPuzzle3.collision = onCollision
     mathPuzzle3:addEventListener( "collision" )
+
+    finalBoss.collision = onCollision
+    finalBoss:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -327,7 +342,7 @@ local function RemoveCollisionListeners()
     mathPuzzle1:removeEventListener( "collision" )
     mathPuzzle2:removeEventListener( "collision" )
     mathPuzzle3:removeEventListener( "collision" )
-
+    finalBoss:removeEventListener( "collision" )
 
 end
 
@@ -353,6 +368,7 @@ local function AddPhysicsBodies()
     physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
 end
 
 local function RemovePhysicsBodies()
@@ -568,6 +584,14 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( mathPuzzle3 )
 
+ --mathPuzzle3
+    finalBoss = display.newImageRect ("Images/FinalBossFinnL@2x.png", 100, 100)
+    finalBoss.x = 700
+    finalBoss.y = 170
+    finalBoss.myName = "theBoss"
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( finalBoss )
 
 end --function scene:create( event )
 
@@ -615,6 +639,8 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
+
+        MakeFinalBossVisible()
     end
 
     -- background music
