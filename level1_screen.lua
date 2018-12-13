@@ -32,6 +32,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 numLives = 3
+bossLevel = false
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -83,7 +84,9 @@ local questionsAnswered = 0
 local textObject
 
 local finalBoss
+local theFinalBoss
 
+local theGlow
 -----------------------------------------------------------------------------------------
 --  Sound
 ----------------------------------------------------------------------------------------- 
@@ -196,6 +199,10 @@ local function  MakeFinalBossVisible()
     finalBoss.isVisible = true
 end
 
+local function  MakeTheGlowVisible()
+    theGlow.isVisible = true
+end
+
 local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end
@@ -203,6 +210,7 @@ end
 local function YouWinTransition()
     composer.gotoScene( "you_Win" )
 end
+
 
 local function UpdateHearts()
     if (numLives == 3) then
@@ -290,26 +298,30 @@ local function onCollision( self, event )
 
         if (event.target.myName == "theBoss") then
 
+            -- get the puzzle that the user hit
+            theFinalBoss = event.target
+
+            -- show overlay with math question
+            composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
+
+            bossLevel = false
+
             if (questionsAnswered == 3) then
-
-               -- stop the character from moving
-             motionx = 0
-
-             -- make the character invisible
-              character.isVisible = false
- 
-             -- show overlay with math question
-              composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
-
-              -- Increment questions answered
-              questionsAnswered = questionsAnswered + 1 
+              
         
               print("***questions answered = " .. questionsAnswered)
-
-              
-                timer.performWithDelay(200, YouWinTransition)
             end
      end      
+
+        if (event.target.myName == "theGlow") then
+
+            -- make the character invisible
+            character.isVisible = false
+
+            timer.performWithDelay(200, YouWinTransition)
+
+        end
+
 
     end
 end
@@ -333,6 +345,10 @@ local function AddCollisionListeners()
 
     finalBoss.collision = onCollision
     finalBoss:addEventListener( "collision" )
+
+
+    theGlow.collision = onCollision
+    theGlow:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -344,6 +360,7 @@ local function RemoveCollisionListeners()
     mathPuzzle2:removeEventListener( "collision" )
     mathPuzzle3:removeEventListener( "collision" )
     finalBoss:removeEventListener( "collision" )
+    theGlow:removeEventListener( "collision" )
 
 end
 
@@ -370,6 +387,8 @@ local function AddPhysicsBodies()
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(theGlow, "static",  {density=0, friction=0, bounce=0} )
+
 end
 
 local function RemovePhysicsBodies()
@@ -406,6 +425,12 @@ function ResumeLevel1()
         if (theMathPuzzle ~= nil) and (theMathPuzzle.isBodyActive == true) then
             physics.removeBody(theMathPuzzle)
             theMathPuzzle.isVisible = false
+        end
+    end
+        if (questionsAnswered > 0) then
+        if (theFinalBoss ~= nil) and (theFinalBoss.isBodyActive == true) then
+            physics.removeBody(theFinalBoss)
+            theFinalBoss.isVisible = false
         end
     end
 
@@ -587,12 +612,22 @@ function scene:create( event )
 
  --mathPuzzle3
     finalBoss = display.newImageRect ("Images/FinalBossFinnL@2x.png", 100, 100)
-    finalBoss.x = 700
-    finalBoss.y = 170
+    finalBoss.x = 800
+    finalBoss.y = 140
     finalBoss.myName = "theBoss"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( finalBoss )
+
+
+ --theGlow
+    theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)
+    theGlow.x = 950
+    theGlow.y = 140
+    theGlow.myName = "theGlow"
+
+    sceneGroup:insert( theGlow )
+
 
 end --function scene:create( event )
 
@@ -642,6 +677,8 @@ function scene:show( event )
         ReplaceCharacter()
 
         MakeFinalBossVisible()
+
+        MakeTheGlowVisible()
     end
 
     -- background music
