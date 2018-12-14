@@ -50,7 +50,7 @@ end
 
 -- The function that will go to the main menu 
 local function gotoMainMenu()
-    composer.gotoScene( "splash_screen3" )
+    composer.gotoScene( "main_menu" )
 end
 
 -----------------------------------------------------------------------------------------
@@ -63,9 +63,6 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -- set the background to be black
-    display.setDefault("background", 20/255, 20/255, 20/255)
-
     -- Insert the beetleship image
     logo = display.newImageRect("Images/CompanyLogoFinn.png", 200, 200)
 
@@ -74,7 +71,8 @@ function scene:create( event )
     logo.y = display.contentHeight/2
 
     --diplsay company name
-     name = display.newText("Dark Excalibur" ,  400, 100, nil,  75)
+    name = display.newText("Dark Excalibur" ,  400, 100, nil,  75)
+
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( logo )
 
