@@ -306,7 +306,7 @@ local function onCollision( self, event )
 
             bossLevel = false
 
-            if (questionsAnswered == 3) then
+            if (questionsAnswered == 4) then
               
         
               print("***questions answered = " .. questionsAnswered)
