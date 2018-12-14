@@ -63,6 +63,7 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
+
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -83,9 +84,9 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-
-        BackToLevel1()
     
+        BackToLevel1()
+     
     end 
 end
 
