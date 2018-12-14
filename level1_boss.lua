@@ -337,6 +337,10 @@ function scene:hide( event )
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
         --parent:resumeGame()
+
+       character.isVisible = false
+
+
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
