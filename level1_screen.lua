@@ -207,6 +207,11 @@ local function YouWinTransition()
     composer.gotoScene( "you_Win" )
 end
 
+-- Creating Transitioning Function back to main menu
+local function BackTransition( )
+    composer.gotoScene( "main_menu", {effect = "slideDown", time = 500})
+end
+
 
 local function UpdateHearts()
     if (numLives == 3) then
@@ -631,6 +636,35 @@ function scene:create( event )
     sceneGroup:insert( theGlow )
 
 
+    -----------------------------------------------------------------------------------------
+    -- BUTTON WIDGETS
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Back Button
+    backButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth * 2 / 24,
+        y = display.contentHeight * 15 / 17,
+
+        -- Setting Dimensions
+         width = 100,
+         height = 100,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/BackButtonUnpressedFinnL.png",
+        overFile = "Images/BackButtonPressedFinnL.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+
+    } )
+
+    -----------------------------------------------------------------------------------------
+
+    -- Associating Buttons with this scene
+    sceneGroup:insert( backButton )
+    
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
