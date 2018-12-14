@@ -203,10 +203,6 @@ local function  MakeTheGlowVisible()
     theGlow.isVisible = true
 end
 
-local function YouLoseTransition()
-    composer.gotoScene( "you_lose" )
-end
-
 local function YouWinTransition()
     composer.gotoScene( "you_Win" )
 end
@@ -304,9 +300,9 @@ local function onCollision( self, event )
             -- show overlay with math question
             composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
 
-            bossLevel = false
+            bossLevel = true
 
-            if (questionsAnswered == 4) then
+            if (questionsAnswered == 3) then
               
         
               print("***questions answered = " .. questionsAnswered)
@@ -435,6 +431,12 @@ function ResumeLevel1()
     end
 
 end
+
+
+function YouLoseTransition()
+    composer.gotoScene( "you_lose" )
+end 
+
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS

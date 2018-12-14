@@ -76,6 +76,12 @@ local function BackToLevel1()
     ResumeLevel1()
 end 
 
+--making transition to next scene
+local function ToYouLose() 
+    composer.hideOverlay("crossFade", 400 )
+  
+    YouLoseTransition()
+end 
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
@@ -102,7 +108,7 @@ local function TouchListenerWrongAnswer(touch)
         correctObject.isVisible = true
         incorrectObject.isVisible = false
         numLives = numLives - 1
-        BackToLevel1()
+        ToYouLose()        
         
         
     end 
@@ -117,8 +123,7 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = false
         numLives = numLives - 1
 
-        BackToLevel1()
-        
+        ToYouLose()        
     end 
 end
 
@@ -131,8 +136,7 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = false
         numLives = numLives - 1
 
-        BackToLevel1()
-        
+        ToYouLose()        
     end 
 end
 -----------------------------------------------------------------------------
