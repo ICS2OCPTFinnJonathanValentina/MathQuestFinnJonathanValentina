@@ -203,11 +203,14 @@ local function  MakeTheGlowVisible()
     theGlow.isVisible = true
 end
 
+local function YouLoseTransition()
+    composer.gotoScene( "you_lose" )
+end
+
 local function YouWinTransition()
     composer.gotoScene( "you_Win" )
 end
 
--- Creating Transitioning Function back to main menu
 local function BackTransition( )
     composer.gotoScene( "main_menu", {effect = "slideDown", time = 500})
 end
@@ -307,7 +310,7 @@ local function onCollision( self, event )
 
             bossLevel = true
 
-            if (questionsAnswered == 3) then
+            if (questionsAnswered == 4) then
               
         
               print("***questions answered = " .. questionsAnswered)
@@ -436,16 +439,6 @@ function ResumeLevel1()
     end
 
 end
-
-
-function YouLoseTransition()
-    composer.gotoScene( "you_lose" )
-end 
-
--- Creating Transitioning Function back to main menu
-local function BackTransition( )
-    composer.gotoScene( "main_menu", {effect = "slideDown", time = 500})
-ended
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -639,28 +632,6 @@ function scene:create( event )
 
     sceneGroup:insert( theGlow )
 
-    -- Creating Back Button
-    backButton = widget.newButton( 
-    {
-        -- Setting Position
-        x = display.contentWidth * 1 / 4,
-        y = display.contentHeight * 15 / 17,
-
-        -- Setting Dimensions
-        width = 200,
-        height = 200,
-
-        -- Setting Visual Properties
-        defaultFile = "Images/BackButtonUnpressedFinnL.png",
-        overFile = "Images/BackButtonPressedFinnL.png",
-
-        -- Setting Functional Properties
-        onRelease = BackTransition
-
-
-    -- Associating Buttons with this scene
-    sceneGroup:insert( backButton )
-
 
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
@@ -692,6 +663,7 @@ function scene:create( event )
     sceneGroup:insert( backButton )
     
 end --function scene:create( event )
+
 
 -----------------------------------------------------------------------------------------
 
