@@ -442,6 +442,10 @@ function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end 
 
+-- Creating Transitioning Function back to main menu
+local function BackTransition( )
+    composer.gotoScene( "main_menu", {effect = "slideDown", time = 500})
+ended
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -634,6 +638,28 @@ function scene:create( event )
     theGlow.myName = "theGlow"
 
     sceneGroup:insert( theGlow )
+
+    -- Creating Back Button
+    backButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth * 1 / 4,
+        y = display.contentHeight * 15 / 17,
+
+        -- Setting Dimensions
+        width = 200,
+        height = 200,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/BackButtonUnpressedFinnL.png",
+        overFile = "Images/BackButtonPressedFinnL.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+
+
+    -- Associating Buttons with this scene
+    sceneGroup:insert( backButton )
 
 
     -----------------------------------------------------------------------------------------
