@@ -1,13 +1,11 @@
 -----------------------------------------------------------------------------------------
 --
--- splash_screen.lua
--- Created by: Your Name
--- Date: Month Day, Year
+-- splash_screen2.lua
+-- Created by: Finn
+-- Date:12-14, 2018
 -- Description: This is the splash screen of the game. It displays the 
--- company logo that...
+-- company logo that gows and moves across the screen
 -----------------------------------------------------------------------------------------
--- remove status bar
-display.setStatusBar(display.HiddenStatusBar) 
 
 -- Use Composer Library
 local composer = require( "composer" )
@@ -20,35 +18,37 @@ sceneName = "splash_screen"
 -- Create Scene Object
 local scene = composer.newScene( sceneName )
 
---------------------------------------------------------------------------------------------
--- LOCAL SOUNDS
---------------------------------------------------------------------------------------------
-
--- sound effect for sword
-local sound = audio.loadSound( "Sounds/swordSound.mp3")
-local soundChannel
-
 ----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
-local scrollspeed = 8
-
+ 
 -- The local variables for this scene
-local sword 
+local name
+local logo
+local scrollSpeed = 3
+local swordSound = audio.loadSound("Sounds/sword.mp3")
+local swordSoundChannel
 
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
 
--- The function that will go to the main menu 
+-- The function that moves the beetleship across the screen
+local function moveLogo()
+     -- add the scroll speed to the x-value of the ship
+     logo.x = logo.x + scrollSpeed
+     -- change the transparency of the ship every time it moves so that it fades in
+     logo.alpha = logo.alpha + 0.01
+     logo:scale(1.005,1.005)
+end  
 
-local function MoveSword(event)
-    -- add the scroll speed to the x-value of the sword
-    sword.x = sword.x + scrollspeed
-    -- change the transparency of the sword every time it moves so that it fades out
-    sword.alpha = sword.alpha + 0.01
+local function NameFadeIn()
+    -- add to the alpha
+    name.alpha = name.alpha + 0.006
+
 end
 
+-- The function that will go to the main menu 
 local function gotoMainMenu()
     composer.gotoScene( "main_menu" )
 end
@@ -63,12 +63,23 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    sword = display.newImageRect("Images/CompanyLogoValentina.png", 1100, 800)
-    sword.y = display.contentWidth * 1.6/4
-    sword.x = display.contentHeight * 1/4
+    -- set the background to be black
+    display.setDefault("background", 20/255, 20/255, 20/255)
 
-    sceneGroup:insert (sword)
+    -- Insert the beetleship image
+    logo = display.newImageRect("Images/CompanyLogoFinn.png", 200, 200)
 
+    -- set the initial x and y position of the beetleship
+    logo.x = 100
+    logo.y = display.contentHeight/2
+
+    --diplsay company name
+     name = display.newText("Dark Excalibur" ,  400, 100, nil,  75)
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( logo )
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( name )
 end -- function scene:create( event )
 
 --------------------------------------------------------------------------------------------
@@ -91,20 +102,19 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+        -- start the splash screen music
+        swordSoundChannel = audio.play(swordSound )
 
-       -- sound effect for sword
-        soundChannel = audio.play(sound)
+        -- Call the moveBeetleship function as soon as we enter the frame.
+        Runtime:addEventListener("enterFrame", moveLogo)
 
-        -- movesword will be called over and over again
-        Runtime:addEventListener("enterFrame", MoveSword)
-    
+         -- Call the moveBeetleship function as soon as we enter the frame.
+        Runtime:addEventListener("enterFrame", NameFadeIn)
 
         -- Go to the main menu screen after the given time.
-        timer.performWithDelay ( 3300, gotoMainMenu)          
+        timer.performWithDelay ( 5000, gotoMainMenu)          
         
     end
-
-    
 
 end --function scene:show( event )
 
@@ -122,19 +132,18 @@ function scene:hide( event )
     -- Called when the scene is on screen (but is about to go off screen).
     -- Insert code here to "pause" the scene.
     -- Example: stop timers, stop animation, stop audio, etc.
-    if ( phase == "will" ) then
-        -- Called when the scene is on screen (but is about to go off screen).
-        -- Insert code here to "pause" the scene.
-        -- Example: stop timers, stop animation, stop audio, etc.
+    if ( phase == "will" ) then  
 
     -----------------------------------------------------------------------------------------
 
+    -- Called immediately after scene goes off screen.
     elseif ( phase == "did" ) then
-        -- Called immediately after scene goes off screen.
-        Runtime:removeEventListener("enterFrame", MoveSword)
-        audio.stop (soundChannel)
+        
+        -- stop the jungle sounds channel for this screen
+        audio.stop(swordSoundChannel)
     end
-end
+
+end --function scene:hide( event )
 
 -----------------------------------------------------------------------------------------
 
