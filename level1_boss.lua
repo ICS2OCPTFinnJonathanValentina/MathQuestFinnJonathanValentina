@@ -79,7 +79,6 @@ end
 --making transition to next scene
 local function ToYouLose() 
     composer.hideOverlay("crossFade", 400 )
-  
     YouLoseTransition()
 end 
 -----------------------------------------------------------------------------------------
@@ -319,6 +318,7 @@ function scene:show( event )
         AddTextListeners()
     end
 
+
 end --function scene:show( event )
 
 -----------------------------------------------------------------------------------------
@@ -338,10 +338,8 @@ function scene:hide( event )
         -- Example: stop timers, stop animation, stop audio, etc.
         --parent:resumeGame()
 
-       character.isVisible = false
 
-
-    -----------------------------------------------------------------------------------------
+     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.

@@ -161,8 +161,8 @@ end
 local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
     character = display.newImageRect("Images/BoyCharacterValentina.png", 100, 150)
-    character.x = display.contentWidth * 0.5 / 8
-    character.y = display.contentHeight  * 0.1 / 3
+    character.x = display.contentWidth * 0.5 / 6
+    character.y = display.contentHeight  * 0.5 / 2
     character.width = 75
     character.height = 100
     character.myName = "BoyQuest"
@@ -201,10 +201,6 @@ end
 
 local function  MakeTheGlowVisible()
     theGlow.isVisible = true
-end
-
-local function YouLoseTransition()
-    composer.gotoScene( "you_lose" )
 end
 
 local function YouWinTransition()
@@ -270,12 +266,17 @@ local function onCollision( self, event )
             -- remove the character from the display
             display.remove(character)
 
+            ReplaceCharacter()
+
+
             -- decrease number of lives
             numLives = numLives - 1
 
+
+
             UpdateHearts()
 
-            ReplaceCharacter()
+
         end
 
         if  (event.target.myName == "mathPuzzle1") or
@@ -307,6 +308,9 @@ local function onCollision( self, event )
 
             -- show overlay with math question
             composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
+
+         -- make the character invisible
+            character.isVisible = false
 
             bossLevel = true
 
@@ -438,6 +442,10 @@ function ResumeLevel1()
         end
     end
 
+end
+
+local function YouLoseTransition()
+    composer.gotoScene( "you_lose" )
 end
 
 -----------------------------------------------------------------------------------------

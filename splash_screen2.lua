@@ -50,7 +50,7 @@ end
 
 -- The function that will go to the main menu 
 local function gotoMainMenu()
-    composer.gotoScene( "splash_screen3" )
+    composer.gotoScene( "splash_screen4" )
 end
 
 -----------------------------------------------------------------------------------------
