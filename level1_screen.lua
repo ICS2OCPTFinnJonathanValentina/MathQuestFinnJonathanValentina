@@ -705,7 +705,11 @@ function scene:show( event )
         physics.start()
 
         -- set gravity
-        physics.setGravity( 0, GRAVITY )
+        physics.setGravity( 0, GRAVITY ) 
+
+
+       
+
 
     elseif ( phase == "did" ) then
 
@@ -735,8 +739,7 @@ function scene:show( event )
 
         MakeTheGlowVisible()
 
-        backgroundSoundChannel = audio.play(backgroundSound)
-
+       backgroundSoundChannel = audio.play(backgroundSound)
     end
 
 
@@ -759,6 +762,8 @@ function scene:hide( event )
         -- Example: stop timers, stop animation, stop audio, etc.
 
         --stop the music
+       audio.stop(backgroundSoundChannel)
+
 
      -----------------------------------------------------------------------------------------
     elseif ( phase == "did" ) then
@@ -766,12 +771,11 @@ function scene:hide( event )
         RemoveCollisionListeners()
         RemovePhysicsBodies()
         display.remove(character)
-        backgroundSoundChannel = audio.stop(backgroundSound)
+        
         physics.stop()
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
     end
-
 end --function scene:hide( event )
 
 -----------------------------------------------------------------------------------------
