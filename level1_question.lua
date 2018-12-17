@@ -84,7 +84,6 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-    
         BackToLevel1()
      
     end 
@@ -99,10 +98,32 @@ local function TouchListenerWrongAnswer(touch)
         correctObject.isVisible = true
         incorrectObject.isVisible = false
         numLives = numLives - 1
-        BackToLevel1()
-        
-        
+        if (numLives == 2) then
+            -- update hearts
+            heart1.isVisible = true
+            heart2.isVisible = true
+            heart3.isVisible = false
+            timer.performWithDelay(200, ReplaceCharacter) 
+
+        elseif (numLives == 1) then
+            -- update hearts
+            heart1.isVisible = true
+            heart2.isVisible = false
+            heart3.isVisible = false
+            timer.performWithDelay(200, ReplaceCharacter)
+
+        elseif (numLives == 0) then
+            -- update hearts
+            heart1.isVisible = false
+            heart2.isVisible = false
+            heart3.isVisible = false
+            timer.performWithDelay(200, YouLoseTransition)
+            youLoseSoundChannel = audio.play(youLose)
+        end
+
+        BackToLevel1()   
     end 
+
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -113,10 +134,32 @@ local function TouchListenerWrongAnswer2(touch)
         correctObject.isVisible = true
         incorrectObject.isVisible = false
         numLives = numLives - 1
+        if (numLives == 2) then
+            -- update hearts
+            heart1.isVisible = true
+            heart2.isVisible = true
+            heart3.isVisible = false
+            timer.performWithDelay(200, ReplaceCharacter) 
 
-        BackToLevel1()
-        
+        elseif (numLives == 1) then
+            -- update hearts
+            heart1.isVisible = true
+            heart2.isVisible = false
+            heart3.isVisible = false
+            timer.performWithDelay(200, ReplaceCharacter)
+
+        elseif (numLives == 0) then
+            -- update hearts
+            heart1.isVisible = false
+            heart2.isVisible = false
+            heart3.isVisible = false
+            timer.performWithDelay(200, YouLoseTransition)
+            youLoseSoundChannel = audio.play(youLose)
+        end
+
+        BackToLevel1()  
     end 
+
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -127,10 +170,26 @@ local function TouchListenerWrongAnswer3(touch)
         correctObject.isVisible = true
         incorrectObject.isVisible = false
         numLives = numLives - 1
+        if (numLives == 2) then
+            -- update hearts
+            heart3.isVisible = false
+            timer.performWithDelay(200, ReplaceCharacter) 
 
-        BackToLevel1()
-        
+        elseif (numLives == 1) then
+            -- update hearts
+            heart2.isVisible = false
+            timer.performWithDelay(200, ReplaceCharacter)
+
+        elseif (numLives == 0) then
+            -- update hearts
+            heart1.isVisible = false
+            timer.performWithDelay(200, YouLoseTransition)
+            youLoseSoundChannel = audio.play(youLose)
+        end
+
+        BackToLevel1() 
     end 
+
 end
 -----------------------------------------------------------------------------
 --adding the event listeners 

@@ -215,36 +215,6 @@ local function BackTransition( )
     composer.gotoScene( "main_menu", {effect = "slideDown", time = 500})
 end
 
-
-local function UpdateHearts()
-    if (numLives == 3) then
-        -- update hearts
-        heart1.isVisible = true
-        heart2.isVisible = true
-        heart3.isVisible = true                
-
-    elseif (numLives == 2) then
-        -- update hearts
-        heart1.isVisible = true
-                heart2.isVisible = true
-                heart3.isVisible = false
-
-    elseif (numLives == 1) then
-                -- update hearts
-                heart1.isVisible = true
-                heart2.isVisible = false
-                heart3.isVisible = false
-
-    elseif (numLives == 0) then
-                -- update hearts
-                heart1.isVisible = false
-                heart2.isVisible = false
-                heart3.isVisible = false
-              timer.performWithDelay(200, YouLoseTransition)
-                youLoseSoundChannel = audio.play(youLose)
-    end
-end
-
 local function onCollision( self, event )
     -- for testing purposes
     --print( event.target )        --the first object in the collision
@@ -269,8 +239,6 @@ local function onCollision( self, event )
 
             -- remove the character from the display
             display.remove(character)
-
-            ReplaceCharacter()
 
 
             -- decrease number of lives
@@ -305,11 +273,6 @@ local function onCollision( self, event )
               timer.performWithDelay(200, YouLoseTransition)
                 youLoseSoundChannel = audio.play(youLose)
             end
-
-
-            UpdateHearts()
-
-
         end
 
         if  (event.target.myName == "mathPuzzle1") or
@@ -481,6 +444,30 @@ end
 local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end
+
+
+--local function UpdateLives()
+--    if (numLives == 2) then
+        -- update hearts
+      --  heart1.isVisible = true
+      --  heart2.isVisible = true
+      --  heart3.isVisible = false
+
+ --   elseif (numLives == 1) then
+        -- update hearts
+      --  heart1.isVisible = true
+      --  heart2.isVisible = false
+      --  heart3.isVisible = false
+
+ --   elseif (numLives == 0) then
+        -- update hearts
+        --heart1.isVisible = false
+        --heart2.isVisible = false
+        --heart3.isVisible = false
+        --timer.performWithDelay(200, YouLoseTransition)
+       -- youLoseSoundChannel = audio.play(youLose)
+ --   end
+--end
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
