@@ -50,7 +50,7 @@ local function MoveSword(event)
 end
 
 local function gotoMainMenu()
-    composer.gotoScene( "main_menu" )
+    composer.gotoScene( "splash_screen2" )
 end
 
 -----------------------------------------------------------------------------------------
@@ -100,7 +100,7 @@ function scene:show( event )
     
 
         -- Go to the main menu screen after the given time.
-        timer.performWithDelay ( 3000, gotoMainMenu)          
+        timer.performWithDelay ( 3300, gotoMainMenu)          
         
     end
 

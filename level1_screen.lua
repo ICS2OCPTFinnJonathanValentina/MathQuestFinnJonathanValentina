@@ -27,6 +27,13 @@ sceneName = "level1_screen"
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 
+---------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+
+numLives = 3
+bossLevel = false
+
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -52,6 +59,9 @@ local heart2
 local heart3
 local numLives = 3
 
+local correctObject
+local incorrectObject
+
 local rArrow
 local lArrow 
 local uArrow
@@ -60,6 +70,7 @@ local motionx = 0
 local SPEED = 7
 local LINEAR_VELOCITY = -100
 local GRAVITY = 5
+local GRAVITY = 7
 
 local leftW 
 local rightW
@@ -75,18 +86,18 @@ local questionsAnswered = 0
 
 local textObject
 
-local goal
+local finalBoss
+local theFinalBoss
 
+local theGlow
 -----------------------------------------------------------------------------------------
 --  Sound
 ----------------------------------------------------------------------------------------- 
 -- GameOver Sound 
 local youLose = audio.loadSound("Sounds/youLose.mp3")
+local youLose = audio.loadSound("Sounds/battle003.mp3")
 local youLoseSoundChannel
 
--- youWin Sound
-local Grease_Monkey = audio.loadSound("Sounds/Grease_Monkey.mp3")
-local Grease_MonkeySoundChannel
 
 -- background sound
 local backgroundSound = audio.loadSound("Sounds/level.1.mp3")
@@ -152,9 +163,10 @@ end
 
 
 local function ReplaceCharacter()
+    print ("***Called ReplaceCharacter")
     character = display.newImageRect("Images/BoyCharacterValentina.png", 100, 150)
-    character.x = display.contentWidth * 0.5 / 8
-    character.y = display.contentHeight  * 0.1 / 3
+    character.x = display.contentWidth * 0.5 / 6
+    character.y = display.contentHeight  * 0.5 / 2
     character.width = 75
     character.height = 100
     character.myName = "BoyQuest"
@@ -187,12 +199,50 @@ local function MakeHeartsVisible()
     heart3.isVisible = true
 end
 
-local function YouLoseTransition()
-    composer.gotoScene( "you_lose" )
+local function  MakeFinalBossVisible()
+    finalBoss.isVisible = true
+end
+
+local function  MakeTheGlowVisible()
+    theGlow.isVisible = true
 end
 
 local function YouWinTransition()
     composer.gotoScene( "you_Win" )
+end
+
+local function BackTransition( )
+    composer.gotoScene( "main_menu", {effect = "slideDown", time = 500})
+end
+
+
+local function UpdateHearts()
+    if (numLives == 3) then
+        -- update hearts
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = true                
+
+    elseif (numLives == 2) then
+        -- update hearts
+        heart1.isVisible = true
+                heart2.isVisible = true
+                heart3.isVisible = false
+
+    elseif (numLives == 1) then
+                -- update hearts
+                heart1.isVisible = true
+                heart2.isVisible = false
+                heart3.isVisible = false
+
+    elseif (numLives == 0) then
+                -- update hearts
+                heart1.isVisible = false
+                heart2.isVisible = false
+                heart3.isVisible = false
+              timer.performWithDelay(200, YouLoseTransition)
+                youLoseSoundChannel = audio.play(youLose)
+    end
 end
 
 local function onCollision( self, event )
@@ -219,6 +269,9 @@ local function onCollision( self, event )
 
             -- remove the character from the display
             display.remove(character)
+
+            ReplaceCharacter()
+
 
             -- decrease number of lives
             numLives = numLives - 1
@@ -252,13 +305,18 @@ local function onCollision( self, event )
               timer.performWithDelay(200, YouLoseTransition)
                 youLoseSoundChannel = audio.play(youLose)
             end
+
+
+            UpdateHearts()
+
+
         end
 
         if  (event.target.myName == "mathPuzzle1") or
             (event.target.myName == "mathPuzzle2") or
             (event.target.myName == "mathPuzzle3") then
 
-            -- get the ball that the user hit
+            -- get the puzzle that the user hit
             theMathPuzzle = event.target
 
             -- stop the character from moving
@@ -276,21 +334,40 @@ local function onCollision( self, event )
             print("***questions answered = " .. questionsAnswered)
         end
 
-        if (event.target.myName == "mathPuzzle3") then
+        if (event.target.myName == "theGlow") then
             --check to see if the user has answered 5 questions
             if (questionsAnswered == 3) then
-                Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
-
-                print("***questions answered = " .. questionsAnswered)
-
-                YouWinTransition()
 
             end
-        end        
+        end
+
+        if (event.target.myName == "theBoss") then
+
+            -- get the puzzle that the user hit
+            theFinalBoss = event.target
+
+            -- show overlay with math question
+            composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
+
+
+            if (questionsAnswered == 4) then
+            
+              print("***questions answered = " .. questionsAnswered)
+            end
+     end      
+
+        if (event.target.myName == "theGlow") then
+
+            -- make the character invisible
+            character.isVisible = false
+
+            timer.performWithDelay(200, YouWinTransition)
+
+        end
+
 
     end
 end
-
 
 local function AddCollisionListeners()
     -- if character collides with ball, onCollision will be called
@@ -309,6 +386,12 @@ local function AddCollisionListeners()
     mathPuzzle3.collision = onCollision
     mathPuzzle3:addEventListener( "collision" )
 
+    finalBoss.collision = onCollision
+    finalBoss:addEventListener( "collision" )
+
+
+    theGlow.collision = onCollision
+    theGlow:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -322,6 +405,8 @@ local function RemoveCollisionListeners()
 
 
 
+    finalBoss:removeEventListener( "collision" )
+    theGlow:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
@@ -347,6 +432,8 @@ local function AddPhysicsBodies()
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
 
+    physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(theGlow, "static",  {density=0, friction=0, bounce=0} )
 end
 
 local function RemovePhysicsBodies()
@@ -382,7 +469,17 @@ function ResumeLevel1()
             theMathPuzzle.isVisible = false
         end
     end
+        if (questionsAnswered > 0) then
+        if (theFinalBoss ~= nil) and (theFinalBoss.isBodyActive == true) then
+            physics.removeBody(theFinalBoss)
+            theFinalBoss.isVisible = false
+        end
+    end
 
+end
+
+local function YouLoseTransition()
+    composer.gotoScene( "you_lose" )
 end
 
 -----------------------------------------------------------------------------------------
@@ -404,34 +501,36 @@ function scene:create( event )
     sceneGroup:insert( bkg_image )    
     
     -- Insert the platforms
-    platform1 = display.newImageRect("Images/Level-1Platform1.png", 250, 50)
+    platform1 = display.newImageRect("Images/PlatformValentina@2x.png", 250, 50)
     platform1.x = 100
     platform1.y = 500
         
     sceneGroup:insert( platform1 )
 
-    platform2 = display.newImageRect("Images/Level-1Platform1.png", 150, 50)
-    platform2.x = 250
-    platform2.y = 350
+  
+    platform2 = display.newImageRect("Images/PlatformValentina@2x.png", 150, 50)
+    platform2.x = 300
+    platform2.y = 241
         
     sceneGroup:insert( platform2 )
 
-    platform3 = display.newImageRect("Images/Level-1Platform1.png", 180, 50)
-    platform3.x = display.contentWidth *3 / 5
-    platform3.y = 591
+    platform3 = display.newImageRect("Images/PlatformValentina@2x.png", 280, 50)
+    platform3.x = 890
+    platform3.y = 200
+    platform3.MyName = "platformWin"
         
     sceneGroup:insert( platform3 )
 
-    platform4 = display.newImageRect("Images/Level-1Platform1.png", 180, 50)
-    platform4.x = 550
-    platform4.y = 300
-        
+    platform4 = display.newImageRect("Images/PlatformValentina@2x.png", 180, 50)
+    platform4.x = display.contentWidth *3 / 5
+    platform4.y = display.contentHeight * 3.5 / 5
+
     sceneGroup:insert( platform4 )
 
-    platform5 = display.newImageRect("Images/Level-1Platform1.png", 300, 50)
-    platform5.x = 840
-    platform5.y = 200
-        
+    platform5 = display.newImageRect("Images/PlatformValentina@2x.png", 180, 50)
+    platform5.x = 600
+    platform5.y = 241
+
     sceneGroup:insert( platform5 )
 
     spikes1 = display.newImageRect("Images/Level-1Spikes1.png", 250, 50)
@@ -448,7 +547,7 @@ function scene:create( event )
         
     sceneGroup:insert( spikes2)
 
-    spikes1platform = display.newImageRect("Images/Level-1Platform1.png", 250, 50)
+    spikes1platform = display.newImageRect("Images/PlatformValentina@2x.png", 250, 50)
     spikes1platform.x = display.contentWidth * 3 / 8
     spikes1platform.y = 600
         
@@ -498,7 +597,7 @@ function scene:create( event )
 
     --Insert the left arrow
     uArrow = display.newImageRect("Images/UpArrowUnpressed.png", 50, 100)
-    uArrow.x = display.contentWidth * 8.2 / 10
+    uArrow.x = display.contentWidth * 8.35 / 10
     uArrow.y = display.contentHeight * 8.5 / 10
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -534,8 +633,8 @@ function scene:create( event )
 
     --mathPuzzle1
     mathPuzzle1 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
-    mathPuzzle1.x = 250
-    mathPuzzle1.y = 291
+    mathPuzzle1.x = 600
+    mathPuzzle1.y = 471
     mathPuzzle1.myName = "mathPuzzle1"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -543,8 +642,8 @@ function scene:create( event )
 
     --mathPuzzle2
     mathPuzzle2 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
-    mathPuzzle2.x = 550
-    mathPuzzle2.y = 241
+    mathPuzzle2.x = 300
+    mathPuzzle2.y = 170
     mathPuzzle2.myName = "mathPuzzle2"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -552,14 +651,62 @@ function scene:create( event )
 
     --mathPuzzle3
     mathPuzzle3 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
-    mathPuzzle3.x = display.contentWidth *3 / 5
-    mathPuzzle3.y = 535
+    mathPuzzle3.x = 600
+    mathPuzzle3.y = 170
     mathPuzzle3.myName = "mathPuzzle3"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( mathPuzzle3 )
 
+ --mathPuzzle3
+    finalBoss = display.newImageRect ("Images/FinalBossFinnL@2x.png", 100, 100)
+    finalBoss.x = 800
+    finalBoss.y = 140
+    finalBoss.myName = "theBoss"
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( finalBoss )
+
+ --theGlow
+    theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)
+    theGlow.x = 950
+    theGlow.y = 140
+    theGlow.myName = "theGlow"
+
+    sceneGroup:insert( theGlow )
+
+
+    -----------------------------------------------------------------------------------------
+    -- BUTTON WIDGETS
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Back Button
+    backButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth * 2 / 24,
+        y = display.contentHeight * 15 / 17,
+
+        -- Setting Dimensions
+         width = 100,
+         height = 100,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/BackButtonUnpressedFinnL.png",
+        overFile = "Images/BackButtonPressedFinnL.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+
+    } )
+
+    -----------------------------------------------------------------------------------------
+
+    -- Associating Buttons with this scene
+    sceneGroup:insert( backButton )
+    
 end --function scene:create( event )
+
 
 -----------------------------------------------------------------------------------------
 
@@ -605,6 +752,10 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
+
+        MakeFinalBossVisible()
+
+        MakeTheGlowVisible()
     end
 
     -- background music
@@ -641,7 +792,6 @@ function scene:hide( event )
         physics.stop()
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
-        display.remove(character)
     end
 
 end --function scene:hide( event )

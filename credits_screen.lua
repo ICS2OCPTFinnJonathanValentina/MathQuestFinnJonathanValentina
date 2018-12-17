@@ -28,6 +28,8 @@ scene = composer.newScene( sceneName ) -- This function doesn't accept a string,
 -----------------------------------------------------------------------------------------
 local bkg_image
 local backButton
+local musicCreditsText
+local musicCreditsText2
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -60,8 +62,17 @@ function scene:create( event )
     bkg_image.width = display.contentWidth
     bkg_image.height = display.contentHeight
 
+    -- put text crediting music sites
+    musicCreditsText = display.newText("Level 2 music:  the dark castle from FesliyanStudios (www.fesliyanstudios.com)." , 500, 600,nil, 25)
+    --sets the colour of the text
+    musicCreditsText:setTextColor(100/255, 50/255, 100/255)
+    --insert it 
+    sceneGroup:insert(musicCreditsText )
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
+    
+    
+
 
     -- Send the background image to the back layer so all other objects can be on top
     bkg_image:toBack()
