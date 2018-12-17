@@ -407,7 +407,17 @@ local function UpdateHearts()
         heart1.isVisible = true
         heart2.isVisible = true
         heart3.isVisible = false
-    end
+    elseif (numLives == 1) then
+        heart1.isVisible = true
+        heart2.isVisible = false
+        heart3.isVisible = false
+    elseif (numLives == 0) then
+        heart1.isVisible = false
+        heart2.isVisible = false
+        heart3.isVisible = false
+        timer.performWithDelay(100, YouLoseTransition)
+        youLoseSoundChannel = audio.play(YouLose)       
+    end 
 end
 
 -----------------------------------------------------------------------------------------
