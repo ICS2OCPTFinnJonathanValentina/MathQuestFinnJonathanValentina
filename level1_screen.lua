@@ -28,6 +28,17 @@ sceneName = "level1_screen"
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 
+-----------------------------------------------------------------------------------------
+--  Sound
+----------------------------------------------------------------------------------------- 
+-- GameOver Sound 
+--local youLose = audio.loadSound("Sounds/battle003.mp3")
+--local youLoseSoundChannel
+
+
+-- background sound
+--local backgroundSound = audio.loadSound("Sounds/level.1.mp3")
+--local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- GlOBAL VARIABLES
@@ -86,17 +97,7 @@ local backButton
 
 local finalBoss
 local theFinalBoss
------------------------------------------------------------------------------------------
---  Sound
------------------------------------------------------------------------------------------ 
--- GameOver Sound 
---local youLose = audio.loadSound("Sounds/battle003.mp3")
---local youLoseSoundChannel
 
-
--- background sound
---local backgroundSound = audio.loadSound("Sounds/level.1.mp3")
---local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -133,6 +134,13 @@ local function stop (event)
     end
 end
 
+local function YouLoseTransition()
+    composer.gotoScene( "you_lose" )
+end
+
+local function YouWinTransition()
+    composer.gotoScene( "you_win" )
+end
 
 local function AddArrowEventListeners()
     rArrow:addEventListener("touch", right)
@@ -203,10 +211,6 @@ end
 
 local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
-end
-
-local function lvl2Transition()
-    composer.gotoScene( "level2_screen" )
 end
 
 local function BackTransition()
@@ -330,7 +334,7 @@ local function onCollision( self, event )
             -- make the character invisible
             character.isVisible = false
 
-            timer.performWithDelay(200, lvl2Transition)
+            timer.performWithDelay(200, YouWinTransition)
         end
     end
 end
@@ -391,6 +395,7 @@ local function AddPhysicsBodies()
 
     physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
 end
+
 
 local function RemovePhysicsBodies()
     physics.removeBody(platform1)
@@ -453,9 +458,7 @@ function ResumeLevel1()
         end
     end
 
-    local function YouLoseTransition()
-       composer.gotoScene( "you_lose" )
-    end
+
 end
 
 
@@ -739,7 +742,7 @@ function scene:show( event )
 
         MakeTheGlowVisible()
 
-       -- = audio.play(backgroundSound)
+        --audio.play(backgroundSound)
     end
 
 
