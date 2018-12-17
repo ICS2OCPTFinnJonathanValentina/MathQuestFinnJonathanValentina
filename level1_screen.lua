@@ -60,7 +60,6 @@ local character
 local heart1
 local heart2
 local heart3
-local numLives = 3
 
 local rArrow
 local lArrow 
@@ -274,7 +273,7 @@ local function onCollision( self, event )
             (event.target.myName == "mathPuzzle3") then
 
             -- get the ball that the user hit
-            theBall = event.target
+            theMathPuzzle = event.target
 
             -- stop the character from moving
             motionx = 0
