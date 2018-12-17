@@ -1,3 +1,4 @@
+
 -----------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
@@ -27,12 +28,13 @@ sceneName = "level1_screen"
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 
----------------------------------------------------------------------------------------
--- GLOBAL VARIABLES
+
+-----------------------------------------------------------------------------------------
+-- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-numLives = 3
-bossLevel = false
+local numLives = 3
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -49,8 +51,9 @@ local platform5
 
 local spikes1
 local spikes2
-
 local spikes1platform
+local spikes2platform
+local spikes3platform
 
 local character
 
@@ -59,9 +62,6 @@ local heart2
 local heart3
 local numLives = 3
 
-local correctObject
-local incorrectObject
-
 local rArrow
 local lArrow 
 local uArrow
@@ -69,11 +69,9 @@ local uArrow
 local motionx = 0
 local SPEED = 7
 local LINEAR_VELOCITY = -100
-local GRAVITY = 5
 local GRAVITY = 7
 
 local leftW 
-local rightW
 local topW
 local floor
 
@@ -84,12 +82,9 @@ local theMathPuzzle
 
 local questionsAnswered = 0
 
-local textObject
 
 local finalBoss
 local theFinalBoss
-
-local theGlow
 -----------------------------------------------------------------------------------------
 --  Sound
 ----------------------------------------------------------------------------------------- 
@@ -175,7 +170,7 @@ local function ReplaceCharacter()
     motionx = 0
 
     -- add physics body
-    physics.addBody( character, "dynamic", { density=6, friction=0.5, bounce=0, rotation=0 } )
+    physics.addBody( character, "dynamic", { density = 6, friction = 0.5, bounce = 0, rotation = 0 } )
 
     -- prevent character from being able to tip over
     character.isFixedRotation = true
@@ -187,7 +182,7 @@ local function ReplaceCharacter()
     AddRuntimeListeners()
 end
 
-local function  MakeMathPuzzlesVisible()
+local function MakeMathPuzzlesVisible()
     mathPuzzle1.isVisible = true
     mathPuzzle2.isVisible = true
     mathPuzzle3.isVisible = true
@@ -207,12 +202,12 @@ local function  MakeTheGlowVisible()
     theGlow.isVisible = true
 end
 
-local function YouWinTransition()
-    composer.gotoScene( "you_Win" )
+local function YouLoseTransition()
+    composer.gotoScene( "you_lose" )
 end
 
-local function BackTransition( )
-    composer.gotoScene( "main_menu", {effect = "slideDown", time = 500})
+local function YouWinTransition()
+    composer.gotoScene( "you_Win" )
 end
 
 local function onCollision( self, event )
@@ -228,8 +223,9 @@ local function onCollision( self, event )
         --Pop sound
         popSoundChannel = audio.play(popSound)
 
-        if (event.target.myName == "spikes1") or
-           (event.target.myName == "spikes2") then
+        if  (event.target.myName == "spikes1") or 
+            (event.target.myName == "spikes2") or
+            (event.target.myName == "spikes3") then
 
             -- add sound effect here
 
@@ -239,7 +235,6 @@ local function onCollision( self, event )
 
             -- remove the character from the display
             display.remove(character)
-
 
             -- decrease number of lives
             numLives = numLives - 1
@@ -279,8 +274,8 @@ local function onCollision( self, event )
             (event.target.myName == "mathPuzzle2") or
             (event.target.myName == "mathPuzzle3") then
 
-            -- get the puzzle that the user hit
-            theMathPuzzle = event.target
+            -- get the ball that the user hit
+            theBall = event.target
 
             -- stop the character from moving
             motionx = 0
@@ -296,6 +291,17 @@ local function onCollision( self, event )
         
             print("***questions answered = " .. questionsAnswered)
         end
+
+        if (event.target.myName == "door") then
+            --check to see if the user has answered 5 questions
+            if (questionsAnswered == 3) then
+                Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
+
+                print("***questions answered = " .. questionsAnswered)
+
+                YouWinTransition()
+            end
+        end        
 
         if (event.target.myName == "theGlow") then
             --check to see if the user has answered 5 questions
@@ -317,7 +323,7 @@ local function onCollision( self, event )
             
               print("***questions answered = " .. questionsAnswered)
             end
-     end      
+        end      
 
         if (event.target.myName == "theGlow") then
 
@@ -325,21 +331,17 @@ local function onCollision( self, event )
             character.isVisible = false
 
             timer.performWithDelay(200, YouWinTransition)
-
         end
-
-
     end
 end
+
 
 local function AddCollisionListeners()
     -- if character collides with ball, onCollision will be called
     spikes1.collision = onCollision
     spikes1:addEventListener( "collision" )
-
     spikes2.collision = onCollision
     spikes2:addEventListener( "collision" )
-
 
     -- if character collides with ball, onCollision will be called    
     mathPuzzle1.collision = onCollision
@@ -348,28 +350,15 @@ local function AddCollisionListeners()
     mathPuzzle2:addEventListener( "collision" )
     mathPuzzle3.collision = onCollision
     mathPuzzle3:addEventListener( "collision" )
-
-    finalBoss.collision = onCollision
-    finalBoss:addEventListener( "collision" )
-
-
-    theGlow.collision = onCollision
-    theGlow:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
     spikes1:removeEventListener( "collision" )
-
     spikes2:removeEventListener( "collision" )
 
     mathPuzzle1:removeEventListener( "collision" )
     mathPuzzle2:removeEventListener( "collision" )
     mathPuzzle3:removeEventListener( "collision" )
-
-
-
-    finalBoss:removeEventListener( "collision" )
-    theGlow:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
@@ -380,23 +369,20 @@ local function AddPhysicsBodies()
     physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform5, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
-    physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } ) 
-    physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )  
 
+
+    physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
+    physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
     physics.addBody( spikes1platform, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
-    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
 
     physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
-
-    physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(theGlow, "static",  {density=0, friction=0, bounce=0} )
 end
 
 local function RemovePhysicsBodies()
@@ -408,9 +394,9 @@ local function RemovePhysicsBodies()
 
     physics.removeBody(spikes1)
     physics.removeBody(spikes2)
+
     physics.removeBody(spikes1platform)
 
-    physics.removeBody(rightW)
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
@@ -421,7 +407,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeLevel1()
+function ResumeGame()
 
     -- make character visible again
     character.isVisible = true
@@ -432,43 +418,18 @@ function ResumeLevel1()
             theMathPuzzle.isVisible = false
         end
     end
-        if (questionsAnswered > 0) then
+      
+    if (questionsAnswered > 0) then
         if (theFinalBoss ~= nil) and (theFinalBoss.isBodyActive == true) then
             physics.removeBody(theFinalBoss)
             theFinalBoss.isVisible = false
         end
     end
 
+    local function YouLoseTransition()
+       composer.gotoScene( "you_lose" )
+    end
 end
-
-local function YouLoseTransition()
-    composer.gotoScene( "you_lose" )
-end
-
-
---local function UpdateLives()
---    if (numLives == 2) then
-        -- update hearts
-      --  heart1.isVisible = true
-      --  heart2.isVisible = true
-      --  heart3.isVisible = false
-
- --   elseif (numLives == 1) then
-        -- update hearts
-      --  heart1.isVisible = true
-      --  heart2.isVisible = false
-      --  heart3.isVisible = false
-
- --   elseif (numLives == 0) then
-        -- update hearts
-        --heart1.isVisible = false
-        --heart2.isVisible = false
-        --heart3.isVisible = false
-        --timer.performWithDelay(200, YouLoseTransition)
-       -- youLoseSoundChannel = audio.play(youLose)
- --   end
---end
-
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
