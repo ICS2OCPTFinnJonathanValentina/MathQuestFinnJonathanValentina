@@ -660,6 +660,7 @@ function scene:create( event )
     theGlow.y = 140
     theGlow.myName = "theGlow"
 
+
     sceneGroup:insert( theGlow )
 
 
