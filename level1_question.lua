@@ -84,8 +84,7 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-        BackToLevel1()
-     
+        timer.performWithDelay(1000, BackToLevel1)
     end 
 end
 
@@ -98,30 +97,8 @@ local function TouchListenerWrongAnswer(touch)
         correctObject.isVisible = true
         incorrectObject.isVisible = false
         numLives = numLives - 1
-        if (numLives == 2) then
-            -- update hearts
-            heart1.isVisible = true
-            heart2.isVisible = true
-            heart3.isVisible = false
-            timer.performWithDelay(200, ReplaceCharacter) 
-
-        elseif (numLives == 1) then
-            -- update hearts
-            heart1.isVisible = true
-            heart2.isVisible = false
-            heart3.isVisible = false
-            timer.performWithDelay(200, ReplaceCharacter)
-
-        elseif (numLives == 0) then
-            -- update hearts
-            heart1.isVisible = false
-            heart2.isVisible = false
-            heart3.isVisible = false
-            timer.performWithDelay(200, YouLoseTransition)
-            youLoseSoundChannel = audio.play(youLose)
-        end
-
-        BackToLevel1()   
+        
+        timer.performWithDelay(1000, BackToLevel1) 
     end 
 
 end
@@ -134,30 +111,7 @@ local function TouchListenerWrongAnswer2(touch)
         correctObject.isVisible = true
         incorrectObject.isVisible = false
         numLives = numLives - 1
-        if (numLives == 2) then
-            -- update hearts
-            heart1.isVisible = true
-            heart2.isVisible = true
-            heart3.isVisible = false
-            timer.performWithDelay(200, ReplaceCharacter) 
-
-        elseif (numLives == 1) then
-            -- update hearts
-            heart1.isVisible = true
-            heart2.isVisible = false
-            heart3.isVisible = false
-            timer.performWithDelay(200, ReplaceCharacter)
-
-        elseif (numLives == 0) then
-            -- update hearts
-            heart1.isVisible = false
-            heart2.isVisible = false
-            heart3.isVisible = false
-            timer.performWithDelay(200, YouLoseTransition)
-            youLoseSoundChannel = audio.play(youLose)
-        end
-
-        BackToLevel1()  
+        timer.performWithDelay(1000, BackToLevel1) 
     end 
 
 end
@@ -170,24 +124,7 @@ local function TouchListenerWrongAnswer3(touch)
         correctObject.isVisible = true
         incorrectObject.isVisible = false
         numLives = numLives - 1
-        if (numLives == 2) then
-            -- update hearts
-            heart3.isVisible = false
-            timer.performWithDelay(200, ReplaceCharacter) 
-
-        elseif (numLives == 1) then
-            -- update hearts
-            heart2.isVisible = false
-            timer.performWithDelay(200, ReplaceCharacter)
-
-        elseif (numLives == 0) then
-            -- update hearts
-            heart1.isVisible = false
-            timer.performWithDelay(200, YouLoseTransition)
-            youLoseSoundChannel = audio.play(youLose)
-        end
-
-        BackToLevel1() 
+        timer.performWithDelay(1000, BackToLevel1)
     end 
 
 end
@@ -309,19 +246,18 @@ function scene:create( event )
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
 
     -- create the correct text object and make it invisble
- correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
+    correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
  correctObject:setTextColor(155/255, 42/255, 198/255)
  correctObject.isVisible = false
 
- sceneGroup:insert( correctObject )
+
  
  -- create the incorrect text object and make it invisble
  incorrectObject = display.newText( "Incorrect!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
  incorrectObject:setTextColor(155/255, 42/255, 198/255)
  incorrectObject.isVisible = false
 
- sceneGroup:insert( incorrectObject )
-
+ 
     -- create the answer text object & wrong answer text objects
     answerText = display.newText("", X1, Y2, Arial, 75)
     answerText.anchorX = 0
@@ -342,6 +278,9 @@ function scene:create( event )
     sceneGroup:insert(wrongText1)
     sceneGroup:insert(wrongText2)
     sceneGroup:insert(wrongText3)
+    sceneGroup:insert( correctObject )
+    sceneGroup:insert( incorrectObject )
+
 
 end --function scene:create( event )
 

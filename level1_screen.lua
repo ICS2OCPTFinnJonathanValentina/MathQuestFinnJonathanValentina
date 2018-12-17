@@ -33,7 +33,7 @@ local scene = composer.newScene( sceneName )
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-local numLives = 3
+numLives = 3
 
 
 -----------------------------------------------------------------------------------------
@@ -89,7 +89,6 @@ local theFinalBoss
 --  Sound
 ----------------------------------------------------------------------------------------- 
 -- GameOver Sound 
-local youLose = audio.loadSound("Sounds/youLose.mp3")
 local youLose = audio.loadSound("Sounds/battle003.mp3")
 local youLoseSoundChannel
 
@@ -403,14 +402,24 @@ local function RemovePhysicsBodies()
  
 end
 
+local function UpdateHearts()
+    print ("***numLives = " .. numLives)
+    if (numLives == 2) then
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = false
+    end
+end
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel1()
 
     -- make character visible again
     character.isVisible = true
+    UpdateHearts()
     
     if (questionsAnswered > 0) then
         if (theMathPuzzle ~= nil) and (theMathPuzzle.isBodyActive == true) then
@@ -426,9 +435,7 @@ function ResumeGame()
         end
     end
 
-    local function YouLoseTransition()
-       composer.gotoScene( "you_lose" )
-    end
+    
 end
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS

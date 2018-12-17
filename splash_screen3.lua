@@ -50,7 +50,7 @@ local function MoveSword(event)
 end
 
 local function gotoMainMenu()
-    composer.gotoScene( "splash_screen4" )
+    composer.gotoScene( "main_menu" )
 end
 
 -----------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    sword = display.newImageRect("Images/CompanyLogoValentina.png", 1100, 800)
+    sword = display.newImageRect("Images/sword.png", 1100, 800)
     sword.y = display.contentWidth * 1.6/4
     sword.x = display.contentHeight * 1/4
 
