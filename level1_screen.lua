@@ -33,7 +33,7 @@ local scene = composer.newScene( sceneName )
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-local numLives = 3
+numLives = 3
 
 
 -----------------------------------------------------------------------------------------
@@ -278,7 +278,7 @@ local function onCollision( self, event )
             (event.target.myName == "mathPuzzle3") then
 
             -- get the ball that the user hit
-            theBall = event.target
+            theMathPuzzle = event.target
 
             -- stop the character from moving
             motionx = 0
@@ -434,7 +434,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel1()
 
     -- make character visible again
     character.isVisible = true
