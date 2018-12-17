@@ -89,7 +89,6 @@ local theFinalBoss
 --  Sound
 ----------------------------------------------------------------------------------------- 
 -- GameOver Sound 
-local youLose = audio.loadSound("Sounds/youLose.mp3")
 local youLose = audio.loadSound("Sounds/battle003.mp3")
 local youLoseSoundChannel
 
