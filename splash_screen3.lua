@@ -13,7 +13,7 @@ display.setStatusBar(display.HiddenStatusBar)
 local composer = require( "composer" )
 
 -- Name the Scene
-sceneName = "splash_screen4"
+sceneName = "splash_screen3"
 
 -----------------------------------------------------------------------------------------
 

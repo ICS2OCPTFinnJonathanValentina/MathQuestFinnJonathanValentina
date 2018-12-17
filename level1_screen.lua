@@ -90,13 +90,13 @@ local theFinalBoss
 --  Sound
 ----------------------------------------------------------------------------------------- 
 -- GameOver Sound 
-local youLose = audio.loadSound("Sounds/battle003.mp3")
-local youLoseSoundChannel
+--local youLose = audio.loadSound("Sounds/battle003.mp3")
+--local youLoseSoundChannel
 
 
 -- background sound
-local backgroundSound = audio.loadSound("Sounds/level.1.mp3")
-local backgroundSoundChannel
+--local backgroundSound = audio.loadSound("Sounds/level.1.mp3")
+--local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -269,7 +269,7 @@ local function onCollision( self, event )
                 heart2.isVisible = false
                 heart3.isVisible = false
               timer.performWithDelay(200, YouLoseTransition)
-                youLoseSoundChannel = audio.play(youLose)
+                --youLoseSoundChannel = audio.play(youLose)
             end
         end
 
@@ -426,7 +426,7 @@ local function UpdateHearts()
         heart3.isVisible = false
         character.isVisible = false
         timer.performWithDelay(100, YouLoseTransition)
-        youLoseSoundChannel = audio.play(YouLose)       
+        --youLoseSoundChannel = audio.play(YouLose)       
     end 
 end
 
@@ -739,7 +739,7 @@ function scene:show( event )
 
         MakeTheGlowVisible()
 
-       backgroundSoundChannel = audio.play(backgroundSound)
+       -- = audio.play(backgroundSound)
     end
 
 
@@ -762,7 +762,7 @@ function scene:hide( event )
         -- Example: stop timers, stop animation, stop audio, etc.
 
         --stop the music
-       audio.stop(backgroundSoundChannel)
+       --audio.stop(backgroundSoundChannel)
 
 
      -----------------------------------------------------------------------------------------

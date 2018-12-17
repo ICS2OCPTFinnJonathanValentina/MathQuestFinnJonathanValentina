@@ -11,7 +11,7 @@
 local composer = require( "composer" )
 
 -- Name the Scene
-sceneName = "splash_screen"
+sceneName = "splash_screen2"
 
 -----------------------------------------------------------------------------------------
 
