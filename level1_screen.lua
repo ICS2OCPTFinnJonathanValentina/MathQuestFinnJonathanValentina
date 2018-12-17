@@ -209,6 +209,10 @@ local function lvl2Transition()
     composer.gotoScene( "level2_screen" )
 end
 
+local function BackTransition()
+    composer.gotoScene( "main_menu")
+end
+
 local function onCollision( self, event )
     -- for testing purposes
     --print( event.target )        --the first object in the collision
@@ -730,10 +734,11 @@ function scene:show( event )
         MakeFinalBossVisible()
 
         MakeTheGlowVisible()
+
+        backgroundSoundChannel = audio.play(backgroundSound)
+
     end
 
-    -- background music
-    backgroundSoundChannel = audio.play(backgroundSound)
 
 end --function scene:show( event )
 
@@ -754,15 +759,14 @@ function scene:hide( event )
         -- Example: stop timers, stop animation, stop audio, etc.
 
         --stop the music
-        audio.stop(backgroundSound)
 
-    -----------------------------------------------------------------------------------------
-
+     -----------------------------------------------------------------------------------------
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
         RemoveCollisionListeners()
         RemovePhysicsBodies()
-
+        display.remove(character)
+        backgroundSoundChannel = audio.stop(backgroundSound)
         physics.stop()
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
