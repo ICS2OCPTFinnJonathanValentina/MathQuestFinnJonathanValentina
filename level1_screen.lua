@@ -33,7 +33,7 @@ local scene = composer.newScene( sceneName )
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-numLives = 3
+local numLives = 3
 
 
 -----------------------------------------------------------------------------------------
@@ -60,6 +60,7 @@ local character
 local heart1
 local heart2
 local heart3
+local numLives = 3
 
 local rArrow
 local lArrow 
@@ -81,6 +82,7 @@ local theMathPuzzle
 
 local questionsAnswered = 0
 
+local backButton
 
 local finalBoss
 local theFinalBoss
@@ -203,8 +205,8 @@ local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end
 
-local function YouWinTransition()
-    composer.gotoScene( "you_Win" )
+local function lvl2Transition()
+    composer.gotoScene( "level2_screen" )
 end
 
 local function onCollision( self, event )
@@ -272,7 +274,7 @@ local function onCollision( self, event )
             (event.target.myName == "mathPuzzle3") then
 
             -- get the ball that the user hit
-            theMathPuzzle = event.target
+            theBall = event.target
 
             -- stop the character from moving
             motionx = 0
@@ -296,7 +298,7 @@ local function onCollision( self, event )
 
                 print("***questions answered = " .. questionsAnswered)
 
-                YouWinTransition()
+                lvl2Transition()
             end
         end        
 
@@ -324,7 +326,7 @@ local function onCollision( self, event )
             -- make the character invisible
             character.isVisible = false
 
-            timer.performWithDelay(200, YouWinTransition)
+            timer.performWithDelay(200, lvl2Transition)
         end
     end
 end
@@ -428,11 +430,10 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeLevel1()
+function ResumeGame()
 
     -- make character visible again
     character.isVisible = true
-    UpdateHearts()
     
     if (questionsAnswered > 0) then
         if (theMathPuzzle ~= nil) and (theMathPuzzle.isBodyActive == true) then
@@ -448,8 +449,12 @@ function ResumeLevel1()
         end
     end
 
-    
+    local function YouLoseTransition()
+       composer.gotoScene( "you_lose" )
+    end
 end
+
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
