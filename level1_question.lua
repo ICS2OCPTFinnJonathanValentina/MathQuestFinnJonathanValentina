@@ -94,8 +94,8 @@ local function TouchListenerWrongAnswer(touch)
     
     if (touch.phase == "ended") then
         -- they got it wrong
-        correctObject.isVisible = true
-        incorrectObject.isVisible = false
+        correctObject.isVisible = false
+        incorrectObject.isVisible = true
         numLives = numLives - 1
         
         timer.performWithDelay(1000, BackToLevel1) 
@@ -108,8 +108,8 @@ local function TouchListenerWrongAnswer2(touch)
     userAnswer = wrongText2.text
     
     if (touch.phase == "ended") then
-        correctObject.isVisible = true
-        incorrectObject.isVisible = false
+        correctObject.isVisible = false
+        incorrectObject.isVisible = true
         numLives = numLives - 1
         timer.performWithDelay(1000, BackToLevel1) 
     end 
@@ -121,8 +121,8 @@ local function TouchListenerWrongAnswer3(touch)
     userAnswer = wrongText3.text
     
     if (touch.phase == "ended") then
-        correctObject.isVisible = true
-        incorrectObject.isVisible = false
+        correctObject.isVisible = false
+        incorrectObject.isVisible = true
         numLives = numLives - 1
         timer.performWithDelay(1000, BackToLevel1)
     end 
@@ -216,7 +216,21 @@ local function PositionAnswers()
 
         wrongText3.x = X2
         wrongText3.y = Y2
+
+    elseif (answerPosition == 4) then
+
+
+        answerText.x = X1
+        answerText.y = Y1
             
+        wrongText1.x = X1
+        wrongText1.y = Y2
+            
+        wrongText2.x = X2
+        wrongText2.y = Y2
+
+        wrongText3.x = X2
+        wrongText3.y = Y1        
     end
 end
 
