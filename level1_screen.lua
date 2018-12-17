@@ -166,7 +166,6 @@ local function ReplaceCharacter()
 
     -- intialize horizontal movement of character
     motionx = 0
-
     -- add physics body
     physics.addBody( character, "dynamic", { density = 6, friction = 0.5, bounce = 0, rotation = 0 } )
 
@@ -301,17 +300,14 @@ local function onCollision( self, event )
             end
         end        
 
-        if (event.target.myName == "theGlow") then
-            --check to see if the user has answered 5 questions
-            if (questionsAnswered == 3) then
-
-            end
-        end
-
         if (event.target.myName == "theBoss") then
 
             -- get the puzzle that the user hit
             theFinalBoss = event.target
+
+
+            -- make the character invisible
+            character.isVisible = false
 
             -- show overlay with math question
             composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
@@ -348,6 +344,9 @@ local function AddCollisionListeners()
     mathPuzzle2:addEventListener( "collision" )
     mathPuzzle3.collision = onCollision
     mathPuzzle3:addEventListener( "collision" )
+
+    finalBoss.collision = onCollision
+    finalBoss:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -357,6 +356,8 @@ local function RemoveCollisionListeners()
     mathPuzzle1:removeEventListener( "collision" )
     mathPuzzle2:removeEventListener( "collision" )
     mathPuzzle3:removeEventListener( "collision" )
+
+    finalBoss:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
@@ -381,6 +382,8 @@ local function AddPhysicsBodies()
     physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
+
+    physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
 end
 
 local function RemovePhysicsBodies()
@@ -415,6 +418,7 @@ local function UpdateHearts()
         heart1.isVisible = false
         heart2.isVisible = false
         heart3.isVisible = false
+        character.isVisible = false
         timer.performWithDelay(100, YouLoseTransition)
         youLoseSoundChannel = audio.play(YouLose)       
     end 
@@ -474,7 +478,7 @@ function scene:create( event )
   
     platform2 = display.newImageRect("Images/PlatformValentina@2x.png", 150, 50)
     platform2.x = 300
-    platform2.y = 241
+    platform2.y = 341
         
     sceneGroup:insert( platform2 )
 
@@ -491,7 +495,7 @@ function scene:create( event )
 
     sceneGroup:insert( platform4 )
 
-    platform5 = display.newImageRect("Images/PlatformValentina@2x.png", 180, 50)
+    platform5 = display.newImageRect("Images/PlatformValentina@2x.png", 100, 50)
     platform5.x = 600
     platform5.y = 241
 
@@ -607,7 +611,7 @@ function scene:create( event )
     --mathPuzzle2
     mathPuzzle2 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
     mathPuzzle2.x = 300
-    mathPuzzle2.y = 170
+    mathPuzzle2.y = 270
     mathPuzzle2.myName = "mathPuzzle2"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -634,7 +638,7 @@ function scene:create( event )
  --theGlow
     theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)
     theGlow.x = 950
-    theGlow.y = 140
+    theGlow.y = 100
     theGlow.myName = "theGlow"
 
 

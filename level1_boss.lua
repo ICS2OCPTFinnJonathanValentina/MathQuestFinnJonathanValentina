@@ -21,7 +21,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_boss"
+sceneName = "level1_question"
 
 -----------------------------------------------------------------------------------------
 
@@ -63,24 +63,20 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
-local numQuestionsAsked = 0
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
---making transition to next scene
-local function BackToLevel1() 
-    composer.hideOverlay("crossFade", 400 )
-  
-    ResumeLevel1()
+local function YouLoseTransition()
+    composer.gotoScene( "you_lose" )
 end 
 
---making transition to next scene
-local function ToYouLose() 
-    composer.hideOverlay("crossFade", 400 )
-    YouLoseTransition()
-end 
+local function YouWinTransition()
+    composer.gotoScene( "you_win" )
+end
+
+
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
@@ -90,11 +86,7 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-        numQuestionsAsked = numQuestionsAsked + 1
-        if (numQuestionsAsked == 3) then
-         BackToLevel1()
-     end
-     
+        timer.performWithDelay(1000, YouWinTransition)
     end 
 end
 
@@ -104,13 +96,14 @@ local function TouchListenerWrongAnswer(touch)
     
     if (touch.phase == "ended") then
         -- they got it wrong
-        correctObject.isVisible = true
-        incorrectObject.isVisible = false
+        correctObject.isVisible = false
+        incorrectObject.isVisible = true
         numLives = numLives - 1
-        ToYouLose()        
+        print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
         
-        
+        timer.performWithDelay(1000, YouLoseTransition) 
     end 
+
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -118,12 +111,13 @@ local function TouchListenerWrongAnswer2(touch)
     userAnswer = wrongText2.text
     
     if (touch.phase == "ended") then
-        correctObject.isVisible = true
-        incorrectObject.isVisible = false
+        correctObject.isVisible = false
+        incorrectObject.isVisible = true
         numLives = numLives - 1
-
-        ToYouLose()        
+        print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
+        timer.performWithDelay(1000, YouloseTransition) 
     end 
+
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -131,12 +125,13 @@ local function TouchListenerWrongAnswer3(touch)
     userAnswer = wrongText3.text
     
     if (touch.phase == "ended") then
-        correctObject.isVisible = true
-        incorrectObject.isVisible = false
+        correctObject.isVisible = false
+        incorrectObject.isVisible = true
         numLives = numLives - 1
-
-        ToYouLose()        
+        print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
+        timer.performWithDelay(1000, YouLoseTransition)
     end 
+
 end
 -----------------------------------------------------------------------------
 --adding the event listeners 
@@ -226,7 +221,21 @@ local function PositionAnswers()
 
         wrongText3.x = X2
         wrongText3.y = Y2
+
+    elseif (answerPosition == 4) then
+
+
+        answerText.x = X1
+        answerText.y = Y1
             
+        wrongText1.x = X1
+        wrongText1.y = Y2
+            
+        wrongText2.x = X2
+        wrongText2.y = Y2
+
+        wrongText3.x = X2
+        wrongText3.y = Y1        
     end
 end
 
@@ -244,7 +253,7 @@ function scene:create( event )
     --covering the other scene with a rectangle so it looks faded and stops touch from going through
     bkg = display.newRect(display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
     --setting to a semi black colour
-    bkg:setFillColor(0,0,0,0)
+    bkg:setFillColor(0,0,0,0.5)
 
     -----------------------------------------------------------------------------------------
     --making a cover rectangle to have the background fully bolcked where the question is
@@ -256,19 +265,18 @@ function scene:create( event )
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
 
     -- create the correct text object and make it invisble
- correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
+    correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
  correctObject:setTextColor(155/255, 42/255, 198/255)
  correctObject.isVisible = false
 
- sceneGroup:insert( correctObject )
+
  
  -- create the incorrect text object and make it invisble
  incorrectObject = display.newText( "Incorrect!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
  incorrectObject:setTextColor(155/255, 42/255, 198/255)
  incorrectObject.isVisible = false
 
- sceneGroup:insert( incorrectObject )
-
+ 
     -- create the answer text object & wrong answer text objects
     answerText = display.newText("", X1, Y2, Arial, 75)
     answerText.anchorX = 0
@@ -282,7 +290,6 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- insert all objects for this scene into the scene group
-
     sceneGroup:insert(bkg)
     sceneGroup:insert(cover)
     sceneGroup:insert(questionText)
@@ -290,6 +297,9 @@ function scene:create( event )
     sceneGroup:insert(wrongText1)
     sceneGroup:insert(wrongText2)
     sceneGroup:insert(wrongText3)
+    sceneGroup:insert( correctObject )
+    sceneGroup:insert( incorrectObject )
+
 
 end --function scene:create( event )
 
@@ -318,7 +328,6 @@ function scene:show( event )
         AddTextListeners()
     end
 
-
 end --function scene:show( event )
 
 -----------------------------------------------------------------------------------------
@@ -337,9 +346,7 @@ function scene:hide( event )
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
         --parent:resumeGame()
-
-
-     -----------------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
