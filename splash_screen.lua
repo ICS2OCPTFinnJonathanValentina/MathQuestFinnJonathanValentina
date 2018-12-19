@@ -50,7 +50,7 @@ local function MoveSword(event)
 end
 
 local function gotoMainMenu()
-    composer.gotoScene( "splash_screen2" )
+    composer.gotoScene( "main_menu" )
 end
 
 -----------------------------------------------------------------------------------------
