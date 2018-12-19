@@ -46,7 +46,6 @@ local scene = composer.newScene( sceneName )
 
 numLives = 3
 
-
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -211,6 +210,30 @@ local function BackTransition()
     composer.gotoScene( "main_menu")
 end
 
+local function UpdateHearts()
+    print ("***numLives = " .. numLives)
+    if (numLives == 3) then
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = true
+    elseif (numLives == 2) then
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = false
+    elseif (numLives == 1) then
+        heart1.isVisible = true
+        heart2.isVisible = false
+        heart3.isVisible = false
+    elseif (numLives == 0) then
+        heart1.isVisible = false
+        heart2.isVisible = false
+        heart3.isVisible = false
+        character.isVisible = false
+        timer.performWithDelay(100, YouLoseTransition)
+        --youLoseSoundChannel = audio.play(YouLose)       
+    end 
+end
+
 local function onCollision( self, event )
     -- for testing purposes
     --print( event.target )        --the first object in the collision
@@ -240,34 +263,10 @@ local function onCollision( self, event )
             -- decrease number of lives
             numLives = numLives - 1
 
-            if (numLives == 3) then
-                -- update hearts
-                heart1.isVisible = true
-                heart2.isVisible = true
-                heart3.isVisible = true
+            UpdateHearts()
+
+            if (numLives >= 0) then
                 timer.performWithDelay(200, ReplaceCharacter)
-
-           elseif (numLives == 2) then
-                -- update hearts
-                heart1.isVisible = true
-                heart2.isVisible = true
-                heart3.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter) 
-
-            elseif (numLives == 1) then
-                -- update hearts
-                heart1.isVisible = true
-                heart2.isVisible = false
-                heart3.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter)
-
-            elseif (numLives == 0) then
-                -- update hearts
-                heart1.isVisible = false
-                heart2.isVisible = false
-                heart3.isVisible = false
-              timer.performWithDelay(200, YouLoseTransition)
-                --youLoseSoundChannel = audio.play(youLose)
             end
         end
 
@@ -284,13 +283,16 @@ local function onCollision( self, event )
             -- make the character invisible
             character.isVisible = false
 
+            -- Increment questions answered
+            questionsAnswered = questionsAnswered + 1 
+
+            print("***questions answered = " .. questionsAnswered)
+
             -- show overlay with math question
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
 
-            -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1 
-        
-            print("***questions answered = " .. questionsAnswered)
+                    
+            
         end
 
         if (event.target.myName == "theGlow") then
@@ -300,6 +302,10 @@ local function onCollision( self, event )
 
                 print("***questions answered = " .. questionsAnswered)
 
+                -- make the character invisible
+                character.isVisible = false
+
+                timer.performWithDelay(200, YouWinTransition)
             end
         end        
 
@@ -322,13 +328,6 @@ local function onCollision( self, event )
             end
         end      
 
-        if (event.target.myName == "theGlow") then
-
-            -- make the character invisible
-            character.isVisible = false
-
-            timer.performWithDelay(200, YouWinTransition)
-        end
     end
 end
 
@@ -407,26 +406,6 @@ local function RemovePhysicsBodies()
     physics.removeBody(floor)
 end
 
-function UpdateHearts()
-    print ("***numLives = " .. numLives)
-    if (numLives == 2) then
-        heart1.isVisible = true
-        heart2.isVisible = true
-        heart3.isVisible = false
-    elseif (numLives == 1) then
-        heart1.isVisible = true
-        heart2.isVisible = false
-        heart3.isVisible = false
-    elseif (numLives == 0) then
-        heart1.isVisible = false
-        heart2.isVisible = false
-        heart3.isVisible = false
-        character.isVisible = false
-        timer.performWithDelay(100, YouLoseTransition)
-        --youLoseSoundChannel = audio.play(YouLose)       
-    end 
-end
-
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -449,6 +428,8 @@ function ResumeLevel1()
             theFinalBoss.isVisible = false
         end
     end
+
+    UpdateHearts()
 end
 
 
