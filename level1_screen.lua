@@ -71,7 +71,6 @@ local character
 local heart1
 local heart2
 local heart3
-local numLives = 3
 
 local rArrow
 local lArrow 
@@ -196,7 +195,6 @@ local function MakeMathPuzzlesVisible()
 end
 
 local function MakeHeartsVisible()
-    heart1.isVisible = true
     heart2.isVisible = true
     heart3.isVisible = true
 end
@@ -207,10 +205,6 @@ end
 
 local function  MakeTheGlowVisible()
     theGlow.isVisible = true
-end
-
-local function YouLoseTransition()
-    composer.gotoScene( "you_lose" )
 end
 
 local function BackTransition()
@@ -299,14 +293,13 @@ local function onCollision( self, event )
             print("***questions answered = " .. questionsAnswered)
         end
 
-        if (event.target.myName == "door") then
+        if (event.target.myName == "theGlow") then
             --check to see if the user has answered 5 questions
             if (questionsAnswered == 3) then
                 Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
 
                 print("***questions answered = " .. questionsAnswered)
 
-                lvl2Transition()
             end
         end        
 
@@ -412,10 +405,9 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
- 
 end
 
-local function UpdateHearts()
+function UpdateHearts()
     print ("***numLives = " .. numLives)
     if (numLives == 2) then
         heart1.isVisible = true
@@ -457,8 +449,6 @@ function ResumeLevel1()
             theFinalBoss.isVisible = false
         end
     end
-
-
 end
 
 
