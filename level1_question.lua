@@ -103,7 +103,7 @@ local function TouchListenerWrongAnswer(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        timer.performWithDelay(1000, nextQuestion) 
+        timer.performWithDelay(1000, BackToLevel1) 
     end 
 
 end
@@ -117,7 +117,7 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000, nextQuestion) 
+        timer.performWithDelay(1000,BackToLevel1) 
     end 
 
 end
@@ -131,7 +131,7 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, nextQuestion)
+        timer.performWithDelay(1000, BackToLevel1)
     end 
 
 end
