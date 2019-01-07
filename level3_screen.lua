@@ -93,8 +93,6 @@ local questionsAnswered = 0
 
 local backButton
 
-local finalBoss
-local theFinalBoss
 
 
 -----------------------------------------------------------------------------------------
@@ -198,9 +196,6 @@ local function MakeHeartsVisible()
     heart3.isVisible = true
 end
 
-local function  MakeFinalBossVisible()
-    finalBoss.isVisible = true
-end
 
 local function  MakeTheGlowVisible()
     theGlow.isVisible = true
@@ -307,27 +302,7 @@ local function onCollision( self, event )
 
                 timer.performWithDelay(200, YouWinTransition)
             end
-        end        
-
-        if (event.target.myName == "theBoss") then
-
-            -- get the puzzle that the user hit
-            theFinalBoss = event.target
-
-
-            -- make the character invisible
-            character.isVisible = false
-
-            -- show overlay with math question
-            composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
-
-
-            if (questionsAnswered == 4) then
-            
-              print("***questions answered = " .. questionsAnswered)
-            end
-        end      
-
+        end            
     end
 end
 
@@ -347,8 +322,7 @@ local function AddCollisionListeners()
     mathPuzzle3.collision = onCollision
     mathPuzzle3:addEventListener( "collision" )
 
-    finalBoss.collision = onCollision
-    finalBoss:addEventListener( "collision" )
+
 end
 
 local function RemoveCollisionListeners()
@@ -359,7 +333,6 @@ local function RemoveCollisionListeners()
     mathPuzzle2:removeEventListener( "collision" )
     mathPuzzle3:removeEventListener( "collision" )
 
-    finalBoss:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
@@ -384,8 +357,6 @@ local function AddPhysicsBodies()
     physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
-
-    physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
 end
 
 
@@ -708,8 +679,6 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
-
-        MakeFinalBossVisible()
 
         MakeTheGlowVisible()
 
