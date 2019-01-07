@@ -171,7 +171,6 @@ local function ReplaceCharacter()
     character.width = 75
     character.height = 100
     character.myName = "BoyQuest"
-
     -- intialize horizontal movement of character
     motionx = 0
     -- add physics body

@@ -75,9 +75,9 @@ local function BackToLevel1()
     ResumeLevel1()
 end 
 
-function nextQuestion()
+local function nextQuestion()
     -- go to next question
-     composer.gotoScene("level1_question2")
+     composer.gotoScene("level2_screen")
 end
 
 -----------------------------------------------------------------------------------------
