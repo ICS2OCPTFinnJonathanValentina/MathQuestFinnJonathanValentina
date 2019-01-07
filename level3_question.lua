@@ -77,7 +77,7 @@ end
 
 function nextQuestion()
     -- go to next question
-     composer.gotoScene("level3_question2")
+     composer.gotoScene("level_question")
 end
 
 -----------------------------------------------------------------------------------------
