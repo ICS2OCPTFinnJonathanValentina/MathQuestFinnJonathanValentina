@@ -444,7 +444,7 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/Level1ScreenJonathan.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/Level1ScreenFinnL@2x.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
@@ -583,7 +583,7 @@ function scene:create( event )
     sceneGroup:insert( floor )
 
     --mathPuzzle1
-    mathPuzzle1 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
+    mathPuzzle1 = display.newImageRect ("Images/mathMonster.png", 70, 70)
     mathPuzzle1.x = 600
     mathPuzzle1.y = 471
     mathPuzzle1.myName = "mathPuzzle1"
@@ -592,7 +592,7 @@ function scene:create( event )
     sceneGroup:insert( mathPuzzle1 )
 
     --mathPuzzle2
-    mathPuzzle2 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
+    mathPuzzle2 = display.newImageRect ("Images/mathMonster.png", 70, 70)
     mathPuzzle2.x = 300
     mathPuzzle2.y = 270
     mathPuzzle2.myName = "mathPuzzle2"
@@ -601,7 +601,7 @@ function scene:create( event )
     sceneGroup:insert( mathPuzzle2 )
 
     --mathPuzzle3
-    mathPuzzle3 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
+    mathPuzzle3 = display.newImageRect ("Images/mathMonster.png", 70, 70)
     mathPuzzle3.x = 600
     mathPuzzle3.y = 170
     mathPuzzle3.myName = "mathPuzzle3"
