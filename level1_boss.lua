@@ -76,9 +76,6 @@ local function YouWinTransition()
     composer.gotoScene( "you_win" )
 end
 
-local function NextQuestionTransition()
-    composer.showOverlay( "level1_boss2", { isModal = true, effect = "fade", time = 100})
-end
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
@@ -88,7 +85,7 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-        timer.performWithDelay(1000, NextQuestionTransition)
+        timer.performWithDelay(1000, YouWinTransition)
     end 
 end
 

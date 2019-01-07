@@ -35,7 +35,9 @@ local bkg
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
-
+local function NextQuestionTransition()
+    composer.showOverlay( "level1_boss2", { isModal = true, effect = "fade", time = 100})
+end
 --------------------------------------------------------------------------------------
 -- The function called when the screen doesn't exist
 function scene:create( event )
@@ -110,6 +112,10 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+
+        NextQuestionTransition()
+    end
+
     end
 
 end
