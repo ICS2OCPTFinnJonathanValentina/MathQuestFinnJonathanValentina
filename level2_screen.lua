@@ -166,7 +166,7 @@ end
 local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
     character = display.newImageRect("Images/BoyCharacterValentina.png", 100, 150)
-    character.x = display.contentWidth * 0.5 / 6
+    character.x = display.contentWidth * 1.6/2
     character.y = display.contentHeight  * 0.5 / 2
     character.width = 75
     character.height = 100
@@ -454,7 +454,7 @@ function scene:create( event )
     -- Insert the platforms
     platform1 = display.newImageRect("Images/PlatformValentina@2x.png", 250, 50)
     platform1.x = 100
-    platform1.y = 500
+    platform1.y = 225
         
     sceneGroup:insert( platform1 )
 
@@ -583,7 +583,7 @@ function scene:create( event )
     sceneGroup:insert( floor )
 
     --mathPuzzle1
-    mathPuzzle1 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
+    mathPuzzle1 = display.newImageRect ("Images/mathMonster.png", 70, 70)
     mathPuzzle1.x = 600
     mathPuzzle1.y = 471
     mathPuzzle1.myName = "mathPuzzle1"
@@ -592,7 +592,7 @@ function scene:create( event )
     sceneGroup:insert( mathPuzzle1 )
 
     --mathPuzzle2
-    mathPuzzle2 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
+    mathPuzzle2 = display.newImageRect ("Images/mathMonster.png", 70, 70)
     mathPuzzle2.x = 300
     mathPuzzle2.y = 270
     mathPuzzle2.myName = "mathPuzzle2"
@@ -601,9 +601,9 @@ function scene:create( event )
     sceneGroup:insert( mathPuzzle2 )
 
     --mathPuzzle3
-    mathPuzzle3 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
+    mathPuzzle3 = display.newImageRect ("Images/mathMonster.png", 70, 70)
     mathPuzzle3.x = 600
-    mathPuzzle3.y = 170
+    mathPuzzle3.y = 370
     mathPuzzle3.myName = "mathPuzzle3"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -611,7 +611,7 @@ function scene:create( event )
 
  --mathPuzzle3
     finalBoss = display.newImageRect ("Images/FinalBossFinnL@2x.png", 100, 100)
-    finalBoss.x = 800
+    finalBoss.x = 100
     finalBoss.y = 140
     finalBoss.myName = "theBoss"
 
