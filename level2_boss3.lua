@@ -76,8 +76,8 @@ local function YouWinTransition()
     composer.gotoScene( "you_win" )
 end
 
-local function NextQuestionTransition()
-    composer.showOverlay( "level1_boss3", { isModal = true, effect = "fade", time = 100})
+local function NextLevelTransition()
+    composer.showOverlay( "level3_screen", { isModal = true, effect = "fade", time = 100})
 end
 
 -----------------------------------------------------------------------------------------
@@ -104,8 +104,7 @@ local function TouchListenerWrongAnswer(touch)
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
         
-        timer.performWithDelay(1000, YouLoseTransition) 
-        timer.performWithDelay(1000, NextQuestionTransition) 
+        timer.performWithDelay(1000, NextLevelTransition) 
     end 
 
 end
@@ -119,7 +118,7 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000, YouLoseTransition) 
+        timer.performWithDelay(1000, NextLevelTransition) 
     end 
 
 end
@@ -133,7 +132,7 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, YouLoseTransition)
+        timer.performWithDelay(1000, NextQuestionTransition)
     end 
 
 end

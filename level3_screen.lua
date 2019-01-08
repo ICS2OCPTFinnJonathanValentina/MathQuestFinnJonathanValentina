@@ -93,7 +93,7 @@ local questionsAnswered = 0
 
 local backButton
 
-finalBoss
+
 
 
 
@@ -419,33 +419,33 @@ function scene:create( event )
     sceneGroup:insert( bkg_image )    
     
     -- Insert the platforms
-    platform1 = display.newImageRect("Images/PlatformValentina@2x.png", 250, 50)
+    platform1 = display.newImageRect("Images/platformLevel3.png", 250, 50)
     platform1.x = 100
     platform1.y = 500
         
     sceneGroup:insert( platform1 )
 
   
-    platform2 = display.newImageRect("Images/PlatformValentina@2x.png", 150, 50)
+    platform2 = display.newImageRect("Images/platformLevel3.png", 150, 50)
     platform2.x = 300
     platform2.y = 341
         
     sceneGroup:insert( platform2 )
 
-    platform3 = display.newImageRect("Images/PlatformValentina@2x.png", 280, 50)
+    platform3 = display.newImageRect("Images/platformLevel3.png", 280, 50)
     platform3.x = 890
     platform3.y = 200
     platform3.MyName = "platformWin"
         
     sceneGroup:insert( platform3 )
 
-    platform4 = display.newImageRect("Images/PlatformValentina@2x.png", 180, 50)
+    platform4 = display.newImageRect("Images/platformLevel3.png", 180, 50)
     platform4.x = display.contentWidth *3 / 5
     platform4.y = display.contentHeight * 3.5 / 5
 
     sceneGroup:insert( platform4 )
 
-    platform5 = display.newImageRect("Images/PlatformValentina@2x.png", 100, 50)
+    platform5 = display.newImageRect("Images/platformLevel3.png", 100, 50)
     platform5.x = 600
     platform5.y = 241
 
@@ -465,7 +465,7 @@ function scene:create( event )
         
     sceneGroup:insert( spikes2)
 
-    spikes1platform = display.newImageRect("Images/PlatformValentina@2x.png", 250, 50)
+    spikes1platform = display.newImageRect("Images/platformLevel3.png", 250, 50)
     spikes1platform.x = display.contentWidth * 3 / 8
     spikes1platform.y = 600
         
@@ -550,7 +550,7 @@ function scene:create( event )
     sceneGroup:insert( floor )
 
     --mathPuzzle1
-    mathPuzzle1 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
+    mathPuzzle1 = display.newImageRect ("Images/mathMonster.png", 70, 70)
     mathPuzzle1.x = 600
     mathPuzzle1.y = 471
     mathPuzzle1.myName = "mathPuzzle1"
@@ -559,7 +559,7 @@ function scene:create( event )
     sceneGroup:insert( mathPuzzle1 )
 
     --mathPuzzle2
-    mathPuzzle2 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
+    mathPuzzle2 = display.newImageRect ("Images/mathMonster.png", 70, 70)
     mathPuzzle2.x = 300
     mathPuzzle2.y = 270
     mathPuzzle2.myName = "mathPuzzle2"
@@ -568,22 +568,13 @@ function scene:create( event )
     sceneGroup:insert( mathPuzzle2 )
 
     --mathPuzzle3
-    mathPuzzle3 = display.newImageRect ("Images/mathPuzzle.png", 70, 70)
+    mathPuzzle3 = display.newImageRect ("Images/mathMonster.png", 70, 70)
     mathPuzzle3.x = 600
     mathPuzzle3.y = 170
     mathPuzzle3.myName = "mathPuzzle3"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( mathPuzzle3 )
-
- --mathPuzzle3
-    finalBoss = display.newImageRect ("Images/FinalBossFinnL@2x.png", 100, 100)
-    finalBoss.x = 800
-    finalBoss.y = 140
-    finalBoss.myName = "theBoss"
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( finalBoss )
 
  --theGlow
     theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)

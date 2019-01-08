@@ -76,11 +76,6 @@ local function NextQuestionTransition()
     composer.showOverlay( "level1_boss2", { isModal = true, effect = "fade", time = 100})
 end
 
-
-local function NextQuestionTransition()
-    composer.showOverlay( "level1_boss2", { isModal = true, effect = "fade", time = 100})
-end
-
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
