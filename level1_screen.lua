@@ -37,8 +37,8 @@ local scene = composer.newScene( sceneName )
 
 
 -- background sound
---local backgroundSound = audio.loadSound("Sounds/level.1.mp3")
---local backgroundSoundChannel
+local backgroundSound = audio.loadSound("Sounds/bkg2.mp3")
+local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- GlOBAL VARIABLES
@@ -712,7 +712,7 @@ function scene:show( event )
 
         MakeTheGlowVisible()
 
-        --audio.play(backgroundSound)
+        backgroundSoundChannel = audio.play(backgroundSound, { channel=1, loops=-1 } )
     end
 
 
@@ -735,7 +735,7 @@ function scene:hide( event )
         -- Example: stop timers, stop animation, stop audio, etc.
 
         --stop the music
-       --audio.stop(backgroundSoundChannel)
+       audio.stop(backgroundSoundChannel)
 
 
      -----------------------------------------------------------------------------------------
