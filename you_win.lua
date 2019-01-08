@@ -113,9 +113,6 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
 
-        NextQuestionTransition()
-    end
-
     end
 
 end

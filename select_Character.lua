@@ -21,7 +21,7 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "main_menu"
+sceneName = "select_Character"
 
 -----------------------------------------------------------------------------------------
 
@@ -33,9 +33,10 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 local bkg_image
-local playButton
-local creditsButton
-local instructionButton
+local boyButton
+local girlButton
+local boyCharacter
+local girlCharacter
 
 -- background music
 --local bkgSound = audio.loadSound("Sounds/background_music.mp3")
@@ -46,32 +47,16 @@ local instructionButton
 -----------------------------------------------------------------------------------------
 
 -- Creating Transition Function to Instructions Page
-local function InstructionsTransition( )       
-    composer.gotoScene( "instructions_screen", {effect = "slideDown", time = 500})
+local function boyCharacter( )       
+    composer.gotoScene( "level1_screen", {effect = "slideDown", time = 500})
 end 
 
 -----------------------------------------------------------------------------------------
 
--- Creating Transition Function to Credits Page
-local function CreditsTransition( )       
-    composer.gotoScene( "credits_screen", {effect = "slideUp", time = 500})
+-- Creating Transition Function to Instructions Page
+local function girlCharacter( )       
+    composer.gotoScene( "level1_screen", {effect = "slideDown", time = 500})
 end 
-
------------------------------------------------------------------------------------------
-
--- Creating Transition to Level1 Screen
-local function Level1Transition( )
-    composer.gotoScene( "level1_screen", {effect = "crossFade", time = 1000})
-end    
-
-
--- Creating Transition to Level1 Screen
-local function SelectCharacterTransition( )
-    composer.gotoScene( "select_Character", {effect = "crossFade", time = 1000})
-end    
-
--- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
-
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -87,7 +72,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- set the background colour
-    bkg_image = display.newImageRect("Images/Level1ScreenJonathan.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/kingdomBkg.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -98,7 +83,7 @@ function scene:create( event )
 
     -- displays text on the screen at position x = 500 and y = 5 with
     -- a deafult font style and font size of 50 
-    textObject = display.newText( "Math Quest", 500, 150, nil, 170)
+    textObject = display.newText( "Pick ye chracter", 500, 150, nil, 50)
 
     -- sets the color of the text
     textObject:setTextColor(0, 0, 0)
@@ -106,73 +91,72 @@ function scene:create( event )
     -- Associating display objects with this scene 
     sceneGroup:insert( textObject )
 
+    -- set the background colour
+    boyCharcter = display.newImage("Images/BoyCharacterValentina.png", 500, 500)
+    boyCharcter.x = 300
+    boyCharcter.y = 500
+    boyCharcter.width = 100
+    boyCharcter.height = 125
+
+    -- Associating display objects with this scene 
+    sceneGroup:insert( bkg_image )
+
+
+    girlCharacter = display.newImage("Images/GirlCharacterValentina.png", 500, 500)
+    girlCharacter.x = 300
+    girlCharacter.y = 500
+    girlCharacter.width = 100
+    girlCharacter.height = 125
+
+    -- Associating display objects with this scene 
+    sceneGroup:insert( bkg_image )
+
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
     -----------------------------------------------------------------------------------------   
 
     -- Creating Instructoins Button
-    instructionButton = widget.newButton( 
+    boyButton = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*1/6,
-            y = display.contentHeight*7/8,
+            x = display.contentWidth*2/6,
+            y = display.contentHeight*6/8,
             -- Insert the images here
-            defaultFile = "Images/InstructionsButtonUnpressedFinnL.png",
-            overFile = "Images/InstructionsButtonPressedFinnL.png",
+            defaultFile = "Images/boyButton.png",
+            overFile = "Images/boyButton.png",
 
             width = 175,
             height = 175,
 
             -- When the button is released, call the instructions screen transition function
-            onRelease = InstructionsTransition          
+            onRelease = Level1ScreenTransition      
         } )
 -----------------------------------------------------------------------------------------
     -- Creating Play Button
-    playButton = widget.newButton( 
+    girlButton = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth/2,
             y = display.contentHeight*7/8,
 
             -- Insert the images here
-            defaultFile = "Images/PlayButtonUnpressedJonathanK.png",
-            overFile = "Images/PlayButtonPressedJonathanK.png",
+            defaultFile = "Images/girlButton.png",
+            overFile = "Images/girlButton.png",
+
 
             width = 175,
             height = 175,
 
             -- When the button is released, call the Level1 screen transition function
-            onRelease = Level1Transition          
+            onRelease = Level1ScreenTransition          
         } )
 
     -----------------------------------------------------------------------------------------
 
-    -- Creating Credits Button
-    creditsButton = widget.newButton( 
-        {
-            -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*7/8,
-            y = display.contentHeight*7/8,
-
-            -- Insert the images here
-            defaultFile = "Images/CreditsButtonUnPressedValentinaG.png",
-            overFile = "Images/CreditsButtonPressedValentinaG.png",
-
-            width = 175,
-            height = 175,
-
-            -- When the button is released, call the Credits transition function
-            onRelease = CreditsTransition
-        } ) 
-    
-    -- ADD INSTRUCTIONS BUTTON WIDGET
-
-    -----------------------------------------------------------------------------------------
-
+     
     -- Associating button widgets with this scene
-    sceneGroup:insert( playButton )
-    sceneGroup:insert( creditsButton )
-    sceneGroup:insert( instructionButton )
+    sceneGroup:insert( boyButton )
+    sceneGroup:insert( girlButton )
     
 
 end -- function scene:create( event )   
