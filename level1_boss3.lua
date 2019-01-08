@@ -89,7 +89,7 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-        timer.performWithDelay(1000, NextQuestionTransition)
+        timer.performWithDelay(1000, YouWinTransition)
     end 
 end
 
@@ -118,7 +118,7 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000, NextQuestionTransition) 
+        timer.performWithDelay(1000, YouloseTransition) 
     end 
 
 end
