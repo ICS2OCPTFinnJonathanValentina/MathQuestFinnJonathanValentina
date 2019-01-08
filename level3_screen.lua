@@ -93,6 +93,8 @@ local questionsAnswered = 0
 
 local backButton
 
+finalBoss
+
 
 
 -----------------------------------------------------------------------------------------
@@ -343,7 +345,7 @@ local function AddPhysicsBodies()
     physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform5, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
-
+    physics.addBody(theGlow)
 
     physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
@@ -392,13 +394,7 @@ function ResumeLevel1()
             theMathPuzzle.isVisible = false
         end
     end
-      
-    if (questionsAnswered > 0) then
-        if (theFinalBoss ~= nil) and (theFinalBoss.isBodyActive == true) then
-            physics.removeBody(theFinalBoss)
-            theFinalBoss.isVisible = false
-        end
-    end
+
 
     UpdateHearts()
 end
