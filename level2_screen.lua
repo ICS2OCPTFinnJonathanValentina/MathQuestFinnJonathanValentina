@@ -289,7 +289,7 @@ local function onCollision( self, event )
             print("***questions answered = " .. questionsAnswered)
 
             -- show overlay with math question
-            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
 
                     
             
@@ -410,7 +410,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeLevel1()
+function ResumeLevel2()
 
     -- make character visible again
     character.isVisible = true

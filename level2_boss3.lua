@@ -21,7 +21,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_boss2"
+sceneName = "level2_boss3"
 
 -----------------------------------------------------------------------------------------
 
@@ -132,7 +132,7 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, NextQuestionTransition)
+        timer.performWithDelay(1000, NextLevelTransition)
     end 
 
 end
