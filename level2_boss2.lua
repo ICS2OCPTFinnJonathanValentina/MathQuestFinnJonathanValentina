@@ -21,7 +21,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_boss2"
+sceneName = "level2_boss2"
 
 -----------------------------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ local function YouWinTransition()
 end
 
 local function NextQuestionTransition()
-    composer.showOverlay( "level1_boss3", { isModal = true, effect = "fade", time = 100})
+    composer.showOverlay( "level2_boss3", { isModal = true, effect = "fade", time = 100})
 end
 
 -----------------------------------------------------------------------------------------

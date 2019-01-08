@@ -21,7 +21,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_boss2"
+sceneName = "level1_boss"
 
 -----------------------------------------------------------------------------------------
 
@@ -72,14 +72,32 @@ local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end 
 
-local function YouWinTransition()
-    composer.gotoScene( "you_win" )
-end
-
 local function NextQuestionTransition()
-    composer.showOverlay( "level1_boss3", { isModal = true, effect = "fade", time = 100})
+    composer.showOverlay( "level1_boss2", { isModal = true, effect = "fade", time = 100})
 end
 
+local function UpdateHearts()
+    print ("***numLives = " .. numLives)
+    if (numLives == 3) then
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = true
+    elseif (numLives == 2) then
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = false
+    elseif (numLives == 1) then
+        heart1.isVisible = true
+        heart2.isVisible = false
+        heart3.isVisible = false
+    elseif (numLives == 0) then
+        heart1.isVisible = false
+        heart2.isVisible = false
+        heart3.isVisible = false
+        character.isVisible = false
+        --youLoseSoundChannel = audio.play(YouLose)       
+    end 
+end
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
@@ -89,7 +107,7 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-        timer.performWithDelay(1000, NextLevelTransition)
+        timer.performWithDelay(1000, NextQuestionTransition)
     end 
 end
 
@@ -103,7 +121,8 @@ local function TouchListenerWrongAnswer(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        timer.performWithDelay(1000, NextQuestionTransition) 
+        
+        timer.performWithDelay(1000, YouLoseTransition) 
     end 
 
 end
@@ -117,7 +136,7 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000, NextQuestionTransition) 
+        timer.performWithDelay(1000, YouLoseTransition) 
     end 
 
 end
@@ -131,7 +150,7 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, NextQuestionTransition)
+        timer.performWithDelay(1000, YouLoseTransition)
     end 
 
 end
