@@ -38,8 +38,8 @@ local creditsButton
 local instructionButton
 
 -- background music
---local bkgSound = audio.loadSound("Sounds/background_music.mp3")
---local bkgSoundChannel
+local bkgSound = audio.loadSound("Sounds/bkg.mp3")
+local bkgSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -203,7 +203,7 @@ function scene:show( event )
     -- Example: start timers, begin animation, play audio, etc.
     elseif ( phase == "did" ) then       
         -- background music
-        --bkgSoundChannel = audio.play(bkgSound)
+        bkgSoundChannel = audio.play(bkgSound, { channel=1, loops=-1 } )
 
     end
 
@@ -234,7 +234,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        --audio.stop(bkgSoundChannel)
+      audio.stop(bkgSoundChannel)
     end
 
 end -- function scene:hide( event )
