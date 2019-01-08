@@ -16,4 +16,6 @@ local composer = require( "composer" )
 -----------------------------------------------------------------------------------------
 
 -- Go to the intro screen
-composer.gotoScene( "level2_screen" )
+
+composer.gotoScene( "main_menu" )
+
