@@ -87,6 +87,11 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
     end
 
+    -- when this screen is shown, you win sound effect is heard
+    local youWinSound = audio.loadSound("Sounds/youWin.mp3")
+    local youWinSoundChannel
+
+    youWinSoundChannel = audio.play(youWinSound)
 end
 
 -----------------------------------------------------------------------------------------
