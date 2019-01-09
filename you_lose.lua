@@ -91,6 +91,11 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
     end
 
+    local wrongSound = audio.loadSound("Sounds/wrongEffect.mp3")
+    local wrongSoundChannel
+
+    wrongSoundChannel = audio.play(wrongSound)
+
 end
 
 -----------------------------------------------------------------------------------------

@@ -63,6 +63,9 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
+local wrongAnswerSound = audio.loadSound("Sounds/wrongAnswer.mp3")
+local wrongAnswerSoundChannel
+
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -81,7 +84,7 @@ function nextQuestion()
 end
 
 -----------------------------------------------------------------------------------------
---checking to see if the user pressed the right answer and bring them back to level 1
+--checking to see if the user pressed the right answer and bring them back to level 3
 local function TouchListenerAnswer(touch)
     userAnswer = answerText.text
     
@@ -91,9 +94,14 @@ local function TouchListenerAnswer(touch)
         incorrectObject.isVisible = false
         timer.performWithDelay(1000, BackToLevel1)
     end 
+    -- when correct answer is pressed, sound effect will be heard
+    local correctSound = audio.loadSound("Sounds/correct.mp3")
+    local correctSoundChannel
+
+    correctSoundChannel = audio.play(correctSound)
 end
 
---checking to see if the user pressed the right answer and bring them back to level 1
+--checking to see if the user pressed the right answer and bring them back to level 3
 local function TouchListenerWrongAnswer(touch)
     userAnswer = wrongText1.text
     
@@ -106,9 +114,11 @@ local function TouchListenerWrongAnswer(touch)
         timer.performWithDelay(1000, BackToLevel1) 
     end 
 
+    --incorrect sound 
+    wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
 end
 
---checking to see if the user pressed the right answer and bring them back to level 1
+--checking to see if the user pressed the right answer and bring them back to level 3
 local function TouchListenerWrongAnswer2(touch)
     userAnswer = wrongText2.text
     
@@ -119,10 +129,11 @@ local function TouchListenerWrongAnswer2(touch)
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
         timer.performWithDelay(1000,BackToLevel1) 
     end 
-
+    --incorrect sound 
+    wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
 end
 
---checking to see if the user pressed the right answer and bring them back to level 1
+--checking to see if the user pressed the right answer and bring them back to level 3
 local function TouchListenerWrongAnswer3(touch)
     userAnswer = wrongText3.text
     
@@ -133,7 +144,8 @@ local function TouchListenerWrongAnswer3(touch)
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
         timer.performWithDelay(1000, BackToLevel1)
     end 
-
+    --incorrect sound 
+    wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
 end
 -----------------------------------------------------------------------------
 --adding the event listeners 

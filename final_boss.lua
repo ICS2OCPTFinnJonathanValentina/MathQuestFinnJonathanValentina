@@ -290,21 +290,7 @@ local function onCollision( self, event )
 
                     
             
-        end
-
-        if (event.target.myName == "theGlow") then
-            --check to see if the user has answered 5 questions
-            if (questionsAnswered == 3) then
-                Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
-
-                print("***questions answered = " .. questionsAnswered)
-
-                -- make the character invisible
-                character.isVisible = false
-
-                timer.performWithDelay(200, YouWinTransition)
-            end
-        end            
+        end       
     end
 end
 
@@ -330,9 +316,11 @@ end
 local function RemoveCollisionListeners()
     spikes1:removeEventListener( "collision" )
     spikes2:removeEventListener( "collision" )
+
     mathPuzzle1:removeEventListener( "collision" )
     mathPuzzle2:removeEventListener( "collision" )
     mathPuzzle3:removeEventListener( "collision" )
+
 end
 
 local function AddPhysicsBodies()

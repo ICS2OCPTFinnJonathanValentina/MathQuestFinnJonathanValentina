@@ -327,7 +327,6 @@ local function onCollision( self, event )
               print("***questions answered = " .. questionsAnswered)
             end
         end      
-
     end
 end
 

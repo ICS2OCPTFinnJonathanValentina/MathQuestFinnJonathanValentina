@@ -1,8 +1,7 @@
 -----------------------------------------------------------------------------------------
 --
 -- credits_screen.lua
--- Created by: Your Name
--- Special thanks to Wal Wal for helping in the design of this framework.
+-- Created by: Finn Leduc
 -- Date: Month Day, Year
 -- Description: This is the credits page, displaying a back button to the main menu.
 -----------------------------------------------------------------------------------------
