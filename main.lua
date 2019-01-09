@@ -20,5 +20,5 @@ local composer = require( "composer" )
 composer.gotoScene( "level1_screen" )
 
 
-composer.gotoScene( "main_menu" )
+--composer.gotoScene( "main_menu" )
 
