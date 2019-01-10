@@ -140,6 +140,10 @@ local function YouWinTransition()
     composer.gotoScene( "you_win" )
 end
 
+local function NextLevelTransition()
+    composer.gotoScene( "you_win" )
+end
+
 local function AddArrowEventListeners()
     rArrow:addEventListener("touch", right)
     lArrow:addEventListener("touch", left)
@@ -294,23 +298,21 @@ local function onCollision( self, event )
 
         if (event.target.myName == "theGlow") then
             --check to see if the user has answered 5 questions
-            if (questionsAnswered == 3) then
-                Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
+            --Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
 
-                print("***questions answered = " .. questionsAnswered)
+            print("***questions answered = " .. questionsAnswered)
 
-                -- make the character invisible
-                character.isVisible = false
+             -- make the character invisible
+            character.isVisible = false
 
-                timer.performWithDelay(200, YouWinTransition)
-            end
+            timer.performWithDelay(200, NextLevelTransition)
         end            
     end
 end
 
 
 local function AddCollisionListeners()
-    -- if character collides with ball, onCollision will be called
+    -- if character collides with spikes, onCollision will be called
     spikes1.collision = onCollision
     spikes1:addEventListener( "collision" )
     spikes2.collision = onCollision
@@ -323,6 +325,10 @@ local function AddCollisionListeners()
     mathPuzzle2:addEventListener( "collision" )
     mathPuzzle3.collision = onCollision
     mathPuzzle3:addEventListener( "collision" )
+
+     -- if character collides with glow, onCollision will be called
+     theGlow.collision = onCollision
+     theGlow:addEventListener("collision") 
 
 
 end
