@@ -44,7 +44,6 @@ local scene = composer.newScene( sceneName )
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-numLives = 3
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -652,8 +651,6 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-
-        numLives = 3
         questionsAnswered = 0
 
         -- make all soccer balls visible
@@ -674,6 +671,9 @@ function scene:show( event )
         MakeTheGlowVisible()
 
         --audio.play(backgroundSound)
+
+        --call updatelives
+        UpdateHearts()
     end
 
 

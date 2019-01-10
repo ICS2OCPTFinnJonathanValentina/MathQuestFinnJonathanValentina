@@ -136,6 +136,10 @@ local function TouchListenerWrongAnswer3(touch)
     end 
 
 end
+
+local function YouLose
+    if (numLives == 0)
+        YouLoseTransition()
 -----------------------------------------------------------------------------
 --adding the event listeners 
 local function AddTextListeners ( )
