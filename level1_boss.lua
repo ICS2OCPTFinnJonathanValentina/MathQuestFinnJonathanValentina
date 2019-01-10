@@ -73,6 +73,7 @@ local function YouLoseTransition()
 end 
 
 local function NextQuestionTransition()
+    print("***Called level1_boss2")
     composer.showOverlay( "level1_boss2", { isModal = true, effect = "fade", time = 100})
 end
 

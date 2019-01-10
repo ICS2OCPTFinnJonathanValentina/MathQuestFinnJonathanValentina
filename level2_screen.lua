@@ -319,7 +319,7 @@ local function onCollision( self, event )
             character.isVisible = false
 
             -- show overlay with math question
-            composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level2_boss", { isModal = true, effect = "fade", time = 100})
 
 
             if (questionsAnswered == 4) then
@@ -413,6 +413,7 @@ function ResumeLevel2()
 
     -- make character visible again
     character.isVisible = true
+    UpdateHearts()
     
     if (questionsAnswered > 0) then
         if (theMathPuzzle ~= nil) and (theMathPuzzle.isBodyActive == true) then
@@ -428,7 +429,7 @@ function ResumeLevel2()
         end
     end
 
-    UpdateHearts()
+    
 end
 
 

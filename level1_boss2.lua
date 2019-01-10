@@ -72,14 +72,7 @@ local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end 
 
---check and see if they have run out of lives, if yes then go to you lose
-local function YouLose()
-    if (numLives == 0) then
-        YouLoseTransition()
-    else
-        timer.performWithDelay(1000, NextQuestionTransition)
-    end
-end
+
 
 
 local function YouWinTransition()
@@ -87,7 +80,17 @@ local function YouWinTransition()
 end
 
 local function NextQuestionTransition()
+    print("***Called level1_boss3")
     composer.showOverlay( "level1_boss3", { isModal = true, effect = "fade", time = 100})
+end
+
+--check and see if they have run out of lives, if yes then go to you lose
+local function YouLose()
+    if (numLives == 0) then
+        YouLoseTransition()
+    else
+        timer.performWithDelay(1000, NextQuestionTransition)
+    end
 end
 
 -----------------------------------------------------------------------------------------
