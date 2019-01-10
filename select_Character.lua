@@ -33,7 +33,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 
-character = nil
+characterName = ""
 
 
 
@@ -85,41 +85,33 @@ end
 local function TouchListener(touch)
     
     if (touch.phase == "ended") then
-     boyCharacter = display.newImageRect("Images/BoyCharacterValentina.png", 500, 150)
-     boyCharacter.width = 75
-     boyCharacter.height = 100
-     boyCharacter.myName = "BoyQuest"
      timer.performWithDelay(1000, GoToLevel1) 
 
-    end 
+    end
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListener2(touch)
-    userAnswer = wrongText1.text
     
     if (touch.phase == "ended") then
-     girlCharacter = display.newImageRect("Images/GirlCharacterValentina.png", 500, 150)
-     girlCharacter.x = display.contentWidth * 0.5 / 6
-     girlCharacter.y = display.contentHeight  * 0.5 / 2
-     girlCharacter.width = 75
-     girlCharacter.height = 100
-     girlCharacter.myName = "GirlQuest"
-     timer.performWithDelay(1000, BackToLevel1) 
+    character = display.newImageRect("Images/GirlCharacterValentina.png", 200, 365)
+    character.x = 750
+    character.y = 350
+    timer.performWithDelay(1000, GoToLevel1) 
     end 
 
 end
 -----------------------------------------------------------------------
 --adding the event listeners 
-local function AddTextListeners ( )
+local function AddListeners ( )
     boyCharacter:addEventListener( "touch", TouchListener)
-    girlCharacter:addEventListener( "touch", TouchListener2)
+    character:addEventListener( "touch", TouchListener2)
 end
 
 --removing the event listeners
-local function RemoveTextListeners()
+local function RemoveListeners()
     boyCharacter:removeEventListener( "touch", TouchListener)
-    girlCharacter:removeEventListener( "touch", TouchListener2)
+    character:removeEventListener( "touch", TouchListener2)
 end
 
 local function PositionCharacters()
@@ -129,8 +121,8 @@ local function PositionCharacters()
  boyCharacter.x = 270
  boyCharacter.y = 350
             
- girlCharacter.x = 750
- girlCharacter.y = 350
+ character.x = 750
+ character.y = 350
             
     
 end
@@ -147,9 +139,10 @@ function scene:create( event )
 
     -----------------------------------------------------------------------------------------
     --covering the other scene with a rectangle so it looks faded and stops touch from going through
-    bkg = display.newRect(display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
-    --setting to a semi black colour
-    bkg:setFillColor(0,0,0,0.5)
+    bkg = display.newImage("Images/kingdomBkg.png", display.contentWidth, display.contentHeight)
+    bkg.x = display.contentWidth / 2 
+    bkg.y = display.contentHeight / 2
+
 
     -----------------------------------------------------------------------------------------
     boyCharacter = display.newImageRect("Images/BoyCharacterValentina.png", 200, 365)
@@ -157,12 +150,12 @@ function scene:create( event )
     boyCharacter.y = 550
 
 
-    girlCharacter = display.newImageRect("Images/GirlCharacterValentina.png", 200, 365)
-    girlCharacter.x = 850
-    girlCharacter.y = 350
+    character = display.newImageRect("Images/GirlCharacterValentina.png", 200, 365)
+    --girlCharacter.x = 850
+    --girlCharacter.y = 400
 
 
-    textObject = display.newText( "Press one of the Questers", 510, 650, nil, 50)
+    textObject = display.newText( "Choose your Quester", 510, 650, nil, 50)
 
  
     -----------------------------------------------------------------------------------------
@@ -170,7 +163,8 @@ function scene:create( event )
     -- insert all objects for this scene into the scene group
     sceneGroup:insert(bkg)
     sceneGroup:insert(boyCharacter)
-    sceneGroup:insert(girlCharacter)
+    sceneGroup:insert(character)
+    sceneGroup:insert(textObject)
 end
 
 -----------------------------------------------------------------------------------------
@@ -194,7 +188,7 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
         PositionCharacters()
-        AddTextListeners()
+        AddListeners()
     end
 
 end --function scene:show( event )
@@ -219,7 +213,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        RemoveTextListeners()
+        RemoveListeners()
     end
 
 end --function scene:hide( event )

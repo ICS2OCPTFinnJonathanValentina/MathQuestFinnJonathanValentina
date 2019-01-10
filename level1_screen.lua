@@ -1,4 +1,3 @@
-
 -----------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
@@ -65,8 +64,6 @@ local spikes1platform
 local spikes2platform
 local spikes3platform
 
-
-
 local heart1
 local heart2
 local heart3
@@ -93,6 +90,7 @@ local questionsAnswered = 0
 
 local backButton
 
+local character
 local finalBoss
 local theFinalBoss
 
@@ -165,12 +163,9 @@ end
 
 local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
-    character = display.newImageRect("Images/BoyCharacterValentina.png", 100, 150)
-    character.x = display.contentWidth * 0.5 / 6
-    character.y = display.contentHeight  * 0.5 / 2
-    character.width = 75
-    character.height = 100
-    character.myName = "BoyQuest"
+
+    character = display.newImageRect("Images/GirlCharacterValentina.png", 100, 175)
+    
     -- intialize horizontal movement of character
     motionx = 0
     -- add physics body
@@ -556,7 +551,6 @@ function scene:create( event )
     --WALLS--
     leftW = display.newLine( 0, 0, 0, display.contentHeight)
     leftW.isVisible = true
-
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( leftW )

@@ -72,6 +72,16 @@ local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end 
 
+--check and see if they have run out of lives, if yes then go to you lose
+local function YouLose()
+    if (numLives == 0) then
+        YouLoseTransition()
+    else
+        timer.performWithDelay(1000, NextQuestionTransition)
+    end
+end
+
+
 local function YouWinTransition()
     composer.gotoScene( "you_win" )
 end
@@ -103,9 +113,7 @@ local function TouchListenerWrongAnswer(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        
-        timer.performWithDelay(1000, YouLoseTransition) 
-        timer.performWithDelay(1000, NextQuestionTransition) 
+        YouLose()
     end 
 
 end
@@ -119,7 +127,8 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000, YouLoseTransition) 
+        YouLose()
+
     end 
 
 end
@@ -133,10 +142,12 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, YouLoseTransition)
+        YouLose()
+        timer.performWithDelay(1000,  NextQuestionTransition)
     end 
 
 end
+
 -----------------------------------------------------------------------------
 --adding the event listeners 
 local function AddTextListeners ( )

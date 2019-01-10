@@ -44,7 +44,6 @@ local scene = composer.newScene( sceneName )
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-numLives = 3
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -194,6 +193,7 @@ local function MakeMathPuzzlesVisible()
 end
 
 local function MakeHeartsVisible()
+    heart1.isVisible = true
     heart2.isVisible = true
     heart3.isVisible = true
 end
@@ -691,15 +691,17 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-
-        numLives = 3
         questionsAnswered = 0
+        
 
         -- make all soccer balls visible
         MakeMathPuzzlesVisible()
 
         -- make all lives visible
         MakeHeartsVisible()
+
+        --call updatelives
+        UpdateHearts()
 
         -- add physics bodies to each object
         AddPhysicsBodies()
