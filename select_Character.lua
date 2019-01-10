@@ -61,10 +61,6 @@ local wrongAnswerText3
 
 local answerPosition = 1
 local bkg
-local X1 = display.contentWidth*2/7
-local X2 = display.contentWidth*4/7
-local Y1 = display.contentHeight*1/2
-local Y2 = display.contentHeight*5.5/7
 
 local userAnswer
 local textTouched = false
@@ -75,11 +71,9 @@ local textTouched = false
 -----------------------------------------------------------------------------------------
 
 --making transition to next scene
-local function BackToLevel1() 
-    composer.hideOverlay("crossFade", 400 )
-  
-    ResumeLevel1()
-end 
+local function GoToLevel1() 
+ composer.gotoScene("level1_screen")
+end
 
 local function nextQuestion()
     -- go to next question
@@ -89,14 +83,13 @@ end
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListener(touch)
-    userAnswer = answerText.text
     
     if (touch.phase == "ended") then
      boyCharacter = display.newImageRect("Images/BoyCharacterValentina.png", 500, 150)
      boyCharacter.width = 75
      boyCharacter.height = 100
      boyCharacter.myName = "BoyQuest"
-     timer.performWithDelay(1000, BackToLevel1) 
+     timer.performWithDelay(1000, GoToLevel1) 
 
     end 
 end
@@ -134,9 +127,9 @@ local function PositionCharacters()
     --creating random start position in a cretain area
 
  boyCharacter.x = 270
- boyCharacter.y = 550
+ boyCharacter.y = 350
             
- girlCharacter.x = 850
+ girlCharacter.x = 750
  girlCharacter.y = 350
             
     
