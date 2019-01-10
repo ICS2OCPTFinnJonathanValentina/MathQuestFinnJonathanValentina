@@ -44,7 +44,6 @@ local scene = composer.newScene( sceneName )
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-numLives = 3
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -137,6 +136,10 @@ local function YouLoseTransition()
 end
 
 local function YouWinTransition()
+    composer.gotoScene( "you_win" )
+end
+
+local function NextLevelTransition()
     composer.gotoScene( "you_win" )
 end
 
@@ -294,23 +297,21 @@ local function onCollision( self, event )
 
         if (event.target.myName == "theGlow") then
             --check to see if the user has answered 5 questions
-            if (questionsAnswered == 3) then
-                Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
+            --Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
 
-                print("***questions answered = " .. questionsAnswered)
+            print("***questions answered = " .. questionsAnswered)
 
-                -- make the character invisible
-                character.isVisible = false
+             -- make the character invisible
+            character.isVisible = false
 
-                timer.performWithDelay(200, YouWinTransition)
-            end
+            timer.performWithDelay(200, NextLevelTransition)
         end            
     end
 end
 
 
 local function AddCollisionListeners()
-    -- if character collides with ball, onCollision will be called
+    -- if character collides with spikes, onCollision will be called
     spikes1.collision = onCollision
     spikes1:addEventListener( "collision" )
     spikes2.collision = onCollision
@@ -323,6 +324,10 @@ local function AddCollisionListeners()
     mathPuzzle2:addEventListener( "collision" )
     mathPuzzle3.collision = onCollision
     mathPuzzle3:addEventListener( "collision" )
+
+     -- if character collides with glow, onCollision will be called
+     theGlow.collision = onCollision
+     theGlow:addEventListener("collision") 
 
 
 end
@@ -418,15 +423,15 @@ function scene:create( event )
     
     -- Insert the platforms
     platform1 = display.newImageRect("Images/platformLevel3.png", 250, 50)
-    platform1.x = 100
-    platform1.y = 500
+    platform1.x = 50
+    platform1.y = 550
         
     sceneGroup:insert( platform1 )
 
   
     platform2 = display.newImageRect("Images/platformLevel3.png", 150, 50)
     platform2.x = 300
-    platform2.y = 341
+    platform2.y = 330
         
     sceneGroup:insert( platform2 )
 
@@ -445,7 +450,7 @@ function scene:create( event )
 
     platform5 = display.newImageRect("Images/platformLevel3.png", 100, 50)
     platform5.x = 600
-    platform5.y = 241
+    platform5.y = 230
 
     sceneGroup:insert( platform5 )
 
@@ -646,8 +651,6 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-
-        numLives = 3
         questionsAnswered = 0
 
         -- make all soccer balls visible
@@ -668,6 +671,9 @@ function scene:show( event )
         MakeTheGlowVisible()
 
         --audio.play(backgroundSound)
+
+        --call updatelives
+        UpdateHearts()
     end
 
 

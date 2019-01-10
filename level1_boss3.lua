@@ -21,7 +21,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_boss2"
+sceneName = "level1_boss3"
 
 -----------------------------------------------------------------------------------------
 
@@ -136,6 +136,10 @@ local function TouchListenerWrongAnswer3(touch)
     end 
 
 end
+
+local function YouLose
+    if (numLives == 0)
+        YouLoseTransition()
 -----------------------------------------------------------------------------
 --adding the event listeners 
 local function AddTextListeners ( )
