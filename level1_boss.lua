@@ -76,6 +76,15 @@ local function NextQuestionTransition()
     composer.showOverlay( "level1_boss2", { isModal = true, effect = "fade", time = 100})
 end
 
+local function YouLose()
+    if (numLives == 0) then
+        YouLoseTransition()
+    else
+        timer.performWithDelay(1000, NextQuestionTransition)
+    end
+end
+
+
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
@@ -85,7 +94,6 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-        timer.performWithDelay(1000, NextQuestionTransition)
     end 
 end
 
@@ -99,10 +107,8 @@ local function TouchListenerWrongAnswer(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        
-        timer.performWithDelay(1000, NextQuestionTransition) 
+        YouLose() 
     end 
-
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -114,9 +120,8 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000, NextQuestionTransition) 
+        YouLose()
     end 
-
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -128,7 +133,7 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, NextQuestionTransition)
+        YouLose()
     end 
 
 end
