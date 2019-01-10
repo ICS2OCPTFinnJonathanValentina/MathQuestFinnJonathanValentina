@@ -33,7 +33,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 
-character = nil
+characterName = ""
 
 
 

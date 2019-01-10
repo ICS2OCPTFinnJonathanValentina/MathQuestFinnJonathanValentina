@@ -71,7 +71,7 @@ local textTouched = false
 local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end 
-
+--check and see if they have run out of lives, if yes then go to you lose
 local function YouLose()
     if (numLives == 0) then
         YouLoseTransition()

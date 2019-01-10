@@ -72,7 +72,7 @@ local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end 
 
---check and see if they have run out of lives, if yes then go to you lose screen
+--check and see if they have run out of lives, if yes then go to you lose
 local function YouLose()
     if (numLives == 0) then
         YouLoseTransition()
@@ -99,7 +99,7 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-        YouLose()
+        timer.performWithDelay(1000, NextQuestionTransition)
     end 
 end
 
