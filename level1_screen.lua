@@ -45,6 +45,7 @@ local backgroundSoundChannel
 -----------------------------------------------------------------------------------------
 
 numLives = 3
+character = nil
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -165,12 +166,7 @@ end
 
 local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
-    character = display.newImageRect("Images/BoyCharacterValentina.png", 100, 150)
-    character.x = display.contentWidth * 0.5 / 6
-    character.y = display.contentHeight  * 0.5 / 2
-    character.width = 75
-    character.height = 100
-    character.myName = "BoyQuest"
+    
     -- intialize horizontal movement of character
     motionx = 0
     -- add physics body
