@@ -418,15 +418,15 @@ function scene:create( event )
     
     -- Insert the platforms
     platform1 = display.newImageRect("Images/platformLevel3.png", 250, 50)
-    platform1.x = 100
-    platform1.y = 500
+    platform1.x = 50
+    platform1.y = 550
         
     sceneGroup:insert( platform1 )
 
   
     platform2 = display.newImageRect("Images/platformLevel3.png", 150, 50)
     platform2.x = 300
-    platform2.y = 341
+    platform2.y = 330
         
     sceneGroup:insert( platform2 )
 
@@ -445,7 +445,7 @@ function scene:create( event )
 
     platform5 = display.newImageRect("Images/platformLevel3.png", 100, 50)
     platform5.x = 600
-    platform5.y = 241
+    platform5.y = 230
 
     sceneGroup:insert( platform5 )
 
