@@ -65,7 +65,7 @@ local spikes1platform
 local spikes2platform
 local spikes3platform
 
-local character
+
 
 local heart1
 local heart2
