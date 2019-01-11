@@ -164,7 +164,7 @@ end
 local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
 
-    character = display.newImageRect("Images/GirlCharacterValentina.png", 100, 175)
+    character = display.newImageRect("Images/GirlCharacterValentina.png", 100, 155)
     
     -- intialize horizontal movement of character
     motionx = 0
@@ -707,6 +707,8 @@ function scene:show( event )
         MakeTheGlowVisible()
 
         backgroundSoundChannel = audio.play(backgroundSound, { channel=1, loops=-1 } )
+
+        Character()
     end
 
 
