@@ -256,6 +256,7 @@ local function onCollision( self, event )
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
             RemoveRuntimeListeners()
+            RemoveCollisionListeners()
 
             -- remove the character from the display
             display.remove(character)
@@ -348,6 +349,8 @@ local function AddCollisionListeners()
 
     finalBoss.collision = onCollision
     finalBoss:addEventListener( "collision" )
+
+    
 end
 
 local function RemoveCollisionListeners()
@@ -745,12 +748,12 @@ function scene:hide( event )
      -----------------------------------------------------------------------------------------
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        RemoveCollisionListeners()
+       -- RemoveCollisionListeners()
         RemovePhysicsBodies()
         display.remove(character)
         
         physics.stop()
-        RemoveArrowEventListeners()
+        --RemoveArrowEventListeners()
         RemoveRuntimeListeners()
     end
 end --function scene:hide( event )
