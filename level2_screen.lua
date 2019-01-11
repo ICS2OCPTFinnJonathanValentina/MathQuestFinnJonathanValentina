@@ -64,7 +64,8 @@ local spikes1platform
 local spikes2platform
 local spikes3platform
 
-local character
+character = nil
+numLives = 3
 
 local heart1
 local heart2
@@ -257,7 +258,7 @@ local function onCollision( self, event )
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
             RemoveRuntimeListeners()
-            RemoveCollisionListeners()
+            --RemoveCollisionListeners()
 
             -- remove the character from the display
             display.remove(character)
@@ -754,7 +755,7 @@ function scene:hide( event )
      -----------------------------------------------------------------------------------------
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-       -- RemoveCollisionListeners()
+        RemoveCollisionListeners()
         RemovePhysicsBodies()
         display.remove(character)
         

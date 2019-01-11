@@ -142,7 +142,7 @@ function scene:create( event )
             height = 175,
 
             -- When the button is released, call the Level1 screen transition function
-            onRelease = Level1Transition          
+            onRelease = SelectCharacterTransition          
         } )
 
     -----------------------------------------------------------------------------------------

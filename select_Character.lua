@@ -46,8 +46,6 @@ local incorrectObject
 local firstNumber
 local secondNumber
 
-local boyCharacter
-local girlCharacter
 
 local answer
 local wrongAnswer1
@@ -64,6 +62,13 @@ local bkg
 
 local userAnswer
 local textTouched = false
+
+-----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+boyCharacter = nil
+girlCharacter = nil
+character = nil
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -84,6 +89,7 @@ end
 local function TouchListener(touch)
     
     if (touch.phase == "ended") then
+     character = boyCharacter
      timer.performWithDelay(1000, GoToLevel1) 
 
     end
@@ -93,9 +99,7 @@ end
 local function TouchListener2(touch)
     
     if (touch.phase == "ended") then
-    character = display.newImageRect("Images/GirlCharacterValentina.png", 200, 365)
-    character.x = 750
-    character.y = 350
+    character = girlCharacter
     timer.performWithDelay(1000, GoToLevel1) 
     end 
 
@@ -104,13 +108,13 @@ end
 --adding the event listeners 
 local function AddListeners ( )
     boyCharacter:addEventListener( "touch", TouchListener)
-    character:addEventListener( "touch", TouchListener2)
+    girlCharacter:addEventListener( "touch", TouchListener2)
 end
 
 --removing the event listeners
 local function RemoveListeners()
     boyCharacter:removeEventListener( "touch", TouchListener)
-    character:removeEventListener( "touch", TouchListener2)
+    girlCharacter:removeEventListener( "touch", TouchListener2)
 end
 
 local function PositionCharacters()
@@ -120,11 +124,23 @@ local function PositionCharacters()
  boyCharacter.x = 270
  boyCharacter.y = 350
             
- character.x = 750
- character.y = 350
-            
-    
+ girlCharacter.x = 750
+ girlCharacter.y = 350
 end
+
+
+----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+----------------------------------------------------------------------------------------
+
+function Character()
+    if (character == boyCharacter) then
+        character = display.newImage("Images/BoyCharacterValentina.png")
+    elseif (character == girlCharacter) then
+        character = display.newImage ("Images/GirlCharacterValentina.png")
+    end
+end
+
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -149,8 +165,8 @@ function scene:create( event )
     boyCharacter.y = 550
 
 
-    character = display.newImageRect("Images/GirlCharacterValentina.png", 200, 365)
-    --girlCharacter.x = 850
+    girlCharacter = display.newImageRect("Images/GirlCharacterValentina.png", 200, 365)
+    --girlCharacter.x = 750
     --girlCharacter.y = 400
 
 
@@ -162,7 +178,7 @@ function scene:create( event )
     -- insert all objects for this scene into the scene group
     sceneGroup:insert(bkg)
     sceneGroup:insert(boyCharacter)
-    sceneGroup:insert(character)
+    sceneGroup:insert(girlCharacter)
     sceneGroup:insert(textObject)
 end
 
