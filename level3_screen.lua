@@ -340,6 +340,7 @@ local function RemoveCollisionListeners()
     mathPuzzle1:removeEventListener( "collision" )
     mathPuzzle2:removeEventListener( "collision" )
     mathPuzzle3:removeEventListener( "collision" )
+    theGlow:removeEventListener("collision")
 end
 
 local function AddPhysicsBodies()
@@ -350,7 +351,7 @@ local function AddPhysicsBodies()
     physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform5, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
-    physics.addBody(theGlow)
+    physics.addBody(theGlow, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
     physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
@@ -382,6 +383,8 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
+
+    physics.removeBody(theGlow)
 end
 
 -----------------------------------------------------------------------------------------
@@ -584,7 +587,7 @@ function scene:create( event )
  --theGlow
     theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)
     theGlow.x = 950
-    theGlow.y = 100
+    theGlow.y = 230
     theGlow.myName = "theGlow"
 
 
