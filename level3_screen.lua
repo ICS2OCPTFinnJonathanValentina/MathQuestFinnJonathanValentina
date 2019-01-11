@@ -252,6 +252,7 @@ local function onCollision( self, event )
             (event.target.myName == "spikes3") then
 
             -- add sound effect here
+            print("***hit the spikes")
 
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
@@ -274,6 +275,7 @@ local function onCollision( self, event )
             (event.target.myName == "mathPuzzle2") or
             (event.target.myName == "mathPuzzle3") then
 
+            print("***hit the math puzzle")
             -- get the ball that the user hit
             theMathPuzzle = event.target
 
@@ -299,7 +301,7 @@ local function onCollision( self, event )
             --check to see if the user has answered 5 questions
             --Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
 
-            print("***questions answered = " .. questionsAnswered)
+            print("***Hit the glow")
 
              -- make the character invisible
             character.isVisible = false
@@ -651,6 +653,10 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+
+        --****TEMPORARY TESTING: DELETE THIS LINE AFTER
+        numLives = 3
+
         questionsAnswered = 0
 
         -- make all soccer balls visible
