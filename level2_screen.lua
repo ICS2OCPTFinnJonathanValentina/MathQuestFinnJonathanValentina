@@ -81,6 +81,7 @@ local GRAVITY = 7
 
 local leftW 
 local topW
+local rightW
 local floor
 
 local mathPuzzle1
@@ -320,7 +321,7 @@ local function onCollision( self, event )
             character.isVisible = false
 
             -- show overlay with math question
-            composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level2_boss", { isModal = true, effect = "fade", time = 100})
 
 
             if (questionsAnswered == 4) then
@@ -382,6 +383,8 @@ local function AddPhysicsBodies()
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
+    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
+
 
     physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
@@ -406,6 +409,8 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
+    physics.removeBody(rightW)
+
 end
 
 -----------------------------------------------------------------------------------------
@@ -416,6 +421,7 @@ function ResumeLevel2()
 
     -- make character visible again
     character.isVisible = true
+    UpdateHearts()
     
     if (questionsAnswered > 0) then
         if (theMathPuzzle ~= nil) and (theMathPuzzle.isBodyActive == true) then
@@ -431,7 +437,7 @@ function ResumeLevel2()
         end
     end
 
-    UpdateHearts()
+    
 end
 
 

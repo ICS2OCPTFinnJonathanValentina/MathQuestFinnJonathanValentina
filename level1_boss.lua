@@ -73,8 +73,18 @@ local function YouLoseTransition()
 end 
 
 local function NextQuestionTransition()
+    print("***Called level1_boss2")
     composer.showOverlay( "level1_boss2", { isModal = true, effect = "fade", time = 100})
 end
+
+local function YouLose()
+    if (numLives == 0) then
+        YouLoseTransition()
+    else
+        timer.performWithDelay(1000, NextQuestionTransition)
+    end
+end
+
 
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -99,10 +109,8 @@ local function TouchListenerWrongAnswer(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        
-        timer.performWithDelay(1000, NextQuestionTransition) 
+        YouLose() 
     end 
-
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -114,9 +122,8 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000, NextQuestionTransition) 
+        YouLose()
     end 
-
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -128,7 +135,7 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, NextQuestionTransition)
+        YouLose()
     end 
 
 end
@@ -272,7 +279,7 @@ function scene:create( event )
  
     -- create the incorrect text object and make it invisble
     incorrectObject = display.newText( "Incorrect!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
-    incorrectObject:setTextColor(255/255, 255/255, 255/255)
+    incorrectObject:setTextColor(255/255, 55/255, 55/255)
     incorrectObject.isVisible = false
  
  

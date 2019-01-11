@@ -63,6 +63,12 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
+-----------------------------------------------------------------------------------------
+-- SOUNDS
+-----------------------------------------------------------------------------------------
+-- when correct answer is pressed, sound effect will be heard
+local correctSound = audio.loadSound("Sounds/correct.mp3")
+local correctSoundChannel
 
 local wrongAnswerSound = audio.loadSound("Sounds/wrongAnswer.mp3")
 local wrongAnswerSoundChannel
@@ -74,30 +80,22 @@ local wrongAnswerSoundChannel
 local function BackToLevel2() 
     composer.hideOverlay("crossFade", 400 )
   
-    ResumeLevel1()
+    ResumeLevel2()
 end 
-
-local function nextQuestion()
-    -- go to next question
-     composer.gotoScene("level2_screen")
-end
 
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
-    userAnswer = answerText.text
     
     if (touch.phase == "ended") then
         -- they got it right
+        correctSoundChannel = audio.play(correctSound)
         correctObject.isVisible = true
-        incorrectObject.isVisible = false
         timer.performWithDelay(1000, BackToLevel2)
     end 
-    -- when correct answer is pressed, sound effect will be heard
-    local correctSound = audio.loadSound("Sounds/correct.mp3")
-    local correctSoundChannel
+    
 
-    correctSoundChannel = audio.play(correctSound)
+    
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -106,14 +104,13 @@ local function TouchListenerWrongAnswer(touch)
     
     if (touch.phase == "ended") then
         -- they got it wrong
-        correctObject.isVisible = false
         incorrectObject.isVisible = true
+        --incorrect sound 
+        wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
         numLives = numLives - 1
-        print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
         timer.performWithDelay(1000, BackToLevel2) 
     end 
-    --incorrect sound 
-    wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
+    
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -121,14 +118,13 @@ local function TouchListenerWrongAnswer2(touch)
     userAnswer = wrongText2.text
     
     if (touch.phase == "ended") then
-        correctObject.isVisible = false
         incorrectObject.isVisible = true
+        --incorrect sound 
+        wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
         numLives = numLives - 1
-        print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
         timer.performWithDelay(1000,BackToLevel2) 
     end 
-    --incorrect sound 
-    wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
+    
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -136,14 +132,13 @@ local function TouchListenerWrongAnswer3(touch)
     userAnswer = wrongText3.text
     
     if (touch.phase == "ended") then
-        correctObject.isVisible = false
         incorrectObject.isVisible = true
+        --incorrect sound 
+        wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
         numLives = numLives - 1
-        print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
         timer.performWithDelay(1000, BackToLevel2)
     end 
-    --incorrect sound 
-    wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
+    
 end
 -----------------------------------------------------------------------------
 --adding the event listeners 
@@ -333,6 +328,8 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        correctObject.isVisible = false
+        incorrectObject.isVisible = false
         DisplayQuestion()
         PositionAnswers()
         AddTextListeners()

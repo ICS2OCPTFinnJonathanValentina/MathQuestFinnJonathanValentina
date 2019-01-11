@@ -33,7 +33,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 
-character = nil
+characterName = ""
 
 
 
@@ -64,7 +64,6 @@ local bkg
 
 local userAnswer
 local textTouched = false
-
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS

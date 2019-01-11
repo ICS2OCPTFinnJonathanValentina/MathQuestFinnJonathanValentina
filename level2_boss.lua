@@ -76,6 +76,14 @@ local function NextQuestionTransition()
     composer.showOverlay( "level2_boss2", { isModal = true, effect = "fade", time = 100})
 end
 
+local function YouLose()
+    if (numLives == 0) then
+        YouLoseTransition()
+    else
+        timer.performWithDelay(1000, NextQuestionTransition)
+    end
+end
+
 local function UpdateHearts()
     print ("***numLives = " .. numLives)
     if (numLives == 3) then
@@ -101,23 +109,23 @@ end
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
-    userAnswer = answerText.text
+    
     
     if (touch.phase == "ended") then
         -- they got it right
         correctObject.isVisible = true
-        incorrectObject.isVisible = false
+    
         timer.performWithDelay(1000, NextQuestionTransition)
     end 
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer(touch)
-    userAnswer = wrongText1.text
+   
     
     if (touch.phase == "ended") then
         -- they got it wrong
-        correctObject.isVisible = false
+     
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
@@ -129,10 +137,10 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer2(touch)
-    userAnswer = wrongText2.text
+  
     
     if (touch.phase == "ended") then
-        correctObject.isVisible = false
+     
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
@@ -143,10 +151,10 @@ end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer3(touch)
-    userAnswer = wrongText3.text
+   
     
     if (touch.phase == "ended") then
-        correctObject.isVisible = false
+      
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)

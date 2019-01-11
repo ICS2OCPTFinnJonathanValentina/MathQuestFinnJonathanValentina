@@ -423,35 +423,34 @@ function scene:create( event )
     
     -- Insert the platforms
     platform1 = display.newImageRect("Images/platformLevel3.png", 250, 50)
-    platform1.x = 50
+    platform1.x = 70
     platform1.y = 550
         
     sceneGroup:insert( platform1 )
 
   
     platform2 = display.newImageRect("Images/platformLevel3.png", 150, 50)
-    platform2.x = 300
-    platform2.y = 330
+    platform2.x = 350
+    platform2.y = 400
         
     sceneGroup:insert( platform2 )
 
     platform3 = display.newImageRect("Images/platformLevel3.png", 280, 50)
     platform3.x = 890
-    platform3.y = 200
+    platform3.y = 310
     platform3.MyName = "platformWin"
         
     sceneGroup:insert( platform3 )
 
     platform4 = display.newImageRect("Images/platformLevel3.png", 180, 50)
-    platform4.x = display.contentWidth *3 / 5
-    platform4.y = display.contentHeight * 3.5 / 5
+    platform4.x = 600
+    platform4.y = 230
 
     sceneGroup:insert( platform4 )
 
     platform5 = display.newImageRect("Images/platformLevel3.png", 100, 50)
-    platform5.x = 600
-    platform5.y = 230
-
+    platform5.x = 700
+    platform5.y = 540
     sceneGroup:insert( platform5 )
 
     spikes1 = display.newImageRect("Images/Level-1Spikes1.png", 250, 50)
@@ -461,9 +460,9 @@ function scene:create( event )
         
     sceneGroup:insert( spikes1)
 
-    spikes2 = display.newImageRect("Images/Level-1Spikes1.png", 250, 50)
-    spikes2.x = 850
-    spikes2.y = 550
+    spikes2 = display.newImageRect("Images/Level-1Spikes1.png", 200, 50)
+    spikes2.x = 700
+    spikes2.y = 350
     spikes2.myName = "spikes2"
         
     sceneGroup:insert( spikes2)
@@ -554,7 +553,7 @@ function scene:create( event )
 
     --mathPuzzle1
     mathPuzzle1 = display.newImageRect ("Images/mathMonster.png", 70, 70)
-    mathPuzzle1.x = 600
+    mathPuzzle1.x = 700
     mathPuzzle1.y = 471
     mathPuzzle1.myName = "mathPuzzle1"
 
@@ -563,8 +562,8 @@ function scene:create( event )
 
     --mathPuzzle2
     mathPuzzle2 = display.newImageRect ("Images/mathMonster.png", 70, 70)
-    mathPuzzle2.x = 300
-    mathPuzzle2.y = 270
+    mathPuzzle2.x = 350
+    mathPuzzle2.y = 340
     mathPuzzle2.myName = "mathPuzzle2"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -578,6 +577,7 @@ function scene:create( event )
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( mathPuzzle3 )
+
 
  --theGlow
     theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)

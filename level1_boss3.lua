@@ -72,12 +72,22 @@ local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end 
 
+
 local function YouWinTransition()
     composer.gotoScene( "you_win" )
 end
 
 local function NextLevelTransition()
     composer.showOverlay( "level2_screen", { isModal = true, effect = "fade", time = 100})
+end
+
+--check and see if they have run out of lives, if yes then go to you lose
+local function YouLose()
+    if (numLives == 0) then
+        YouLoseTransition()
+    else
+        timer.performWithDelay(1000, NextLevelTransition)
+    end
 end
 
 -----------------------------------------------------------------------------------------
@@ -103,8 +113,7 @@ local function TouchListenerWrongAnswer(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        
-        timer.performWithDelay(1000, NextLevelTransition) 
+        YouLose()
     end 
 
 end
@@ -118,7 +127,7 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000, NextLevelTransition) 
+        YouLose()
     end 
 
 end
@@ -132,14 +141,10 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, NextQuestionTransition)
+        YouLose()
     end 
 
 end
-
-local function YouLose
-    if (numLives == 0)
-        YouLoseTransition()
 -----------------------------------------------------------------------------
 --adding the event listeners 
 local function AddTextListeners ( )
@@ -245,6 +250,7 @@ local function PositionAnswers()
         wrongText3.y = Y1        
     end
 end
+
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
