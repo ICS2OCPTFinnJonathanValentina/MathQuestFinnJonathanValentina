@@ -29,17 +29,15 @@ sceneName = "select_Character"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+characterName = ""
+
+-----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-
-characterName = ""
-
-
-
--- The local variables for this scene
-local questionText
-
+-- The local variables for this scenes
 local correctObject
 local incorrectObject
 
@@ -63,12 +61,10 @@ local bkg
 local userAnswer
 local textTouched = false
 
------------------------------------------------------------------------------------------
--- GLOBAL VARIABLES
------------------------------------------------------------------------------------------
-boyCharacter = nil
-girlCharacter = nil
-character = nil
+local textObject
+
+local boyCharacter 
+local girlCharacter
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -76,74 +72,51 @@ character = nil
 
 --making transition to next scene
 local function GoToLevel1() 
- composer.gotoScene("level1_screen")
+    composer.gotoScene("level1_screen")
 end
 
-local function nextQuestion()
-    -- go to next question
-     composer.gotoScene("level2_screen")
-end
 
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
-local function TouchListener(touch)
+local function TouchListenerBoy(touch)
     
     if (touch.phase == "ended") then
-     Character()
-     timer.performWithDelay(1000, GoToLevel1) 
-
+        characterName = "boy"
+        timer.performWithDelay(1000, GoToLevel1) 
     end
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
-local function TouchListener2(touch)
+local function TouchListenerGirl(touch)
     
     if (touch.phase == "ended") then
-     Character()
+     characterName = "girl"
      timer.performWithDelay(1000, GoToLevel1) 
     end 
-
 end
 -----------------------------------------------------------------------
 --adding the event listeners 
 local function AddListeners ( )
-    boyCharacter:addEventListener( "touch", TouchListener)
-    girlCharacter:addEventListener( "touch", TouchListener2)
+    boyCharacter:addEventListener( "touch", TouchListenerBoy)
+    girlCharacter:addEventListener( "touch", TouchListenerGirl)
 end
 
 --removing the event listeners
 local function RemoveListeners()
-    boyCharacter:removeEventListener( "touch", TouchListener)
-    girlCharacter:removeEventListener( "touch", TouchListener2)
+    boyCharacter:removeEventListener( "touch", TouchListenerBoy)
+    girlCharacter:removeEventListener( "touch", TouchListenerGirl)
 end
 
 local function PositionCharacters()
 
-    --creating random start position in a cretain area
+ --creating random start position in a cretain area
 
- boyCharacter.x = 270
- boyCharacter.y = 350
+    boyCharacter.x = 270
+    boyCharacter.y = 350
             
- girlCharacter.x = 750
- girlCharacter.y = 350
+    girlCharacter.x = 750
+    girlCharacter.y = 350
 end
-
-
-----------------------------------------------------------------------------------------
--- GLOBAL VARIABLES
-----------------------------------------------------------------------------------------
-
-function Character()
-    if (character == boyCharacter) then
-        character = display.newImage("Images/BoyCharacterValentina.png")
-        character.isVisible = false
-    elseif (character == girlCharacter) then
-        character = display.newImage ("Images/GirlCharacterValentina.png")
-        character.isVisible = false
-    end
-end
-
-
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -163,13 +136,13 @@ function scene:create( event )
 
     -----------------------------------------------------------------------------------------
     boyCharacter = display.newImageRect("Images/BoyCharacterValentina.png", 200, 365)
-    boyCharacter.x = 270
-    boyCharacter.y = 550
+    boyCharacter.x = 300
+    boyCharacter.y = 400
 
 
     girlCharacter = display.newImageRect("Images/GirlCharacterValentina.png", 200, 365)
-    --girlCharacter.x = 750
-    --girlCharacter.y = 400
+    girlCharacter.x = 720
+    girlCharacter.y = 400
 
 
     textObject = display.newText( "Choose your Quester", 510, 650, nil, 50)
@@ -203,8 +176,7 @@ function scene:show( event )
     elseif ( phase == "did" ) then
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
-        -- Example: start timers, begin animation, play audio, etc.
-        PositionCharacters()
+        -- Example: start timers, begin animation, play audio, etc.       
         AddListeners()
     end
 
