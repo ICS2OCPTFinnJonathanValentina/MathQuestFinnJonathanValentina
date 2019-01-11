@@ -64,7 +64,8 @@ local spikes1platform
 local spikes2platform
 local spikes3platform
 
-local character
+character = nil
+numLives = 3
 
 local heart1
 local heart2
@@ -81,6 +82,7 @@ local GRAVITY = 7
 
 local leftW 
 local topW
+local rightW
 local floor
 
 local mathPuzzle1
@@ -256,6 +258,7 @@ local function onCollision( self, event )
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
             RemoveRuntimeListeners()
+            --RemoveCollisionListeners()
 
             -- remove the character from the display
             display.remove(character)
@@ -348,6 +351,8 @@ local function AddCollisionListeners()
 
     finalBoss.collision = onCollision
     finalBoss:addEventListener( "collision" )
+
+    
 end
 
 local function RemoveCollisionListeners()
@@ -379,6 +384,8 @@ local function AddPhysicsBodies()
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
+    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
+
 
     physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
@@ -403,6 +410,8 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
+    physics.removeBody(rightW)
+
 end
 
 -----------------------------------------------------------------------------------------
@@ -751,7 +760,7 @@ function scene:hide( event )
         display.remove(character)
         
         physics.stop()
-        RemoveArrowEventListeners()
+        --RemoveArrowEventListeners()
         RemoveRuntimeListeners()
     end
 end --function scene:hide( event )

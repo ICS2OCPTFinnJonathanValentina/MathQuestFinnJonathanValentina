@@ -21,7 +21,7 @@ local physics = require("physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level3_screen"
+sceneName = "final_boss"
 
 -----------------------------------------------------------------------------------------
 
@@ -187,12 +187,6 @@ local function ReplaceCharacter()
     AddRuntimeListeners()
 end
 
-local function MakeMathPuzzlesVisible()
-    mathPuzzle1.isVisible = true
-    mathPuzzle2.isVisible = true
-    mathPuzzle3.isVisible = true
-end
-
 local function MakeHeartsVisible()
     heart2.isVisible = true
     heart3.isVisible = true
@@ -264,32 +258,7 @@ local function onCollision( self, event )
 
             if (numLives >= 0) then
                 timer.performWithDelay(200, ReplaceCharacter)
-            end
-        end
-
-        if  (event.target.myName == "mathPuzzle1") or
-            (event.target.myName == "mathPuzzle2") or
-            (event.target.myName == "mathPuzzle3") then
-
-            -- get the ball that the user hit
-            theMathPuzzle = event.target
-
-            -- stop the character from moving
-            motionx = 0
-
-            -- make the character invisible
-            character.isVisible = false
-
-            -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1 
-
-            print("***questions answered = " .. questionsAnswered)
-
-            -- show overlay with math question
-            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
-
-                    
-            
+            end    
         end       
     end
 end
@@ -303,12 +272,12 @@ local function AddCollisionListeners()
     spikes2:addEventListener( "collision" )
 
     -- if character collides with ball, onCollision will be called    
-    mathPuzzle1.collision = onCollision
-    mathPuzzle1:addEventListener( "collision" )
-    mathPuzzle2.collision = onCollision
-    mathPuzzle2:addEventListener( "collision" )
-    mathPuzzle3.collision = onCollision
-    mathPuzzle3:addEventListener( "collision" )
+    --mathPuzzle1.collision = onCollision
+    --mathPuzzle1:addEventListener( "collision" )
+    --mathPuzzle2.collision = onCollision
+    --mathPuzzle2:addEventListener( "collision" )
+    --mathPuzzle3.collision = onCollision
+    --mathPuzzle3:addEventListener( "collision" )
 
 
 end
@@ -317,9 +286,9 @@ local function RemoveCollisionListeners()
     spikes1:removeEventListener( "collision" )
     spikes2:removeEventListener( "collision" )
 
-    mathPuzzle1:removeEventListener( "collision" )
-    mathPuzzle2:removeEventListener( "collision" )
-    mathPuzzle3:removeEventListener( "collision" )
+    --mathPuzzle1:removeEventListener( "collision" )
+    --mathPuzzle2:removeEventListener( "collision" )
+    --mathPuzzle3:removeEventListener( "collision" )
 
 end
 
@@ -341,10 +310,7 @@ local function AddPhysicsBodies()
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
-
-    physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
 end
 
 
@@ -535,33 +501,6 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( floor )
 
-    --mathPuzzle1
-    mathPuzzle1 = display.newImageRect ("Images/mathMonster.png", 70, 70)
-    mathPuzzle1.x = 600
-    mathPuzzle1.y = 471
-    mathPuzzle1.myName = "mathPuzzle1"
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( mathPuzzle1 )
-
-    --mathPuzzle2
-    mathPuzzle2 = display.newImageRect ("Images/mathMonster.png", 70, 70)
-    mathPuzzle2.x = 300
-    mathPuzzle2.y = 270
-    mathPuzzle2.myName = "mathPuzzle2"
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( mathPuzzle2 )
-
-    --mathPuzzle3
-    mathPuzzle3 = display.newImageRect ("Images/mathMonster.png", 70, 70)
-    mathPuzzle3.x = 600
-    mathPuzzle3.y = 170
-    mathPuzzle3.myName = "mathPuzzle3"
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( mathPuzzle3 )
-
  --theGlow
     theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)
     theGlow.x = 950
@@ -639,7 +578,6 @@ function scene:show( event )
         questionsAnswered = 0
 
         -- make all soccer balls visible
-        MakeMathPuzzlesVisible()
 
         -- make all lives visible
         MakeHeartsVisible()

@@ -24,6 +24,15 @@ sceneName = "you_win"
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 
+
+-----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
+
+-- when this screen is shown, you win sound effect is heard
+local youWinSound = audio.loadSound("Sounds/youWin.mp3")
+local youWinSoundChannel
+
 -----------------------------------------------------------------------------------------
 -- FORWARD REFERENCES
 -----------------------------------------------------------------------------------------
@@ -84,14 +93,13 @@ function scene:show( event )
 
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
-        -- Example: start timers, begin animation, play audio, etc.
+        -- Example: start timers, begin animation, play audio, etc. 
+        youWinSoundChannel = audio.play(youWinSound)
     end
 
-    -- when this screen is shown, you win sound effect is heard
-    local youWinSound = audio.loadSound("Sounds/youWin.mp3")
-    local youWinSoundChannel
 
-    youWinSoundChannel = audio.play(youWinSound)
+
+   
 end
 
 -----------------------------------------------------------------------------------------
@@ -112,7 +120,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-
+        audio.stop(youWinSoundChannel)
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then

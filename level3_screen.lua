@@ -252,6 +252,7 @@ local function onCollision( self, event )
             (event.target.myName == "spikes3") then
 
             -- add sound effect here
+            print("***hit the spikes")
 
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
@@ -274,6 +275,7 @@ local function onCollision( self, event )
             (event.target.myName == "mathPuzzle2") or
             (event.target.myName == "mathPuzzle3") then
 
+            print("***hit the math puzzle")
             -- get the ball that the user hit
             theMathPuzzle = event.target
 
@@ -299,7 +301,7 @@ local function onCollision( self, event )
             --check to see if the user has answered 5 questions
             --Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
 
-            print("***questions answered = " .. questionsAnswered)
+            print("***Hit the glow")
 
              -- make the character invisible
             character.isVisible = false
@@ -338,6 +340,7 @@ local function RemoveCollisionListeners()
     mathPuzzle1:removeEventListener( "collision" )
     mathPuzzle2:removeEventListener( "collision" )
     mathPuzzle3:removeEventListener( "collision" )
+    theGlow:removeEventListener("collision")
 end
 
 local function AddPhysicsBodies()
@@ -348,7 +351,7 @@ local function AddPhysicsBodies()
     physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform5, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
-    physics.addBody(theGlow)
+    physics.addBody(theGlow, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
     physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
@@ -380,6 +383,8 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
+
+    physics.removeBody(theGlow)
 end
 
 -----------------------------------------------------------------------------------------
@@ -582,7 +587,7 @@ function scene:create( event )
  --theGlow
     theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)
     theGlow.x = 950
-    theGlow.y = 100
+    theGlow.y = 230
     theGlow.myName = "theGlow"
 
 
@@ -651,6 +656,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+
         questionsAnswered = 0
 
         -- make all soccer balls visible
