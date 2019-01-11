@@ -708,7 +708,6 @@ function scene:show( event )
 
         backgroundSoundChannel = audio.play(backgroundSound, { channel=1, loops=-1 } )
 
-        Character()
     end
 
 

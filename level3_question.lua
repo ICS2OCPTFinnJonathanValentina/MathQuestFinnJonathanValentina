@@ -92,7 +92,7 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-        timer.performWithDelay(1000, BackToLevel1)
+        timer.performWithDelay(1000, BackToLevel3)
     end 
     -- when correct answer is pressed, sound effect will be heard
     local correctSound = audio.loadSound("Sounds/correct.mp3")
