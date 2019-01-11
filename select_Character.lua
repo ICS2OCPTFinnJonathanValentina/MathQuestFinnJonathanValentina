@@ -89,7 +89,7 @@ end
 local function TouchListener(touch)
     
     if (touch.phase == "ended") then
-     character = boyCharacter
+     Character()
      timer.performWithDelay(1000, GoToLevel1) 
 
     end
@@ -99,8 +99,8 @@ end
 local function TouchListener2(touch)
     
     if (touch.phase == "ended") then
-    character = girlCharacter
-    timer.performWithDelay(1000, GoToLevel1) 
+     Character()
+     timer.performWithDelay(1000, GoToLevel1) 
     end 
 
 end
@@ -136,8 +136,10 @@ end
 function Character()
     if (character == boyCharacter) then
         character = display.newImage("Images/BoyCharacterValentina.png")
+        character.isVisible = false
     elseif (character == girlCharacter) then
         character = display.newImage ("Images/GirlCharacterValentina.png")
+        character.isVisible = false
     end
 end
 
