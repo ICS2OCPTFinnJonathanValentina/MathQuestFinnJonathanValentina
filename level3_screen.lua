@@ -657,9 +657,6 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
-        --****TEMPORARY TESTING: DELETE THIS LINE AFTER
-        numLives = 3
-
         questionsAnswered = 0
 
         -- make all soccer balls visible
