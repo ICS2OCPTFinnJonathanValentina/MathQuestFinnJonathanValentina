@@ -64,7 +64,8 @@ local spikes1platform
 local spikes2platform
 local spikes3platform
 
-local character
+character = nil
+numLives = 3
 
 local heart1
 local heart2
@@ -257,6 +258,7 @@ local function onCollision( self, event )
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
             RemoveRuntimeListeners()
+            --RemoveCollisionListeners()
 
             -- remove the character from the display
             display.remove(character)
@@ -349,6 +351,8 @@ local function AddCollisionListeners()
 
     finalBoss.collision = onCollision
     finalBoss:addEventListener( "collision" )
+
+    
 end
 
 local function RemoveCollisionListeners()
@@ -756,7 +760,7 @@ function scene:hide( event )
         display.remove(character)
         
         physics.stop()
-        RemoveArrowEventListeners()
+        --RemoveArrowEventListeners()
         RemoveRuntimeListeners()
     end
 end --function scene:hide( event )
