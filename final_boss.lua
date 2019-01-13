@@ -93,7 +93,8 @@ local questionsAnswered = 0
 
 local backButton
 
-
+local finalBoss
+local theFinalBoss
 
 
 
@@ -193,10 +194,6 @@ local function MakeHeartsVisible()
 end
 
 
-local function  MakeTheGlowVisible()
-    theGlow.isVisible = true
-end
-
 local function BackTransition()
     composer.gotoScene( "main_menu")
 end
@@ -255,10 +252,28 @@ local function onCollision( self, event )
             numLives = numLives - 1
 
             UpdateHearts()
-
             if (numLives >= 0) then
                 timer.performWithDelay(200, ReplaceCharacter)
-            end    
+            end
+        end
+
+        if (event.target.myName == "theBoss") then
+
+            -- get the puzzle that the user hit
+            theFinalBoss = event.target
+
+
+            -- make the character invisible
+            character.isVisible = false
+
+            -- show overlay with math question
+            composer.showOverlay( "final_boss_questions", { isModal = true, effect = "fade", time = 100})
+
+
+            if (questionsAnswered == 4) then
+            
+              print("***questions answered = " .. questionsAnswered)
+            end      
         end       
     end
 end
@@ -270,6 +285,10 @@ local function AddCollisionListeners()
     spikes1:addEventListener( "collision" )
     spikes2.collision = onCollision
     spikes2:addEventListener( "collision" )
+
+    finalBoss.collision = onCollision
+    finalBoss:addEventListener( "collision" )
+
 
     -- if character collides with ball, onCollision will be called    
     --mathPuzzle1.collision = onCollision
@@ -300,7 +319,7 @@ local function AddPhysicsBodies()
     physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform5, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
-    physics.addBody(theGlow)
+    physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
 
     physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
@@ -329,6 +348,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
+    physics.removeBody(rightW)
 end
 
 -----------------------------------------------------------------------------------------
@@ -386,7 +406,7 @@ function scene:create( event )
 
     platform3 = display.newImageRect("Images/platformLevel3.png", 280, 50)
     platform3.x = 890
-    platform3.y = 200
+    platform3.y = 400
     platform3.MyName = "platformWin"
         
     sceneGroup:insert( platform3 )
@@ -410,9 +430,9 @@ function scene:create( event )
         
     sceneGroup:insert( spikes1)
 
-    spikes2 = display.newImageRect("Images/Level-1Spikes1.png", 250, 50)
-    spikes2.x = 850
-    spikes2.y = 550
+    spikes2 = display.newImageRect("Images/Level-1Spikes1.png", 175, 50)
+    spikes2.x = display.contentWidth * 4.8 / 8
+    spikes2.y = 490
     spikes2.myName = "spikes2"
         
     sceneGroup:insert( spikes2)
@@ -501,14 +521,14 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( floor )
 
- --theGlow
-    theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)
-    theGlow.x = 950
-    theGlow.y = 100
-    theGlow.myName = "theGlow"
+ --Final boss
+    finalBoss = display.newImageRect ("Images/BossFinnL@2x.png", 200, 200)
+    finalBoss.x = 875
+    finalBoss.y = 275
+    finalBoss.myName = "theBoss"
 
-
-    sceneGroup:insert( theGlow )
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( finalBoss )
 
 
     -----------------------------------------------------------------------------------------
@@ -590,8 +610,6 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
-
-        MakeTheGlowVisible()
 
         --audio.play(backgroundSound)
     end

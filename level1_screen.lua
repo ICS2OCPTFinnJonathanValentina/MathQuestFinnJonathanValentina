@@ -165,9 +165,9 @@ local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
 
     if (characterName == "boy") then
-        character = display.newImage("Images/BoyCharacterValentina.png", 50, 50)
+        character = display.newImageRect("Images/BoyCharacterValentina.png", 50, 50)
     else
-        character = display.newImage("Images/GirlCharacterValentina.png", 10, 10)
+        character = display.newImageRect("Images/GirlCharacterValentina.png", 50, 50)
     end
     
     
