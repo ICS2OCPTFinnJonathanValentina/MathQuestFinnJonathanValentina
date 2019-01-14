@@ -165,12 +165,16 @@ local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
 
     if (characterName == "boy") then
-        character = display.newImageRect("Images/BoyCharacterValentina.png", 50, 50)
+        character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
+        character.x = 100
+        character.y = 100
     else
-        character = display.newImageRect("Images/GirlCharacterValentina.png", 50, 50)
+        character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
+        character.x = 100
+        character.y = 100
+
     end
-    
-    
+        
     -- intialize horizontal movement of character
     motionx = 0
     -- add physics body
@@ -712,15 +716,16 @@ function scene:show( event )
         MakeTheGlowVisible()
 
         backgroundSoundChannel = audio.play(backgroundSound, { channel=1, loops=-1 } )
-    end
-end 
 
---function scene:show( event )
+       -- Character()
+    end
+
+
+end --function scene:show( event )
 
 -----------------------------------------------------------------------------------------
 
--- The function called when the scene is issued to leave the screen`
-
+-- The function called when the scene is issued to leave the screen
 function scene:hide( event )
 
     -- Creating a group that associates objects with the scene

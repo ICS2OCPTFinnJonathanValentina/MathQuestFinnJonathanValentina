@@ -39,6 +39,9 @@ local bkg
 local sound = audio.loadSound( "Sounds/battle003.mp3")
 local soundChannel
 
+local function BackTransition()
+    composer.gotoScene( "main_menu")
+end
 --------------------------------------------------------------------------------------
 -- The function called when the screen doesn't exist
 function scene:create( event )
@@ -54,8 +57,37 @@ function scene:create( event )
     bkg.height = display.contentHeight
    
     -- Associating display objects with this scene 
+    
     sceneGroup:insert( bkg )
-  
+
+    -----------------------------------------------------------------------------------------
+    -- BUTTON WIDGETS
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Back Button
+    backButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth * 2 / 24,
+        y = display.contentHeight * 15 / 17,
+
+        -- Setting Dimensions
+         width = 100,
+         height = 100,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/BackButtonUnpressedFinnL.png",
+        overFile = "Images/BackButtonPressedFinnL.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+
+    } )
+
+    -----------------------------------------------------------------------------------------
+
+    -- Associating Buttons with this scene
+    sceneGroup:insert( backButton )
 end    
 
 -----------------------------------------------------------------------------------------

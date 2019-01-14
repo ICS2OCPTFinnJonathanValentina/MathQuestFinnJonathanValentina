@@ -135,12 +135,12 @@ function scene:create( event )
 
 
     -----------------------------------------------------------------------------------------
-    boyCharacter = display.newImageRect("Images/BoyCharacterValentina.png", 200, 365)
+    boyCharacter = display.newImageRect("Images/BoyCharacterValentina.png", 200, 400)
     boyCharacter.x = 300
     boyCharacter.y = 400
 
 
-    girlCharacter = display.newImageRect("Images/GirlCharacterValentina.png", 200, 365)
+    girlCharacter = display.newImageRect("Images/GirlCharacterValentina.png", 200, 400)
     girlCharacter.x = 720
     girlCharacter.y = 400
 
