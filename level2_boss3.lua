@@ -77,7 +77,7 @@ local function YouWinTransition()
 end
 
 local function NextLevelTransition1()
-    composer.showOverlay( "level3_screen", { isModal = true, effect = "fade", time = 100})
+    composer.gotoScene( "level2_screen", { isModal = true, effect = "fade", time = 100})
 end
 
 -----------------------------------------------------------------------------------------
