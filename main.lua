@@ -22,6 +22,10 @@ composer.gotoScene( "level1_screen" )
 --composer.gotoScene( "final_screen" )
 
 
+--composer.gotoScene( "level1_screen" )
 
---composer.gotoScene( "main_menu" )
+
+--composer.gotoScene( "final_boss" )
+
+--composer.gotoScene( "splash_screen" )
 
