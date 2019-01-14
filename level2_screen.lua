@@ -170,7 +170,7 @@ local function ReplaceCharacter()
         character.y = 100
     else
         character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
-        character.x = 800
+        character.x = 999
         character.y = 100
 
     end
