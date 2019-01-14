@@ -174,9 +174,7 @@ local function ReplaceCharacter()
         character.y = 100
 
     end
-    
-    character = display.newImageRect("Images/GirlCharacterValentina.png", 100, 155)
-    
+        
     -- intialize horizontal movement of character
     motionx = 0
     -- add physics body
