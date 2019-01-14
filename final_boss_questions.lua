@@ -1,11 +1,11 @@
 -----------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
--- Created by: Allison
+-- Created by: Jonathan Kene
 -- Date: May 16, 2017
 -- Description: This is the level 1 screen of the game. the charater can be dragged to move
 --If character goes off a certain araea they go back to the start. When a user interactes
---with piant a trivia question will come up. they will have a limided time to click on the answer
+--with piant a trivia question will come up. they will have a limited time to click on the answer
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level2_boss"
+sceneName = "final_boss_questions"
 
 -----------------------------------------------------------------------------------------
 
@@ -63,6 +63,10 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
+-----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+numAnswered = 0
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -72,8 +76,14 @@ local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end 
 
+local function YouWinTransition()
+    composer.gotoScene( "you_win" )
+end 
+
+
 local function NextQuestionTransition()
-    composer.showOverlay( "level2_boss2", { isModal = true, effect = "fade", time = 100})
+    print("***Called level1_boss2")
+    composer.showOverlay( "final_boss_questions", { isModal = true, effect = "fade", time = 100})
 end
 
 local function YouLose()
@@ -84,81 +94,93 @@ local function YouLose()
     end
 end
 
-local function UpdateHearts()
-    print ("***numLives = " .. numLives)
-    if (numLives == 3) then
-        heart1.isVisible = true
-        heart2.isVisible = true
-        heart3.isVisible = true
-    elseif (numLives == 2) then
-        heart1.isVisible = true
-        heart2.isVisible = true
-        heart3.isVisible = false
-    elseif (numLives == 1) then
-        heart1.isVisible = true
-        heart2.isVisible = false
-        heart3.isVisible = false
-    elseif (numLives == 0) then
-        heart1.isVisible = false
-        heart2.isVisible = false
-        heart3.isVisible = false
-        character.isVisible = false
-        --youLoseSoundChannel = audio.play(YouLose)       
-    end 
+local function QuestionMax()
+    if (numAnswered == 5) then
+        -- call function to make them win
+        timer.performWithDelay(1000, YouWinTransition)
+    end
 end
+
+
+
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
-    
+    userAnswer = answerText.text
     
     if (touch.phase == "ended") then
+        --keeps track of questions answered
+        numAnswered = numAnswered + 1
+
+        --check amount of questions asked
+        QuestionMax()
         -- they got it right
         correctObject.isVisible = true
-    
+        incorrectObject.isVisible = false
         timer.performWithDelay(1000, NextQuestionTransition)
     end 
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer(touch)
-   
+    userAnswer = wrongText1.text
     
     if (touch.phase == "ended") then
+
+        --keeps track of questions answered
+        numAnswered = numAnswered + 1    
         -- they got it wrong
-     
+         correctObject.isVisible = false
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        
-        timer.performWithDelay(1000, youLose) 
+        YouLose() 
+        UpdateHearts()
+        --check amount of questions asked
+        QuestionMax()
     end 
-
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer2(touch)
-  
+    userAnswer = wrongText2.text
     
     if (touch.phase == "ended") then
-     
+
+
+        --keeps track of questions answered
+        numAnswered = numAnswered + 1
+
+        --they got it wrong    
+        correctObject.isVisible = false
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000, youLose) 
+        YouLose()
+        UpdateHearts()
+        --check amount of questions asked
+        QuestionMax()
     end 
-
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer3(touch)
-   
+    userAnswer = wrongText3.text
     
     if (touch.phase == "ended") then
-      
+
+        --keeps track of questions answered
+        numAnswered = numAnswered + 1
+
+        --they got it wrong    
+        correctObject.isVisible = false
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, youLose)
+        YouLose()
+        UpdateHearts()
+        --check amount of questions asked
+        QuestionMax()
     end 
 
 end
@@ -268,6 +290,31 @@ local function PositionAnswers()
     end
 end
 
+
+local function UpdateHearts()
+    print ("***numLives = " .. numLives)
+    if (numLives == 3) then
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = true
+    elseif (numLives == 2) then
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = false
+    elseif (numLives == 1) then
+        heart1.isVisible = true
+        heart2.isVisible = false
+        heart3.isVisible = false
+    elseif (numLives == 0) then
+        heart1.isVisible = false
+        heart2.isVisible = false
+        heart3.isVisible = false
+        character.isVisible = false
+        timer.performWithDelay(100, YouLoseTransition)
+        --youLoseSoundChannel = audio.play(YouLose)       
+    end 
+end
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -302,7 +349,7 @@ function scene:create( event )
  
     -- create the incorrect text object and make it invisble
     incorrectObject = display.newText( "Incorrect!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
-    incorrectObject:setTextColor(255/255, 255/255, 255/255)
+    incorrectObject:setTextColor(255/255, 55/255, 55/255)
     incorrectObject.isVisible = false
  
  
@@ -315,6 +362,29 @@ function scene:create( event )
     wrongText2.anchorX = 0
     wrongText3 = display.newText("", X2, Y2, Arial, 75)
     wrongText3.anchorX = 0
+
+    -- Insert the Hearts
+    heart1 = display.newImageRect("Images/heart.png", 80, 80)
+    heart1.x = 210
+    heart1.y = 50
+    heart1.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart1 )
+
+    heart2 = display.newImageRect("Images/heart.png", 80, 80)
+    heart2.x = 310
+    heart2.y = 50
+    heart2.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart2 )
+
+    heart3 = display.newImageRect("Images/heart.png", 80, 80)
+    heart3.x = 410
+    heart3.y = 50
+    heart3.isVisible = true
+
 
     -----------------------------------------------------------------------------------------
 
@@ -355,6 +425,7 @@ function scene:show( event )
         DisplayQuestion()
         PositionAnswers()
         AddTextListeners()
+        UpdateHearts()
     end
 
 end --function scene:show( event )

@@ -175,6 +175,7 @@ local function ReplaceCharacter()
 
     end
     
+    character = display.newImageRect("Images/GirlCharacterValentina.png", 100, 155)
     
     -- intialize horizontal movement of character
     motionx = 0
@@ -717,15 +718,16 @@ function scene:show( event )
         MakeTheGlowVisible()
 
         backgroundSoundChannel = audio.play(backgroundSound, { channel=1, loops=-1 } )
-    end
-end 
 
---function scene:show( event )
+       -- Character()
+    end
+
+
+end --function scene:show( event )
 
 -----------------------------------------------------------------------------------------
 
--- The function called when the scene is issued to leave the screen`
-
+-- The function called when the scene is issued to leave the screen
 function scene:hide( event )
 
     -- Creating a group that associates objects with the scene
