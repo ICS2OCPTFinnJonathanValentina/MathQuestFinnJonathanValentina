@@ -187,6 +187,8 @@ local function ReplaceCharacter()
     AddRuntimeListeners()
 end
 
+
+
 local function MakeHeartsVisible()
     heart2.isVisible = true
     heart3.isVisible = true
@@ -300,7 +302,7 @@ local function AddPhysicsBodies()
     physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform5, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
-    physics.addBody(theGlow)
+    --physics.addBody(theGlow)
 
     physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
@@ -386,7 +388,7 @@ function scene:create( event )
 
     platform3 = display.newImageRect("Images/platformLevel3.png", 280, 50)
     platform3.x = 890
-    platform3.y = 200
+    platform3.y = 350
     platform3.MyName = "platformWin"
         
     sceneGroup:insert( platform3 )
