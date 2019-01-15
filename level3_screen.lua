@@ -4,7 +4,7 @@
 -- level1_screen.lua
 -- Created by: Ms Raffin
 -- Date: Nov. 22nd, 2014
--- Description: This is the level 3 screen of the game.
+-- Description: This is the level 1 screen of the game.
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -37,13 +37,14 @@ local scene = composer.newScene( sceneName )
 
 
 -- background sound
---local backgroundSound = audio.loadSound("Sounds/level.1.mp3")
---local backgroundSoundChannel
+local backgroundSound = audio.loadSound("Sounds/bkg2.mp3")
+local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
 
+numLives = 3
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -63,8 +64,6 @@ local spikes2
 local spikes1platform
 local spikes2platform
 local spikes3platform
-
-local character
 
 local heart1
 local heart2
@@ -92,8 +91,9 @@ local questionsAnswered = 0
 
 local backButton
 
-
-
+local character
+local finalBoss
+local theFinalBoss
 
 
 -----------------------------------------------------------------------------------------
@@ -139,10 +139,6 @@ local function YouWinTransition()
     composer.gotoScene( "you_win" )
 end
 
-local function NextLevelTransition()
-    composer.gotoScene( "you_win" )
-end
-
 local function AddArrowEventListeners()
     rArrow:addEventListener("touch", right)
     lArrow:addEventListener("touch", left)
@@ -168,13 +164,18 @@ end
 
 local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
-    character = display.newImageRect("Images/BoyCharacterValentina.png", 100, 150)
-    character.x = display.contentWidth * 0.5 / 6
-    character.y = display.contentHeight  * 0.5 / 2
-    character.width = 75
-    character.height = 100
-    character.myName = "BoyQuest"
 
+    if (characterName == "boy") then
+        character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
+        character.x = 100
+        character.y = 100
+    else
+        character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
+        character.x = 100
+        character.y = 100
+
+    end
+        
     -- intialize horizontal movement of character
     motionx = 0
     -- add physics body
@@ -201,6 +202,9 @@ local function MakeHeartsVisible()
     heart3.isVisible = true
 end
 
+local function  MakeFinalBossVisible()
+    finalBoss.isVisible = true
+end
 
 local function  MakeTheGlowVisible()
     theGlow.isVisible = true
@@ -252,7 +256,6 @@ local function onCollision( self, event )
             (event.target.myName == "spikes3") then
 
             -- add sound effect here
-            print("***hit the spikes")
 
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
@@ -275,7 +278,6 @@ local function onCollision( self, event )
             (event.target.myName == "mathPuzzle2") or
             (event.target.myName == "mathPuzzle3") then
 
-            print("***hit the math puzzle")
             -- get the ball that the user hit
             theMathPuzzle = event.target
 
@@ -299,21 +301,43 @@ local function onCollision( self, event )
 
         if (event.target.myName == "theGlow") then
             --check to see if the user has answered 5 questions
-            --Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
+            if (questionsAnswered == 3) then
+                Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
 
-            print("***Hit the glow")
+                print("***questions answered = " .. questionsAnswered)
 
-             -- make the character invisible
+                -- make the character invisible
+                character.isVisible = false
+
+                timer.performWithDelay(200, YouWinTransition)
+            end
+        end        
+
+        if (event.target.myName == "theBoss") then
+
+            -- get the puzzle that the user hit
+            theFinalBoss = event.target
+
+
+            -- make the character invisible
             character.isVisible = false
 
-            timer.performWithDelay(200, NextLevelTransition)
-        end            
+            -- show overlay with math question
+            composer.showOverlay( "level2_boss", { isModal = true, effect = "fade", time = 100})
+
+
+            if (questionsAnswered == 4) then
+            
+              print("***questions answered = " .. questionsAnswered)
+            end
+        end      
+
     end
 end
 
 
 local function AddCollisionListeners()
-    -- if character collides with spikes, onCollision will be called
+    -- if character collides with ball, onCollision will be called
     spikes1.collision = onCollision
     spikes1:addEventListener( "collision" )
     spikes2.collision = onCollision
@@ -327,31 +351,30 @@ local function AddCollisionListeners()
     mathPuzzle3.collision = onCollision
     mathPuzzle3:addEventListener( "collision" )
 
-     -- if character collides with glow, onCollision will be called
-     theGlow.collision = onCollision
-     theGlow:addEventListener("collision") 
-
-
+    --finalBoss.collision = onCollision
+    --finalBoss:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
     spikes1:removeEventListener( "collision" )
     spikes2:removeEventListener( "collision" )
+
     mathPuzzle1:removeEventListener( "collision" )
     mathPuzzle2:removeEventListener( "collision" )
     mathPuzzle3:removeEventListener( "collision" )
-    theGlow:removeEventListener("collision")
+
+    --finalBoss:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
     --add to the physics engine
-    physics.addBody( platform1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
+    --physics.addBody( platform1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform3, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform5, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
-    physics.addBody(theGlow, "static", { density=1.0, friction=0.3, bounce=0.2 } )
+
 
     physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
@@ -365,11 +388,13 @@ local function AddPhysicsBodies()
     physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
+
+    --physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
 end
 
 
 local function RemovePhysicsBodies()
-    physics.removeBody(platform1)
+    --physics.removeBody(platform1)
     physics.removeBody(platform2)
     physics.removeBody(platform3)
     physics.removeBody(platform4)
@@ -383,8 +408,6 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
-
-    physics.removeBody(theGlow)
 end
 
 -----------------------------------------------------------------------------------------
@@ -402,7 +425,13 @@ function ResumeLevel1()
             theMathPuzzle.isVisible = false
         end
     end
-
+      
+    if (questionsAnswered > 0) then
+        if (theFinalBoss ~= nil) and (theFinalBoss.isBodyActive == true) then
+            physics.removeBody(theFinalBoss)
+            theFinalBoss.isVisible = false
+        end
+    end
 
     UpdateHearts()
 end
@@ -427,16 +456,16 @@ function scene:create( event )
     sceneGroup:insert( bkg_image )    
     
     -- Insert the platforms
-    platform1 = display.newImageRect("Images/platformLevel3.png", 250, 50)
-    platform1.x = 70
-    platform1.y = 550
+    --platform1 = display.newImageRect("Images/platformLevel3.png", 250, 50)
+    --platform1.x = 70
+    --platform1.y = 300
         
-    sceneGroup:insert( platform1 )
+    --sceneGroup:insert( platform1 )
 
   
     platform2 = display.newImageRect("Images/platformLevel3.png", 150, 50)
-    platform2.x = 350
-    platform2.y = 400
+    platform2.x = 150
+    platform2.y = 550
         
     sceneGroup:insert( platform2 )
 
@@ -448,14 +477,14 @@ function scene:create( event )
     sceneGroup:insert( platform3 )
 
     platform4 = display.newImageRect("Images/platformLevel3.png", 180, 50)
-    platform4.x = 600
+    platform4.x = 600        
     platform4.y = 230
 
     sceneGroup:insert( platform4 )
 
     platform5 = display.newImageRect("Images/platformLevel3.png", 100, 50)
-    platform5.x = 700
-    platform5.y = 540
+    platform5.x = 300
+    platform5.y = 300
     sceneGroup:insert( platform5 )
 
     spikes1 = display.newImageRect("Images/Level-1Spikes1.png", 250, 50)
@@ -466,8 +495,8 @@ function scene:create( event )
     sceneGroup:insert( spikes1)
 
     spikes2 = display.newImageRect("Images/Level-1Spikes1.png", 200, 50)
-    spikes2.x = 700
-    spikes2.y = 350
+    spikes2.x = 450
+    spikes2.y = 300
     spikes2.myName = "spikes2"
         
     sceneGroup:insert( spikes2)
@@ -558,8 +587,8 @@ function scene:create( event )
 
     --mathPuzzle1
     mathPuzzle1 = display.newImageRect ("Images/mathMonster.png", 70, 70)
-    mathPuzzle1.x = 700
-    mathPuzzle1.y = 471
+    mathPuzzle1.x = 150
+    mathPuzzle1.y = 480
     mathPuzzle1.myName = "mathPuzzle1"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -567,8 +596,8 @@ function scene:create( event )
 
     --mathPuzzle2
     mathPuzzle2 = display.newImageRect ("Images/mathMonster.png", 70, 70)
-    mathPuzzle2.x = 350
-    mathPuzzle2.y = 340
+    mathPuzzle2.x = 300
+    mathPuzzle2.y = 240
     mathPuzzle2.myName = "mathPuzzle2"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene

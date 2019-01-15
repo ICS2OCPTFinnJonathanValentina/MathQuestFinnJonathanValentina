@@ -1,4 +1,4 @@
------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
 -- Created by: Ms Raffin
@@ -20,7 +20,7 @@ local physics = require("physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_screen"
+sceneName = "level2_screen"
 
 -----------------------------------------------------------------------------------------
 
@@ -166,11 +166,11 @@ local function ReplaceCharacter()
 
     if (characterName == "boy") then
         character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
-        character.x = 800
+        character.x = 600
         character.y = 100
     else
         character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
-        character.x = 999
+        character.x = 600
         character.y = 100
 
     end
@@ -197,6 +197,7 @@ local function MakeMathPuzzlesVisible()
 end
 
 local function MakeHeartsVisible()
+    heart1.isVisible = true
     heart2.isVisible = true
     heart3.isVisible = true
 end
@@ -322,7 +323,7 @@ local function onCollision( self, event )
             character.isVisible = false
 
             -- show overlay with math question
-            composer.showOverlay( "level2_boss", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
 
 
             if (questionsAnswered == 4) then

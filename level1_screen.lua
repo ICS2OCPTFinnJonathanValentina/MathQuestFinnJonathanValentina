@@ -318,12 +318,12 @@ local function onCollision( self, event )
             theFinalBoss = event.target
 
 
-            -- make the character invisible
-            character.isVisible = false
 
             -- show overlay with math question
             composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
 
+            -- make the character invisible
+            character.isVisible = false
 
             if (questionsAnswered == 4) then
             
@@ -613,7 +613,7 @@ function scene:create( event )
 
  --mathPuzzle3
     finalBoss = display.newImageRect ("Images/FinalBossFinnL@2x.png", 100, 100)
-    finalBoss.x = 800
+    finalBoss.x = 840
     finalBoss.y = 140
     finalBoss.myName = "theBoss"
 
