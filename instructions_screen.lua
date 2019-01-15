@@ -28,6 +28,9 @@ scene = composer.newScene( sceneName ) -- This function doesn't accept a string,
 local bkg_image
 local backButton
 
+local music = audio.loadSound("Sounds/instructionsMusic.mp3")
+local musicChannel 
+
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -116,6 +119,8 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        music = audio.play(music, { channel=1, loops=-1 } )
+
     end
 
 end -- function scene:show( event )
@@ -138,6 +143,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
+        audio.stop(1)
 
     -----------------------------------------------------------------------------------------
 
