@@ -1,4 +1,4 @@
------------------------------------------------------------------------------------------
+ -----------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
 -- Created by: Allison
@@ -10,7 +10,7 @@
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
 
 -- Use Composer Libraries
 local composer = require( "composer" )
@@ -78,7 +78,7 @@ local function YouWinTransition()
 end
 
 local function NextLevelTransition()
-    composer.showOverlay( "level2_screen", { isModal = true, effect = "fade", time = 100})
+    composer.gotoScene( "level2_screen", { isModal = true, effect = "fade", time = 100})
 end
 
 --check and see if they have run out of lives, if yes then go to you lose

@@ -166,14 +166,14 @@ end
 
 local function DisplayQuestion()
     --creating random numbers
-    firstNumber = math.random (0,15)
+    firstNumber = math.random (2,15)
     secondNumber = math.random (0,15)
 
     -- calculate answer
     answer = firstNumber + secondNumber
 
     -- calculate wrong answers
-    wrongAnswer1 = answer + math.random(1, 3)
+    wrongAnswer1 = answer - math.random(2, 3)
     wrongAnswer2 = answer + math.random(4, 6)
     wrongAnswer3 = answer + math.random(7, 9)
 
