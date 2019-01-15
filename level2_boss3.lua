@@ -77,7 +77,9 @@ local function YouWinTransition()
 end
 
 local function NextLevelTransition1()
+
     composer.gotoScene( "level3_screen", { isModal = true, effect = "fade", time = 100})
+
 end
 
 local function YouLose()
