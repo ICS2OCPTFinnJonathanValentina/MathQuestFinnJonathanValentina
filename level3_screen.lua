@@ -658,6 +658,7 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
 
         questionsAnswered = 0
+       
 
         -- make all soccer balls visible
         MakeMathPuzzlesVisible()
