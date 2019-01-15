@@ -15,8 +15,6 @@ local composer = require( "composer" )
 
 -----------------------------------------------------------------------------------------
 
--- Go to the intro screen
-
-
-composer.gotoScene( "main_menu" )
+-- Go to the intro screen 
+composer.gotoScene( "final_boss" )
 
