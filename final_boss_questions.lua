@@ -63,6 +63,13 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
+-- correct and incorreect sounds
+local correctSound = audio.loadSound("Sounds/correct.mp3")
+local correctSoundChannel
+
+local wrongSound = audio.loadSound("Sounds/wrongAnswer.mp3")
+local wrongSoundChannel
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -118,7 +125,9 @@ local function TouchListenerAnswer(touch)
         correctObject.isVisible = true
         incorrectObject.isVisible = false
         timer.performWithDelay(1000, NextQuestionTransition)
-    end 
+    end
+        -- sound played if this text is selected
+    correctSoundChannel = audio.play(correctSound) 
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -139,6 +148,8 @@ local function TouchListenerWrongAnswer(touch)
         --check amount of questions asked
         QuestionMax()
     end 
+    -- sound played if this text is selected
+    wrongSoundChannel = audio.play(wrongSound)
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -161,6 +172,8 @@ local function TouchListenerWrongAnswer2(touch)
         --check amount of questions asked
         QuestionMax()
     end 
+    -- sound played if this text is selected
+    wrongSoundChannel = audio.play(wrongSound)
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -182,7 +195,8 @@ local function TouchListenerWrongAnswer3(touch)
         --check amount of questions asked
         QuestionMax()
     end 
-
+    -- sound played if this text is selected
+    wrongSoundChannel = audio.play(wrongSound)
 end
 -----------------------------------------------------------------------------
 --adding the event listeners 
