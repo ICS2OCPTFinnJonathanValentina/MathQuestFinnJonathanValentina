@@ -98,6 +98,8 @@ local function QuestionMax()
     if (numAnswered == 5) then
         -- call function to make them win
         timer.performWithDelay(1000, YouWinTransition)
+    else
+        timer.performWithDelay(1000, NextQuestionTransition)
     end
 end
 

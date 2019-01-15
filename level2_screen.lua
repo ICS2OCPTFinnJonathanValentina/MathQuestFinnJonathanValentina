@@ -322,7 +322,7 @@ local function onCollision( self, event )
             character.isVisible = false
 
             -- show overlay with math question
-            composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level2_boss", { isModal = true, effect = "fade", time = 100})
 
 
             if (questionsAnswered == 4) then
@@ -628,6 +628,7 @@ function scene:create( event )
     theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)
     theGlow.x = 950
     theGlow.y = 100
+    theGlow.isVisible = false
     theGlow.myName = "theGlow"
 
 
