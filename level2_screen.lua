@@ -1,4 +1,4 @@
--------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
 -- Created by: Ms Raffin
@@ -20,7 +20,7 @@ local physics = require("physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level2_screen"
+sceneName = "level1_screen"
 
 -----------------------------------------------------------------------------------------
 
@@ -36,13 +36,12 @@ local scene = composer.newScene( sceneName )
 
 
 -- background sound
-local backgroundSound = audio.loadSound("Sounds/bkg3.mp3")
+local backgroundSound = audio.loadSound("Sounds/bkg2.mp3")
 local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
-
 
 
 -----------------------------------------------------------------------------------------
@@ -161,34 +160,7 @@ local function RemoveRuntimeListeners()
 end
 
 
-local function ReplaceCharacter()
-    print ("***Called ReplaceCharacter")
 
-    if (characterName == "boy") then
-        character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
-        character.x = 600
-        character.y = 100
-    else
-        character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
-        character.x = 600
-        character.y = 100
-
-    end
-        
-    -- intialize horizontal movement of character
-    motionx = 0
-    -- add physics body
-    physics.addBody( character, "dynamic", { density = 6, friction = 0.5, bounce = 0, rotation = 0 } )
-
-    -- prevent character from being able to tip over
-    character.isFixedRotation = true
-
-    -- add back arrow listeners
-    AddArrowEventListeners()
-
-    -- add back runtime listeners
-    AddRuntimeListeners()
-end
 
 local function MakeMathPuzzlesVisible()
     mathPuzzle1.isVisible = true
@@ -197,7 +169,6 @@ local function MakeMathPuzzlesVisible()
 end
 
 local function MakeHeartsVisible()
-    heart1.isVisible = true
     heart2.isVisible = true
     heart3.isVisible = true
 end
@@ -319,12 +290,12 @@ local function onCollision( self, event )
             theFinalBoss = event.target
 
 
-            -- make the character invisible
-            character.isVisible = false
 
             -- show overlay with math question
             composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
 
+            -- make the character invisible
+            character.isVisible = false
 
             if (questionsAnswered == 4) then
             
@@ -408,6 +379,35 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
+end
+
+local function ReplaceCharacter()
+    print ("***Called ReplaceCharacter")
+
+    if (characterName == "boy") then
+        character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
+        character.x = 800
+        character.y = 100
+    else
+        character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
+        character.x = 800
+        character.y = 100
+
+    end
+        
+    -- intialize horizontal movement of character
+    motionx = 0
+    -- add physics body
+    physics.addBody( character, "dynamic", { density = 6, friction = 0.5, bounce = 0, rotation = 0 } )
+
+    -- prevent character from being able to tip over
+    character.isFixedRotation = true
+
+    -- add back arrow listeners
+    AddArrowEventListeners()
+
+    -- add back runtime listeners
+    AddRuntimeListeners()
 end
 
 -----------------------------------------------------------------------------------------
@@ -721,7 +721,6 @@ function scene:show( event )
         backgroundSoundChannel = audio.play(backgroundSound, { channel=1, loops=-1 } )
 
        -- Character()
-
        UpdateHearts()
     end
 
