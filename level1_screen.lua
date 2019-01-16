@@ -39,6 +39,8 @@ local scene = composer.newScene( sceneName )
 local backgroundSound = audio.loadSound("Sounds/bkg2.mp3")
 local backgroundSoundChannel
 
+spikeSound = audio.loadSound("Sounds/spike.mp3")
+spikeSoundChannel
 -----------------------------------------------------------------------------------------
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
