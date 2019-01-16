@@ -214,6 +214,10 @@ local function BackTransition()
     composer.gotoScene( "main_menu")
 end
 
+local function ToTheFinal()
+    composer.gotoScene( "final_boss")
+end
+
 local function UpdateHearts()
     print ("***numLives = " .. numLives)
     if (numLives == 3) then
@@ -302,14 +306,12 @@ local function onCollision( self, event )
         if (event.target.myName == "theGlow") then
             --check to see if the user has answered 5 questions
             if (questionsAnswered == 3) then
-                Grease_MonkeySoundChannel = audio.play(Grease_Monkey)
-
                 print("***questions answered = " .. questionsAnswered)
 
                 -- make the character invisible
                 character.isVisible = false
 
-                timer.performWithDelay(200, YouWinTransition)
+                timer.performWithDelay(200, ToTheFinal)
             end
         end        
 
@@ -363,7 +365,7 @@ local function RemoveCollisionListeners()
     mathPuzzle2:removeEventListener( "collision" )
     mathPuzzle3:removeEventListener( "collision" )
 
-    --finalBoss:removeEventListener( "collision" )
+   -- theGlow:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
@@ -389,7 +391,7 @@ local function AddPhysicsBodies()
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
 
-    --physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
+    --physics.addBody(theGlow, "static",  {density=0, friction=0, bounce=0} )
 end
 
 
@@ -686,7 +688,7 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
-       backgroundSoundChannel =  audio.play(backgroundSound {channel = 1, loops = -1})
+       --backgroundSoundChannel =  audio.play(backgroundSound {channel = 1, loops = -1})
 
         -- make all soccer balls visible
         MakeMathPuzzlesVisible()
