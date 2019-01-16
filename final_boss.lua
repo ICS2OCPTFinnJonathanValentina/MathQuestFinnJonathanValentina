@@ -37,8 +37,8 @@ local scene = composer.newScene( sceneName )
 
 
 -- background sound
---local backgroundSound = audio.loadSound("Sounds/level.1.mp3")
---local backgroundSoundChannel
+local backgroundSound = audio.loadSound("Sounds/bkg4.mp3")
+local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- GlOBAL VARIABLES
