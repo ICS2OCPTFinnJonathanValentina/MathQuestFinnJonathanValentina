@@ -70,6 +70,9 @@ local correctSoundChannel
 local wrongSound = audio.loadSound("Sounds/wrongAnswer.mp3")
 local wrongSoundChannel
 
+local heart1boss
+local heart2boss
+local heart3boss
 -----------------------------------------------------------------------------------------
 -- GLOBAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -84,6 +87,7 @@ local function YouLoseTransition()
 end 
 
 local function YouWinTransition()
+    invisibleHearts()
     composer.gotoScene( "you_win" )
 end 
 
@@ -110,6 +114,13 @@ local function QuestionMax()
     end
 end
 
+
+--make hearts invisible
+local function invisibleHearts()
+heart1boss.isVisible = false
+heart2boss.isVisible = false
+heart3boss.isVisible = false
+end
 
 
 -----------------------------------------------------------------------------------------
@@ -146,7 +157,6 @@ local function TouchListenerWrongAnswer(touch)
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
         YouLose() 
-        UpdateHearts()
         --check amount of questions asked
         QuestionMax()
     end 
@@ -170,7 +180,7 @@ local function TouchListenerWrongAnswer2(touch)
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
         YouLose()
-        UpdateHearts()
+
         --check amount of questions asked
         QuestionMax()
     end 
@@ -193,7 +203,7 @@ local function TouchListenerWrongAnswer3(touch)
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
         YouLose()
-        UpdateHearts()
+        
         --check amount of questions asked
         QuestionMax()
     end 
@@ -310,22 +320,21 @@ end
 local function UpdateHearts()
     print ("***numLives = " .. numLives)
     if (numLives == 3) then
-        heart1.isVisible = true
-        heart2.isVisible = true
-        heart3.isVisible = true
+        heart1boss.isVisible = true
+        heart2boss.isVisible = true
+        heart3boss.isVisible = true
     elseif (numLives == 2) then
-        heart1.isVisible = true
-        heart2.isVisible = true
-        heart3.isVisible = false
+        heart1boss.isVisible = true
+        heart2boss.isVisible = true
+        heart3boss.isVisible = false
     elseif (numLives == 1) then
-        heart1.isVisible = true
-        heart2.isVisible = false
-        heart3.isVisible = false
+        heart1boss.isVisible = true
+        heart2boss.isVisible = false
+        heart3boss.isVisible = false
     elseif (numLives == 0) then
-        heart1.isVisible = false
-        heart2.isVisible = false
-        heart3.isVisible = false
-        character.isVisible = false
+        heart1boss.isVisible = false
+        heart2boss.isVisible = false
+        heart3boss.isVisible = false
         timer.performWithDelay(100, YouLoseTransition)
         --youLoseSoundChannel = audio.play(YouLose)       
     end 
@@ -380,26 +389,23 @@ function scene:create( event )
     wrongText3.anchorX = 0
 
     -- Insert the Hearts
-    heart1 = display.newImageRect("Images/heart.png", 80, 80)
-    heart1.x = 210
-    heart1.y = 50
-    heart1.isVisible = true
+    heart1boss = display.newImageRect("Images/heart.png", 80, 80)
+    heart1boss.x = 210
+    heart1boss.y = 75
+    heart1boss.isVisible = true
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( heart1 )
 
-    heart2 = display.newImageRect("Images/heart.png", 80, 80)
-    heart2.x = 310
-    heart2.y = 50
-    heart2.isVisible = true
+    heart2boss = display.newImageRect("Images/heart.png", 80, 80)
+    heart2boss.x = 310
+    heart2boss.y = 75
+    heart2boss.isVisible = true
 
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( heart2 )
 
-    heart3 = display.newImageRect("Images/heart.png", 80, 80)
-    heart3.x = 410
-    heart3.y = 50
-    heart3.isVisible = true
+    heart3boss = display.newImageRect("Images/heart.png", 80, 80)
+    heart3boss.x = 410
+    heart3boss.y = 75
+    heart3boss.isVisible = true
 
 
     -----------------------------------------------------------------------------------------
@@ -466,7 +472,6 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        RemoveTextListeners()
     end
 
 end --function scene:hide( event )
