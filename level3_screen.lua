@@ -37,7 +37,7 @@ local scene = composer.newScene( sceneName )
 
 
 -- background sound
-local backgroundSound = audio.loadSound("Sounds/bkg2.mp3")
+local backgroundSound = audio.loadSound("Sounds/bkg4.mp3")
 local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------
@@ -686,8 +686,7 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
-        questionsAnswered = 0
-       
+       backgroundSoundChannel =  audio.play(backgroundSound {channel = 1, loops = -1})
 
         -- make all soccer balls visible
         MakeMathPuzzlesVisible()

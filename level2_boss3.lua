@@ -113,7 +113,7 @@ local function TouchListenerWrongAnswer(touch)
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
         
-        timer.performWithDelay(1000, YouLose) 
+        timer.performWithDelay(1000, NextLevelTransition1) 
     end 
 
 end
