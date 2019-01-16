@@ -292,7 +292,7 @@ local function onCollision( self, event )
 
 
             -- show overlay with math question
-            composer.showOverlay( "level1_boss", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level2_boss", { isModal = true, effect = "fade", time = 100})
 
             -- make the character invisible
             character.isVisible = false
