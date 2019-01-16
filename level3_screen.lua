@@ -302,6 +302,7 @@ local function onCollision( self, event )
                     
             
         end
+      
 
         if (event.target.myName == "theGlow") then
             --check to see if the user has answered 5 questions
@@ -318,14 +319,14 @@ local function onCollision( self, event )
         if (event.target.myName == "theBoss") then
 
             -- get the puzzle that the user hit
-            theFinalBoss = event.target
+            theGlow = event.target
 
 
             -- make the character invisible
             character.isVisible = false
 
             -- show overlay with math question
-            composer.showOverlay( "final_boss", { isModal = true, effect = "fade", time = 100})
+            composer.gotoScene( "final_boss", { isModal = true, effect = "fade", time = 100})
 
 
             if (questionsAnswered == 4) then
@@ -353,8 +354,8 @@ local function AddCollisionListeners()
     mathPuzzle3.collision = onCollision
     mathPuzzle3:addEventListener( "collision" )
 
-    --finalBoss.collision = onCollision
-    --finalBoss:addEventListener( "collision" )
+    theGlow.collision = onCollision
+    theGlow:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -366,6 +367,7 @@ local function RemoveCollisionListeners()
     mathPuzzle3:removeEventListener( "collision" )
 
    -- theGlow:removeEventListener( "collision" )
+    theGlow:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
@@ -390,6 +392,9 @@ local function AddPhysicsBodies()
     physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(theGlow, "static",  {density=0, friction=0, bounce=0} )
+
+
 
     --physics.addBody(theGlow, "static",  {density=0, friction=0, bounce=0} )
 end
@@ -689,6 +694,7 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
 
        --backgroundSoundChannel =  audio.play(backgroundSound {channel = 1, loops = -1})
+       backgroundSoundChannel  =  audio.play(backgroundSound, {channel = 1, loops = -1})
 
         -- make all soccer balls visible
         MakeMathPuzzlesVisible()
@@ -733,7 +739,7 @@ function scene:hide( event )
         -- Example: stop timers, stop animation, stop audio, etc.
 
         --stop the music
-       --audio.stop(backgroundSoundChannel)
+       audio.stop(backgroundSoundChannel)
 
 
      -----------------------------------------------------------------------------------------

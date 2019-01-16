@@ -84,7 +84,7 @@ end
 
 local function YouLose()
     if (numLives == 0) then
-        YouLoseTransition()
+        NextLevelTransition()
     else
         timer.performWithDelay(1000, NextLevelTransition)
     end
@@ -114,6 +114,7 @@ local function TouchListenerWrongAnswer(touch)
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
         
         timer.performWithDelay(1000, NextLevelTransition) 
+        timer.performWithDelay(1000, YouLose) 
     end 
 
 end

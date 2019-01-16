@@ -111,7 +111,7 @@ local function TouchListenerWrongAnswer(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        timer.performWithDelay(1000, BackToLevel1) 
+        timer.performWithDelay(1000, BackToLevel3) 
     end 
 
     --incorrect sound 
@@ -127,7 +127,7 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000,BackToLevel1) 
+        timer.performWithDelay(1000,BackToLevel3) 
     end 
     --incorrect sound 
     wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
@@ -142,7 +142,7 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, BackToLevel1)
+        timer.performWithDelay(1000, BackToLevel3)
     end 
     --incorrect sound 
     wrongAnswerSoundChannel = audio.play(wrongAnswerSound)

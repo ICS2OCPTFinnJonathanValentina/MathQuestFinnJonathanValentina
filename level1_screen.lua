@@ -206,7 +206,7 @@ local function  MakeFinalBossVisible()
 end
 
 local function  MakeTheGlowVisible()
-    theGlow.isVisible = true
+    theGlow.isVisible = false
 end
 
 local function BackTransition()
