@@ -64,7 +64,7 @@ local userAnswer
 local textTouched = false
 
 
-local wrongAnswerSound = audio.loadSound("Sounds/wrongAnswer.mp3")
+ wrongAnswerSound = audio.loadSound("Sounds/wrongAnswer.mp3")
 local wrongAnswerSoundChannel
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
