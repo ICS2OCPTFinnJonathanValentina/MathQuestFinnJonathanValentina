@@ -65,7 +65,7 @@ function scene:create( event )
     bkg_image.height = display.contentHeight
 
     -- put text crediting music sites
-    musicCreditsText = display.newText("music from bensound royalty free music (www.bensound.com)." , 500, 600,nil, 25)
+    musicCreditsText = display.newText("music from bensound royalty free music (www.bensound.com). And Mattia Cupelli" , 500, 600,nil, 25)
     --sets the colour of the text
     musicCreditsText:setTextColor(100/255, 50/255, 100/255)
     --insert it 

@@ -739,12 +739,7 @@ function scene:hide( event )
         -- Example: stop timers, stop animation, stop audio, etc.
 
         --stop the music
-       audio.stop(backgroundSoundChannel)
-
-
-     -----------------------------------------------------------------------------------------
-    elseif ( phase == "did" ) then
-        -- Called immediately after scene goes off screen.
+        audio.stop(backgroundSoundChannel)
         RemoveCollisionListeners()
         RemovePhysicsBodies()
         display.remove(character)
@@ -752,6 +747,12 @@ function scene:hide( event )
         physics.stop()
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
+
+
+     -----------------------------------------------------------------------------------------
+    elseif ( phase == "did" ) then
+        -- Called immediately after scene goes off screen.
+        
     end
 end --function scene:hide( event )
 

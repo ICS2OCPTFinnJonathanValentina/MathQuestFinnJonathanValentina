@@ -72,6 +72,8 @@ local correctSoundChannel
 
 local wrongAnswerSound = audio.loadSound("Sounds/wrongAnswer.mp3")
 local wrongAnswerSoundChannel
+
+local music = audio.loadSound("Sounds/bkg3.mp3")
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------

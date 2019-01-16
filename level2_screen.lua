@@ -20,7 +20,7 @@ local physics = require("physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_screen"
+sceneName = "level2_screen"
 
 -----------------------------------------------------------------------------------------
 
@@ -264,7 +264,7 @@ local function onCollision( self, event )
             print("***questions answered = " .. questionsAnswered)
 
             -- show overlay with math question
-            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
 
                     
             
@@ -386,11 +386,11 @@ local function ReplaceCharacter()
 
     if (characterName == "boy") then
         character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
-        character.x = 800
+        character.x = 900
         character.y = 100
     else
         character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
-        character.x = 800
+        character.x = 900
         character.y = 100
 
     end
@@ -414,7 +414,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeLevel1()
+function ResumeLevel2()
 
     -- make character visible again
     character.isVisible = true
@@ -744,12 +744,7 @@ function scene:hide( event )
         -- Example: stop timers, stop animation, stop audio, etc.
 
         --stop the music
-       audio.stop(backgroundSoundChannel)
-
-
-     -----------------------------------------------------------------------------------------
-    elseif ( phase == "did" ) then
-        -- Called immediately after scene goes off screen.
+        audio.stop(backgroundSoundChannel)
         RemoveCollisionListeners()
         RemovePhysicsBodies()
         display.remove(character)
@@ -757,6 +752,12 @@ function scene:hide( event )
         physics.stop()
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
+
+
+     -----------------------------------------------------------------------------------------
+    elseif ( phase == "did" ) then
+        -- Called immediately after scene goes off screen.
+        
     end
 end --function scene:hide( event )
 

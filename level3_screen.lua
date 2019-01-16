@@ -37,7 +37,7 @@ local scene = composer.newScene( sceneName )
 
 
 -- background sound
-local backgroundSound = audio.loadSound("Sounds/bkg2.mp3")
+local backgroundSound = audio.loadSound("Sounds/bkg4.mp3")
 local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------
@@ -293,7 +293,7 @@ local function onCollision( self, event )
             print("***questions answered = " .. questionsAnswered)
 
             -- show overlay with math question
-            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
                     
             
@@ -323,7 +323,7 @@ local function onCollision( self, event )
             character.isVisible = false
 
             -- show overlay with math question
-            composer.showOverlay( "level2_boss", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "final_boss", { isModal = true, effect = "fade", time = 100})
 
 
             if (questionsAnswered == 4) then
@@ -414,7 +414,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeLevel1()
+function ResumeLevel3()
 
     -- make character visible again
     character.isVisible = true
@@ -686,8 +686,7 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
-        questionsAnswered = 0
-       
+       backgroundSoundChannel =  audio.play(backgroundSound {channel = 1, loops = -1})
 
         -- make all soccer balls visible
         MakeMathPuzzlesVisible()
