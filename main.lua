@@ -17,7 +17,7 @@ local composer = require( "composer" )
 
 
 -- Go to the intro screen 
-composer.gotoScene( "select_Character" )
+composer.gotoScene( "splash_screen" )
 
 
 
