@@ -75,7 +75,7 @@ local wrongAnswerSoundChannel
 local function BackToLevel3() 
     composer.hideOverlay("crossFade", 400 )
   
-    ResumeLevel1()
+    ResumeLevel3()
 end 
 
 function nextQuestion()

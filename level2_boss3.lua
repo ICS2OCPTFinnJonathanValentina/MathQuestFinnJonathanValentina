@@ -76,7 +76,7 @@ local function YouWinTransition()
     composer.gotoScene( "you_win" )
 end
 
-local function NextLevelTransition1()
+local function NextLevelTransition()
 
     composer.gotoScene( "level3_screen", { isModal = true, effect = "fade", time = 100})
 
@@ -98,7 +98,7 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-        timer.performWithDelay(1000, NextLevelTransition1)
+        timer.performWithDelay(1000, NextLevelTransition)
     end 
 end
 

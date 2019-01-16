@@ -293,7 +293,7 @@ local function onCollision( self, event )
             print("***questions answered = " .. questionsAnswered)
 
             -- show overlay with math question
-            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
                     
             
@@ -323,7 +323,7 @@ local function onCollision( self, event )
             character.isVisible = false
 
             -- show overlay with math question
-            composer.showOverlay( "level2_boss", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "final_boss", { isModal = true, effect = "fade", time = 100})
 
 
             if (questionsAnswered == 4) then
@@ -414,7 +414,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeLevel1()
+function ResumeLevel3()
 
     -- make character visible again
     character.isVisible = true
