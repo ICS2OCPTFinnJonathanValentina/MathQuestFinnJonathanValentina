@@ -29,25 +29,6 @@ sceneName = "final_boss"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
---  Sound
------------------------------------------------------------------------------------------ 
--- GameOver Sound 
---local youLose = audio.loadSound("Sounds/battle003.mp3")
---local youLoseSoundChannel
-
-
--- background sound
-local backgroundSound = audio.loadSound("Sounds/bkg2.mp3")
-local backgroundSound = audio.loadSound("Sounds/bkg4.mp3")
-
-local backgroundSoundChannel
-
------------------------------------------------------------------------------------------
--- GlOBAL VARIABLES
------------------------------------------------------------------------------------------
-
-
------------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
@@ -636,7 +617,6 @@ function scene:show( event )
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
 
-        --audio.play(backgroundSound)
     end
 
 
@@ -657,10 +637,6 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-
-        --stop the music
-       --audio.stop(backgroundSoundChannel)
-
 
      -----------------------------------------------------------------------------------------
     elseif ( phase == "did" ) then
