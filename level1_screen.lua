@@ -42,6 +42,7 @@ local backgroundSoundChannel
 local spikeSound = audio.loadSound("Sounds/spike.mp3")
 local spikeSoundChannel
 
+
 -----------------------------------------------------------------------------------------
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------

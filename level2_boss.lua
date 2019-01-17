@@ -106,6 +106,8 @@ local function UpdateHearts()
         --youLoseSoundChannel = audio.play(YouLose)       
     end 
 end
+
+local wrongAnswerSoundChannel
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)

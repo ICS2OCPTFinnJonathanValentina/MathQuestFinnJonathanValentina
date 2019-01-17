@@ -63,7 +63,7 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
-
+local wrongAnswerSoundChannel
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
