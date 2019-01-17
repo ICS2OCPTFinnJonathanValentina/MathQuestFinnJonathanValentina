@@ -218,7 +218,6 @@ local function ToTheFinal()
 end
 
 local function UpdateHearts()
-    print ("***numLives = " .. numLives)
     if (numLives == 3) then
         heart1.isVisible = true
         heart2.isVisible = true
