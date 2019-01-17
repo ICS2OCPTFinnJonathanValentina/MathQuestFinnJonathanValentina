@@ -1,4 +1,3 @@
-
 -----------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
@@ -21,12 +20,32 @@ local physics = require("physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "final_boss"
+sceneName = "level2_screen"
 
 -----------------------------------------------------------------------------------------
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
+
+-----------------------------------------------------------------------------------------
+--  Sound
+----------------------------------------------------------------------------------------- 
+-- GameOver Sound 
+--local youLose = audio.loadSound("Sounds/battle003.mp3")
+--local youLoseSoundChannel
+
+
+-- background sound
+local backgroundSound = audio.loadSound("Sounds/bkg3.mp3")
+local backgroundSoundChannel
+
+
+local spikeSound = audio.loadSound("Sounds/spike.mp3")
+local spikeSoundChannel
+-----------------------------------------------------------------------------------------
+-- GlOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -144,13 +163,35 @@ local function RemoveRuntimeListeners()
 end
 
 
+local function ReplaceCharacter()
+    print ("***Called ReplaceCharacter")
 
+    --if (characterName == "boy") then
+        character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
+        character.x = 100
+        character.y = 100
+     --elseif
+        --character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
+        --character.x = 100
+        --character.y = 100
+    --end
 
-local function MakeMathPuzzlesVisible()
-    mathPuzzle1.isVisible = true
-    mathPuzzle2.isVisible = true
-    mathPuzzle3.isVisible = true
+        
+    -- intialize horizontal movement of character
+    motionx = 0
+    -- add physics body
+    physics.addBody( character, "dynamic", { density = 6, friction = 0.5, bounce = 0, rotation = 0 } )
+
+    -- prevent character from being able to tip over
+    character.isFixedRotation = true
+
+    -- add back arrow listeners
+    AddArrowEventListeners()
+
+    -- add back runtime listeners
+    AddRuntimeListeners()
 end
+
 
 local function MakeHeartsVisible()
     heart2.isVisible = true
@@ -170,7 +211,7 @@ local function BackTransition()
 end
 
 local function UpdateHearts()
-    print ("***numLives = " .. numLives)
+    --print ("***numLives = " .. numLives)
     if (numLives == 3) then
         heart1.isVisible = true
         heart2.isVisible = true
@@ -193,6 +234,7 @@ local function UpdateHearts()
     end 
 end
 
+
 local function onCollision( self, event )
     -- for testing purposes
     --print( event.target )        --the first object in the collision
@@ -211,6 +253,7 @@ local function onCollision( self, event )
             (event.target.myName == "spikes3") then
 
             -- add sound effect here
+            spikeSoundChannel = audio.play(spikeSound)
 
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
@@ -225,7 +268,7 @@ local function onCollision( self, event )
             UpdateHearts()
 
             if (numLives >= 0) then
-                timer.performWithDelay(200, ReplaceCharacter)
+                timer.performWithDelay(1000, ReplaceCharacter)
             end
         end
 
@@ -234,19 +277,18 @@ local function onCollision( self, event )
             -- get the puzzle that the user hit
             theFinalBoss = event.target
 
+            -- show overlay with math question
+            composer.showOverlay( "final_boss_questions", { isModal = true, effect = "fade", time = 100})
 
             -- make the character invisible
             character.isVisible = false
 
-            -- show overlay with math question
-            composer.showOverlay( "final_boss_questions", { isModal = true, effect = "fade", time = 100})
-
-
             if (questionsAnswered == 4) then
             
               print("***questions answered = " .. questionsAnswered)
-            end      
-        end       
+            end
+        end      
+
     end
 end
 
@@ -260,27 +302,13 @@ local function AddCollisionListeners()
 
     finalBoss.collision = onCollision
     finalBoss:addEventListener( "collision" )
-
-
-    -- if character collides with ball, onCollision will be called    
-    --mathPuzzle1.collision = onCollision
-    --mathPuzzle1:addEventListener( "collision" )
-    --mathPuzzle2.collision = onCollision
-    --mathPuzzle2:addEventListener( "collision" )
-    --mathPuzzle3.collision = onCollision
-    --mathPuzzle3:addEventListener( "collision" )
-
-
 end
 
 local function RemoveCollisionListeners()
     spikes1:removeEventListener( "collision" )
     spikes2:removeEventListener( "collision" )
 
-    --mathPuzzle1:removeEventListener( "collision" )
-    --mathPuzzle2:removeEventListener( "collision" )
-    --mathPuzzle3:removeEventListener( "collision" )
-
+    finalBoss:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
@@ -292,7 +320,6 @@ local function AddPhysicsBodies()
     physics.addBody( platform5, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
 
-    physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
 
     physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
@@ -302,7 +329,12 @@ local function AddPhysicsBodies()
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
-    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
+
+    physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
+
+    physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
 end
 
 
@@ -321,57 +353,36 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
-    physics.removeBody(rightW)
 end
 
-local function ReplaceCharacter()
-    print ("***Called ReplaceCharacter")
 
-    if (characterName == "boy") then
-        character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
-        character.x = 100
-        character.y = 100
-    else
-        character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
-        character.x = 100
-        character.y = 100
-
-    end
-        
-    -- intialize horizontal movement of character
-    motionx = 0
-    -- add physics body
-    physics.addBody( character, "dynamic", { density = 6, friction = 0.5, bounce = 0, rotation = 0 } )
-
-    -- prevent character from being able to tip over
-    character.isFixedRotation = true
-
-    -- add back arrow listeners
-    AddArrowEventListeners()
-
-    -- add back runtime listeners
-    AddRuntimeListeners()
-end
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeLevel1()
+function ResumeLevel2()
 
     -- make character visible again
     character.isVisible = true
     
+    UpdateHearts()
+
     if (questionsAnswered > 0) then
         if (theMathPuzzle ~= nil) and (theMathPuzzle.isBodyActive == true) then
             physics.removeBody(theMathPuzzle)
             theMathPuzzle.isVisible = false
         end
     end
-
-
-    UpdateHearts()
+      
+    if (questionsAnswered > 0) then
+        if (theFinalBoss ~= nil) and (theFinalBoss.isBodyActive == true) then
+            physics.removeBody(theFinalBoss)
+            theFinalBoss.isVisible = false
+        end
+    end
 end
+
 
 
 -----------------------------------------------------------------------------------------
@@ -384,7 +395,7 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -- Insert the background image
+   -- Insert the background image
     bkg_image = display.newImageRect("Images/Level3ScreenValentina@2x.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
@@ -537,6 +548,17 @@ function scene:create( event )
     sceneGroup:insert( finalBoss )
 
 
+ --theGlow
+    theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)
+    theGlow.x = 950
+    theGlow.y = 100
+    theGlow.isVisible = false
+    theGlow.myName = "theGlow"
+
+
+    sceneGroup:insert( theGlow )
+
+
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
     -----------------------------------------------------------------------------------------
@@ -568,7 +590,6 @@ function scene:create( event )
     
 end --function scene:create( event )
 
-
 -----------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to appear on screen
@@ -591,7 +612,6 @@ function scene:show( event )
         physics.setGravity( 0, GRAVITY ) 
 
 
-       
 
 
     elseif ( phase == "did" ) then
@@ -599,11 +619,10 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-
-        numLives = 3
         questionsAnswered = 0
 
-        -- make all soccer balls visible
+-- ###REMOVE THIS AFTER TESTING
+numLives = 3
 
         -- make all lives visible
         MakeHeartsVisible()
@@ -617,6 +636,14 @@ function scene:show( event )
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
 
+        MakeFinalBossVisible()
+
+        MakeTheGlowVisible()
+
+        backgroundSoundChannel = audio.play(backgroundSound, { channel=1, loops=-1 } )
+
+       -- Character()
+       UpdateHearts()
     end
 
 
@@ -638,9 +665,8 @@ function scene:hide( event )
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
 
-     -----------------------------------------------------------------------------------------
-    elseif ( phase == "did" ) then
-        -- Called immediately after scene goes off screen.
+        --stop the music
+        audio.stop(backgroundSoundChannel)
         RemoveCollisionListeners()
         RemovePhysicsBodies()
         display.remove(character)
@@ -648,6 +674,12 @@ function scene:hide( event )
         physics.stop()
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
+
+
+     -----------------------------------------------------------------------------------------
+    elseif ( phase == "did" ) then
+        -- Called immediately after scene goes off screen.
+        
     end
 end --function scene:hide( event )
 
