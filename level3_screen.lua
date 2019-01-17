@@ -503,7 +503,7 @@ function scene:create( event )
 
     spikes2 = display.newImageRect("Images/Level-1Spikes1.png", 200, 50)
     spikes2.x = 450
-    spikes2.y = 300
+    spikes2.y = 400
     spikes2.myName = "spikes2"
         
     sceneGroup:insert( spikes2)
