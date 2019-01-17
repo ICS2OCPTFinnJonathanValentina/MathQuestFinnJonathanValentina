@@ -44,8 +44,8 @@ local bkg
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
-local function NextQuestionTransition()
-    composer.showOverlay( "level1_boss2", { isModal = true, effect = "fade", time = 100})
+local function BackTransition()
+    composer.showOverlay( "main_menu", { isModal = true, effect = "fade", time = 100})
 end
 --------------------------------------------------------------------------------------
 -- The function called when the screen doesn't exist
@@ -64,7 +64,40 @@ function scene:create( event )
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg )
   
+ -----------------------------------------------------------------------------------------
+    -- BUTTON WIDGETS
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Back Button
+    backButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth * 2 / 24,
+        y = display.contentHeight * 15 / 17,
+
+        -- Setting Dimensions
+         width = 100,
+         height = 100,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/BackButtonUnpressedFinnL.png",
+        overFile = "Images/BackButtonPressedFinnL.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+
+    } )
+
+    -----------------------------------------------------------------------------------------
+
+    -- Associating Buttons with this scene
+    sceneGroup:insert( backButton )
 end    
+
+
+
+
+
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -125,7 +158,6 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-
     end
 
 end

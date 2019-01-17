@@ -21,7 +21,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "final_boss_questions"
+sceneName = "final_boss_questions3"
 
 -----------------------------------------------------------------------------------------
 
@@ -72,11 +72,18 @@ local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end 
 
-local function NextWinTransition()
+local function NextQuestionTransition()
     print("***Called level1_boss2")
-    composer.showOverlay( "you_win", { isModal = true, effect = "fade", time = 100})
+    composer.showOverlay( "final_boss_questions3", { isModal = true, effect = "fade", time = 100})
 end
 
+local function YouLose()
+    if (numLives == 0) then
+        YouLoseTransition()
+    else
+        timer.performWithDelay(1000, NextQuestionTransition)
+    end
+end
 
 
 -----------------------------------------------------------------------------------------
@@ -88,7 +95,7 @@ local function TouchListenerAnswer(touch)
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-        timer.performWithDelay(1000, NextWinTransition)
+        timer.performWithDelay(1000, NextQuestionTransition)
     end 
 end
 
@@ -102,7 +109,7 @@ local function TouchListenerWrongAnswer(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        YouLoseTransition() 
+        YouLose() 
     end 
 end
 
@@ -115,7 +122,7 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        YouLoseTransition()
+        YouLose()
     end 
 end
 
@@ -128,7 +135,7 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        YouLoseTransition()
+        YouLose()
     end 
 
 end
