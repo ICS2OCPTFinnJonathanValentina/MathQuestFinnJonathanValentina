@@ -47,6 +47,8 @@ spikeSoundChannel
 
 numLives = 3
 
+
+
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -695,7 +697,6 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
-        numLives = 3
 
         -- make all soccer balls visible
         MakeMathPuzzlesVisible()
