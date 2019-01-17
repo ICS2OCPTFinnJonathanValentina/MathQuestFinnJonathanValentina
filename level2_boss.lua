@@ -106,6 +106,8 @@ local function UpdateHearts()
         --youLoseSoundChannel = audio.play(YouLose)       
     end 
 end
+
+local wrongAnswerSoundChannel
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
@@ -130,7 +132,7 @@ local function TouchListenerWrongAnswer(touch)
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
         
-        timer.performWithDelay(1000, youLose) 
+        timer.performWithDelay(1000, YouLose) 
     end 
 
 end
@@ -144,7 +146,7 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000, youLose) 
+        timer.performWithDelay(1000, YouLose) 
     end 
 
 end
@@ -158,7 +160,7 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, youLose)
+        timer.performWithDelay(1000, YouLose)
     end 
 
 end

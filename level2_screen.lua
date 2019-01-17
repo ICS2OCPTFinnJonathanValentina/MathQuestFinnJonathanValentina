@@ -703,8 +703,6 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
         questionsAnswered = 0
 
--- ###REMOVE THIS AFTER TESTING
-numLives = 3
 
         -- make all soccer balls visible
         MakeMathPuzzlesVisible()
