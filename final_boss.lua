@@ -4,7 +4,7 @@
 -- level1_screen.lua
 -- Created by: Ms Raffin
 -- Date: Nov. 22nd, 2014
--- Description: This is the level 3 screen of the game.
+-- Description: This is the level 1 screen of the game.
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -37,14 +37,15 @@ local scene = composer.newScene( sceneName )
 
 
 -- background sound
+local backgroundSound = audio.loadSound("Sounds/bkg2.mp3")
 local backgroundSound = audio.loadSound("Sounds/bkg4.mp3")
+
 local backgroundSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-numLives = 3
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -64,8 +65,6 @@ local spikes2
 local spikes1platform
 local spikes2platform
 local spikes3platform
-
-local character
 
 local heart1
 local heart2
@@ -93,9 +92,9 @@ local questionsAnswered = 0
 
 local backButton
 
+local character
 local finalBoss
 local theFinalBoss
-
 
 
 -----------------------------------------------------------------------------------------
@@ -164,37 +163,26 @@ local function RemoveRuntimeListeners()
 end
 
 
-local function ReplaceCharacter()
-    print ("***Called ReplaceCharacter")
-    character = display.newImageRect("Images/BoyCharacterValentina.png", 100, 150)
-    character.x = display.contentWidth * 0.5 / 6
-    character.y = display.contentHeight  * 0.5 / 2
-    character.width = 75
-    character.height = 100
-    character.myName = "BoyQuest"
 
-    -- intialize horizontal movement of character
-    motionx = 0
-    -- add physics body
-    physics.addBody( character, "dynamic", { density = 6, friction = 0.5, bounce = 0, rotation = 0 } )
 
-    -- prevent character from being able to tip over
-    character.isFixedRotation = true
-
-    -- add back arrow listeners
-    AddArrowEventListeners()
-
-    -- add back runtime listeners
-    AddRuntimeListeners()
+local function MakeMathPuzzlesVisible()
+    mathPuzzle1.isVisible = true
+    mathPuzzle2.isVisible = true
+    mathPuzzle3.isVisible = true
 end
-
-
 
 local function MakeHeartsVisible()
     heart2.isVisible = true
     heart3.isVisible = true
 end
 
+local function  MakeFinalBossVisible()
+    finalBoss.isVisible = true
+end
+
+local function  MakeTheGlowVisible()
+    theGlow.isVisible = true
+end
 
 local function BackTransition()
     composer.gotoScene( "main_menu")
@@ -254,6 +242,7 @@ local function onCollision( self, event )
             numLives = numLives - 1
 
             UpdateHearts()
+
             if (numLives >= 0) then
                 timer.performWithDelay(200, ReplaceCharacter)
             end
@@ -352,6 +341,35 @@ local function RemovePhysicsBodies()
     physics.removeBody(topW)
     physics.removeBody(floor)
     physics.removeBody(rightW)
+end
+
+local function ReplaceCharacter()
+    print ("***Called ReplaceCharacter")
+
+    if (characterName == "boy") then
+        character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
+        character.x = 100
+        character.y = 100
+    else
+        character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
+        character.x = 100
+        character.y = 100
+
+    end
+        
+    -- intialize horizontal movement of character
+    motionx = 0
+    -- add physics body
+    physics.addBody( character, "dynamic", { density = 6, friction = 0.5, bounce = 0, rotation = 0 } )
+
+    -- prevent character from being able to tip over
+    character.isFixedRotation = true
+
+    -- add back arrow listeners
+    AddArrowEventListeners()
+
+    -- add back runtime listeners
+    AddRuntimeListeners()
 end
 
 -----------------------------------------------------------------------------------------
