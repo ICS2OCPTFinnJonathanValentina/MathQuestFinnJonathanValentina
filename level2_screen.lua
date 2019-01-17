@@ -186,7 +186,7 @@ local function BackTransition()
 end
 
 local function UpdateHearts()
-    print ("***numLives = " .. numLives)
+    --print ("***numLives = " .. numLives)
     if (numLives == 3) then
         heart1.isVisible = true
         heart2.isVisible = true
@@ -383,17 +383,16 @@ end
 
 local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
+        --if (characterName == "boy") then
 
-    if (characterName == "boy") then
         character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
         character.x = 900
         character.y = 100
-    else
-        character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
-        character.x = 900
-        character.y = 100
-
-    end
+     --elseif
+        --character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
+        ---character.x = 100
+        --character.y = 100
+    --end
         
     -- intialize horizontal movement of character
     motionx = 0
@@ -689,7 +688,6 @@ function scene:show( event )
         physics.setGravity( 0, GRAVITY ) 
 
 
-       
 
 
     elseif ( phase == "did" ) then
@@ -698,6 +696,7 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
         questionsAnswered = 0
+
 
         -- make all soccer balls visible
         MakeMathPuzzlesVisible()

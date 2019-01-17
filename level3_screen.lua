@@ -165,16 +165,16 @@ end
 local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
 
-    if (characterName == "boy") then
+    --if (characterName == "boy") then
         character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
         character.x = 100
         character.y = 100
-    else
-        character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
-        character.x = 100
-        character.y = 100
+     --elseif
+        --character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
+        --character.x = 100
+        --character.y = 100
+    --end
 
-    end
         
     -- intialize horizontal movement of character
     motionx = 0
