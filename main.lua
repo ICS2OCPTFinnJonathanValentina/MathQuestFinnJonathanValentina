@@ -18,7 +18,7 @@ local composer = require( "composer" )
 
 -- Go to the intro screen
 
-composer.gotoScene("level3_screen" )
+composer.gotoScene("splash_screen" )
 
 
 
