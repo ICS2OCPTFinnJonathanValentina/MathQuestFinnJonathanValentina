@@ -444,7 +444,7 @@ function scene:create( event )
 
     platform5 = display.newImageRect("Images/platformLevel3.png", 100, 50)
     platform5.x = 600
-    platform5.y = 241
+    platform5.y = 375
 
     sceneGroup:insert( platform5 )
 
