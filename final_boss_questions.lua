@@ -212,7 +212,7 @@ local function TouchListenerWrongAnswer3(touch)
 end
 -----------------------------------------------------------------------------
 --adding the event listeners 
-local function AddTextListeners ( )
+local function AddTextListeners()
     answerText:addEventListener( "touch", TouchListenerAnswer )
     wrongText1:addEventListener( "touch", TouchListenerWrongAnswer)
     wrongText2:addEventListener( "touch", TouchListenerWrongAnswer2)
