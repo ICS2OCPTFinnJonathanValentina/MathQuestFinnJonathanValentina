@@ -39,8 +39,9 @@ local scene = composer.newScene( sceneName )
 local backgroundSound = audio.loadSound("Sounds/bkg2.mp3")
 local backgroundSoundChannel
 
-spikeSound = audio.loadSound("Sounds/spike.mp3")
-spikeSoundChannel
+local spikeSound = audio.loadSound("Sounds/spike.mp3")
+local spikeSoundChannel
+
 -----------------------------------------------------------------------------------------
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -167,17 +168,15 @@ end
 
 local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
-
-    if (characterName == "boy") then
+    --if (character == "boy") then
         character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
         character.x = 100
         character.y = 100
-    else
-        character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
-        character.x = 100
-        character.y = 100
-
-    end
+     --elseif
+        --character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
+        --character.x = 100
+        --character.y = 100
+    --end
         
     -- intialize horizontal movement of character
     motionx = 0
@@ -218,7 +217,7 @@ local function BackTransition()
 end
 
 local function UpdateHearts()
-    print ("***numLives = " .. numLives)
+   print ("***numLives = " .. numLives)
     if (numLives == 3) then
         heart1.isVisible = true
         heart2.isVisible = true
@@ -259,6 +258,7 @@ local function onCollision( self, event )
             (event.target.myName == "spikes3") then
 
             -- add sound effect here
+            spikesSoundChannel = audio.play (spikeSound)
 
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
@@ -272,8 +272,9 @@ local function onCollision( self, event )
 
             UpdateHearts()
 
-            if (numLives >= 0) then
-                timer.performWithDelay(200, ReplaceCharacter)
+            
+            if ( numLives > 0) then
+                timer.performWithDelay(1000, ReplaceCharacter)
             end
         end
 
@@ -421,6 +422,7 @@ function ResumeLevel1()
 
     -- make character visible again
     character.isVisible = true
+    UpdateHearts()
     
     if (questionsAnswered > 0) then
         if (theMathPuzzle ~= nil) and (theMathPuzzle.isBodyActive == true) then
@@ -436,7 +438,7 @@ function ResumeLevel1()
         end
     end
 
-    UpdateHearts()
+    
 end
 
 
@@ -719,6 +721,7 @@ function scene:show( event )
 
         backgroundSoundChannel = audio.play(backgroundSound, { channel=1, loops=-1 } )
 
+        
        -- Character()
     end
 

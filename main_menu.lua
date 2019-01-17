@@ -59,15 +59,10 @@ end
 
 -----------------------------------------------------------------------------------------
 
--- Creating Transition to Level1 Screen
-local function Level1Transition( )
-    composer.gotoScene( "level1_screen", {effect = "crossFade", time = 1000})
-end    
-
 
 -- Creating Transition to Level1 Screen
 local function SelectCharacterTransition( )
-    composer.gotoScene( "select_Character", {effect = "crossFade", time = 1000})
+    composer.gotoScene( "level1_screen", {effect = "crossFade", time = 1000})
 end    
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
