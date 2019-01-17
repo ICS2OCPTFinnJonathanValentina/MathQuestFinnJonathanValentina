@@ -700,7 +700,9 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
 
         numLives = 3
-        
+
+        UpdateHearts()
+
         -- make all soccer balls visible
         MakeMathPuzzlesVisible()
 

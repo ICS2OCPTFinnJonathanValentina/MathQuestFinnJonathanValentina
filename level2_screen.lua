@@ -240,7 +240,7 @@ local function onCollision( self, event )
 
             UpdateHearts()
 
-            if (numLives >= 0) then
+            if (numLives > 0) then
                 timer.performWithDelay(200, ReplaceCharacter)
             end
         end
