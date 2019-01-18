@@ -39,6 +39,9 @@ local scene = composer.newScene( sceneName )
 local backgroundSound = audio.loadSound("Sounds/bkg3.mp3")
 local backgroundSoundChannel
 
+
+local spikeSound = audio.loadSound("Sounds/spike.mp3")
+local spikeSoundChannel
 -----------------------------------------------------------------------------------------
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -186,7 +189,7 @@ local function BackTransition()
 end
 
 local function UpdateHearts()
-    print ("***numLives = " .. numLives)
+    --print ("***numLives = " .. numLives)
     if (numLives == 3) then
         heart1.isVisible = true
         heart2.isVisible = true
@@ -209,6 +212,34 @@ local function UpdateHearts()
     end 
 end
 
+local function ReplaceCharacter()
+    print ("***Called ReplaceCharacter")
+        --if (characterName == "boy") then
+
+        character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
+        character.x = 900
+        character.y = 100
+     --elseif
+        --character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
+        ---character.x = 100
+        --character.y = 100
+    --end
+        
+    -- intialize horizontal movement of character
+    motionx = 0
+    -- add physics body
+    physics.addBody( character, "dynamic", { density = 6, friction = 0.5, bounce = 0, rotation = 0 } )
+
+    -- prevent character from being able to tip over
+    character.isFixedRotation = true
+
+    -- add back arrow listeners
+    AddArrowEventListeners()
+
+    -- add back runtime listeners
+    AddRuntimeListeners()
+end
+
 local function onCollision( self, event )
     -- for testing purposes
     --print( event.target )        --the first object in the collision
@@ -227,6 +258,7 @@ local function onCollision( self, event )
             (event.target.myName == "spikes3") then
 
             -- add sound effect here
+            spikeSoundChannel = audio.play(spikeSound)
 
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
@@ -240,8 +272,8 @@ local function onCollision( self, event )
 
             UpdateHearts()
 
-            if (numLives >= 0) then
-                timer.performWithDelay(200, ReplaceCharacter)
+            if (numLives > 0) then
+                timer.performWithDelay(1000, ReplaceCharacter)
             end
         end
 
@@ -381,34 +413,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(floor)
 end
 
-local function ReplaceCharacter()
-    print ("***Called ReplaceCharacter")
 
-    if (characterName == "boy") then
-        character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
-        character.x = 900
-        character.y = 100
-    else
-        character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
-        character.x = 900
-        character.y = 100
-
-    end
-        
-    -- intialize horizontal movement of character
-    motionx = 0
-    -- add physics body
-    physics.addBody( character, "dynamic", { density = 6, friction = 0.5, bounce = 0, rotation = 0 } )
-
-    -- prevent character from being able to tip over
-    character.isFixedRotation = true
-
-    -- add back arrow listeners
-    AddArrowEventListeners()
-
-    -- add back runtime listeners
-    AddRuntimeListeners()
-end
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
@@ -689,7 +694,6 @@ function scene:show( event )
         physics.setGravity( 0, GRAVITY ) 
 
 
-       
 
 
     elseif ( phase == "did" ) then
@@ -698,6 +702,7 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
         questionsAnswered = 0
+
 
         -- make all soccer balls visible
         MakeMathPuzzlesVisible()

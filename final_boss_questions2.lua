@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------------------
 --
 -- level1_screen.lua
--- Created by: Finn Leduc
+-- Created by: Jonathan Kene
 -- Date: May 16, 2017
 -- Description: This is the level 1 screen of the game. the charater can be dragged to move
 --If character goes off a certain araea they go back to the start. When a user interactes
@@ -21,7 +21,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_boss2"
+sceneName = "final_boss_questions2"
 
 -----------------------------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
-local wrongAnswerSoundChannel
+
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -72,19 +72,11 @@ local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end 
 
-
-
-
-local function YouWinTransition()
-    composer.gotoScene( "you_win" )
-end
-
 local function NextQuestionTransition()
-    print("***Called level1_boss3")
-    composer.showOverlay( "level1_boss3", { isModal = true, effect = "fade", time = 100})
+    print("***Called level1_boss2")
+    composer.showOverlay( "final_boss_questions3", { isModal = true, effect = "fade", time = 100})
 end
 
---check and see if they have run out of lives, if yes then go to you lose
 local function YouLose()
     if (numLives == 0) then
         YouLoseTransition()
@@ -92,6 +84,7 @@ local function YouLose()
         timer.performWithDelay(1000, NextQuestionTransition)
     end
 end
+
 
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -116,10 +109,8 @@ local function TouchListenerWrongAnswer(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
-        YouLose()
+        YouLose() 
     end 
-
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -131,11 +122,8 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
         YouLose()
-
     end 
-
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -147,13 +135,10 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
         YouLose()
-        timer.performWithDelay(1000,  NextQuestionTransition)
     end 
 
 end
-
 -----------------------------------------------------------------------------
 --adding the event listeners 
 local function AddTextListeners ( )
@@ -294,7 +279,7 @@ function scene:create( event )
  
     -- create the incorrect text object and make it invisble
     incorrectObject = display.newText( "Incorrect!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
-    incorrectObject:setTextColor(255/255, 255/255, 255/255)
+    incorrectObject:setTextColor(255/255, 55/255, 55/255)
     incorrectObject.isVisible = false
  
  

@@ -63,7 +63,7 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
-
+local wrongAnswerSoundChannel
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -129,8 +129,8 @@ local function TouchListenerWrongAnswer(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        
-        timer.performWithDelay(1000, youLose) 
+        wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
+        timer.performWithDelay(1000, YouLose) 
     end 
 
 end
@@ -144,7 +144,8 @@ local function TouchListenerWrongAnswer2(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        timer.performWithDelay(1000, youLose) 
+        wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
+        timer.performWithDelay(1000, YouLose) 
     end 
 
 end
@@ -158,7 +159,8 @@ local function TouchListenerWrongAnswer3(touch)
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        timer.performWithDelay(1000, youLose)
+        wrongAnswerSoundChannel = audio.play(wrongAnswerSound)
+        timer.performWithDelay(1000, YouLose)
     end 
 
 end

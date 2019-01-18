@@ -44,7 +44,6 @@ local backgroundSoundChannel
 -- GlOBAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-numLives = 3
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -165,16 +164,16 @@ end
 local function ReplaceCharacter()
     print ("***Called ReplaceCharacter")
 
-    if (characterName == "boy") then
+    --if (characterName == "boy") then
         character = display.newImageRect("Images/BoyCharacterValentina.png", 90, 150)
         character.x = 100
         character.y = 100
-    else
-        character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
-        character.x = 100
-        character.y = 100
+     --elseif
+        --character = display.newImageRect("Images/GirlCharacterValentina.png", 90, 150)
+        --character.x = 100
+        --character.y = 100
+    --end
 
-    end
         
     -- intialize horizontal movement of character
     motionx = 0
@@ -206,10 +205,6 @@ local function  MakeFinalBossVisible()
     finalBoss.isVisible = true
 end
 
-local function  MakeTheGlowVisible()
-    theGlow.isVisible = true
-end
-
 local function BackTransition()
     composer.gotoScene( "main_menu")
 end
@@ -219,7 +214,6 @@ local function ToTheFinal()
 end
 
 local function UpdateHearts()
-    print ("***numLives = " .. numLives)
     if (numLives == 3) then
         heart1.isVisible = true
         heart2.isVisible = true
@@ -298,23 +292,9 @@ local function onCollision( self, event )
 
             -- show overlay with math question
             composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
-
-                    
             
         end
-      
-
-        if (event.target.myName == "theGlow") then
-            --check to see if the user has answered 5 questions
-            if (questionsAnswered == 3) then
-                print("***questions answered = " .. questionsAnswered)
-
-                -- make the character invisible
-                character.isVisible = false
-
-                timer.performWithDelay(200, ToTheFinal)
-            end
-        end        
+              
 
         if (event.target.myName == "theBoss") then
 
@@ -326,7 +306,7 @@ local function onCollision( self, event )
             character.isVisible = false
 
             -- show overlay with math question
-            composer.gotoScene( "final_boss", { isModal = true, effect = "fade", time = 100})
+            composer.gotoScene( "final_boss_questions", { isModal = true, effect = "fade", time = 100})
 
 
             if (questionsAnswered == 4) then
@@ -354,20 +334,16 @@ local function AddCollisionListeners()
     mathPuzzle3.collision = onCollision
     mathPuzzle3:addEventListener( "collision" )
 
-    theGlow.collision = onCollision
-    theGlow:addEventListener( "collision" )
+    finalBoss.collision = onCollision
+    finalBoss:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
     spikes1:removeEventListener( "collision" )
     spikes2:removeEventListener( "collision" )
 
-    mathPuzzle1:removeEventListener( "collision" )
-    mathPuzzle2:removeEventListener( "collision" )
-    mathPuzzle3:removeEventListener( "collision" )
-
    -- theGlow:removeEventListener( "collision" )
-    theGlow:removeEventListener( "collision" )
+    finalBoss:removeEventListener( "collision" )
 end
 
 local function AddPhysicsBodies()
@@ -392,11 +368,9 @@ local function AddPhysicsBodies()
     physics.addBody(mathPuzzle1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(mathPuzzle3, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(theGlow, "static",  {density=0, friction=0, bounce=0} )
 
 
-
-    --physics.addBody(theGlow, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(finalBoss, "static",  {density=0, friction=0, bounce=0} )
 end
 
 
@@ -503,7 +477,7 @@ function scene:create( event )
 
     spikes2 = display.newImageRect("Images/Level-1Spikes1.png", 200, 50)
     spikes2.x = 450
-    spikes2.y = 300
+    spikes2.y = 400
     spikes2.myName = "spikes2"
         
     sceneGroup:insert( spikes2)
@@ -621,14 +595,23 @@ function scene:create( event )
 
 
  --theGlow
-    theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)
-    theGlow.x = 950
-    theGlow.y = 230
-    theGlow.myName = "theGlow"
+    --theGlow = display.newImageRect ("Images/GlowBall.png", 100, 100)
+    --theGlow.x = 950
+    --theGlow.y = 230
+    --theGlow.myName = "theGlow"
 
 
-    sceneGroup:insert( theGlow )
+    --sceneGroup:insert( theGlow )
 
+
+ --finalBoss
+    finalBoss = display.newImageRect ("Images/BossFinnL@2x.png", 200, 200)
+    finalBoss.x = 900
+    finalBoss.y = 200
+    finalBoss.myName = "theBoss"
+
+
+    sceneGroup:insert( finalBoss )
 
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
@@ -693,6 +676,9 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
+-- ###REMOVE THIS AFTER TESTING
+numLives =3
+
        --backgroundSoundChannel =  audio.play(backgroundSound {channel = 1, loops = -1})
        backgroundSoundChannel  =  audio.play(backgroundSound, {channel = 1, loops = -1})
 
@@ -710,8 +696,6 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
-
-        MakeTheGlowVisible()
 
         --audio.play(backgroundSound)
 

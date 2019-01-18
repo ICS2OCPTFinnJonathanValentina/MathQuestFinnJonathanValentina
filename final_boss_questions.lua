@@ -5,7 +5,7 @@
 -- Date: May 16, 2017
 -- Description: This is the level 1 screen of the game. the charater can be dragged to move
 --If character goes off a certain araea they go back to the start. When a user interactes
---with piant a trivia question will come up. they will have a limited time to click on the answer
+--with piant a trivia question will come up. they will have a limided time to click on the answer
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -63,20 +63,6 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
--- correct and incorreect sounds
-local correctSound = audio.loadSound("Sounds/correct.mp3")
-local correctSoundChannel
-
-local wrongSound = audio.loadSound("Sounds/wrongAnswer.mp3")
-local wrongSoundChannel
-
-local heart1boss
-local heart2boss
-local heart3boss
------------------------------------------------------------------------------------------
--- GLOBAL VARIABLES
------------------------------------------------------------------------------------------
-numAnswered = 0
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -86,41 +72,11 @@ local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 end 
 
-local function YouWinTransition()
-    invisibleHearts()
-    composer.gotoScene( "you_win" )
-end 
-
-
-local function NextQuestionTransition()
+local function NextWinTransition()
     print("***Called level1_boss2")
-    composer.showOverlay( "final_boss_questions", { isModal = true, effect = "fade", time = 100})
+    composer.showOverlay( "you_win", { isModal = true, effect = "fade", time = 100})
 end
 
-local function YouLose()
-    if (numLives == 0) then
-        YouLoseTransition()
-    else
-        timer.performWithDelay(1000, NextQuestionTransition)
-    end
-end
-
-local function QuestionMax()
-    if (numAnswered == 5) then
-        -- call function to make them win
-        timer.performWithDelay(1000, YouWinTransition)
-    else
-        timer.performWithDelay(1000, NextQuestionTransition)
-    end
-end
-
-
---make hearts invisible
-local function invisibleHearts()
-heart1boss.isVisible = false
-heart2boss.isVisible = false
-heart3boss.isVisible = false
-end
 
 
 -----------------------------------------------------------------------------------------
@@ -129,18 +85,11 @@ local function TouchListenerAnswer(touch)
     userAnswer = answerText.text
     
     if (touch.phase == "ended") then
-        --keeps track of questions answered
-        numAnswered = numAnswered + 1
-
-        --check amount of questions asked
-        QuestionMax()
         -- they got it right
         correctObject.isVisible = true
         incorrectObject.isVisible = false
-        timer.performWithDelay(1000, NextQuestionTransition)
-    end
-        -- sound played if this text is selected
-    correctSoundChannel = audio.play(correctSound) 
+        timer.performWithDelay(1000, NextWinTransition)
+    end 
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -148,20 +97,13 @@ local function TouchListenerWrongAnswer(touch)
     userAnswer = wrongText1.text
     
     if (touch.phase == "ended") then
-
-        --keeps track of questions answered
-        numAnswered = numAnswered + 1    
         -- they got it wrong
-         correctObject.isVisible = false
+        correctObject.isVisible = false
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer1 = " .. numLives)
-        YouLose() 
-        --check amount of questions asked
-        QuestionMax()
+        YouLoseTransition() 
     end 
-    -- sound played if this text is selected
-    wrongSoundChannel = audio.play(wrongSound)
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -169,23 +111,12 @@ local function TouchListenerWrongAnswer2(touch)
     userAnswer = wrongText2.text
     
     if (touch.phase == "ended") then
-
-
-        --keeps track of questions answered
-        numAnswered = numAnswered + 1
-
-        --they got it wrong    
         correctObject.isVisible = false
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer2 = " .. numLives)
-        YouLose()
-
-        --check amount of questions asked
-        QuestionMax()
+        YouLoseTransition()
     end 
-    -- sound played if this text is selected
-    wrongSoundChannel = audio.play(wrongSound)
 end
 
 --checking to see if the user pressed the right answer and bring them back to level 1
@@ -193,22 +124,13 @@ local function TouchListenerWrongAnswer3(touch)
     userAnswer = wrongText3.text
     
     if (touch.phase == "ended") then
-
-        --keeps track of questions answered
-        numAnswered = numAnswered + 1
-
-        --they got it wrong    
         correctObject.isVisible = false
         incorrectObject.isVisible = true
         numLives = numLives - 1
         print ("***numLives: TouchListenerWrongAnswer3 = " .. numLives)
-        YouLose()
-        
-        --check amount of questions asked
-        QuestionMax()
+        YouLoseTransition()
     end 
-    -- sound played if this text is selected
-    wrongSoundChannel = audio.play(wrongSound)
+
 end
 -----------------------------------------------------------------------------
 --adding the event listeners 
@@ -229,14 +151,14 @@ end
 
 local function DisplayQuestion()
     --creating random numbers
-    firstNumber = math.random (0,15)
+    firstNumber = math.random (3,15)
     secondNumber = math.random (0,15)
 
     -- calculate answer
     answer = firstNumber + secondNumber
 
     -- calculate wrong answers
-    wrongAnswer1 = answer + math.random(1, 3)
+    wrongAnswer1 = answer - math.random(1, 3)
     wrongAnswer2 = answer + math.random(4, 6)
     wrongAnswer3 = answer + math.random(7, 9)
 
@@ -316,30 +238,6 @@ local function PositionAnswers()
     end
 end
 
-
-local function UpdateHearts()
-    print ("***numLives = " .. numLives)
-    if (numLives == 3) then
-        heart1boss.isVisible = true
-        heart2boss.isVisible = true
-        heart3boss.isVisible = true
-    elseif (numLives == 2) then
-        heart1boss.isVisible = true
-        heart2boss.isVisible = true
-        heart3boss.isVisible = false
-    elseif (numLives == 1) then
-        heart1boss.isVisible = true
-        heart2boss.isVisible = false
-        heart3boss.isVisible = false
-    elseif (numLives == 0) then
-        heart1boss.isVisible = false
-        heart2boss.isVisible = false
-        heart3boss.isVisible = false
-        timer.performWithDelay(100, YouLoseTransition)
-        --youLoseSoundChannel = audio.play(YouLose)       
-    end 
-end
-
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -388,26 +286,6 @@ function scene:create( event )
     wrongText3 = display.newText("", X2, Y2, Arial, 75)
     wrongText3.anchorX = 0
 
-    -- Insert the Hearts
-    heart1boss = display.newImageRect("Images/heart.png", 80, 80)
-    heart1boss.x = 210
-    heart1boss.y = 75
-    heart1boss.isVisible = true
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-
-    heart2boss = display.newImageRect("Images/heart.png", 80, 80)
-    heart2boss.x = 310
-    heart2boss.y = 75
-    heart2boss.isVisible = true
-
-
-    heart3boss = display.newImageRect("Images/heart.png", 80, 80)
-    heart3boss.x = 410
-    heart3boss.y = 75
-    heart3boss.isVisible = true
-
-
     -----------------------------------------------------------------------------------------
 
     -- insert all objects for this scene into the scene group
@@ -447,7 +325,6 @@ function scene:show( event )
         DisplayQuestion()
         PositionAnswers()
         AddTextListeners()
-        UpdateHearts()
     end
 
 end --function scene:show( event )
